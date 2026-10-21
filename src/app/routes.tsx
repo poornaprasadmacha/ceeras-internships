@@ -3,6 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import { DashboardView } from '../features/dashboard/DashboardView';
 import { CourseLessonsView } from '../features/lessons/CourseLessonsView';
 import { LessonView } from '../features/lessons/LessonView';
+import { PythonCourseView } from '../features/python/PythonCourseView';
+import { PythonLessonView } from '../features/python/PythonLessonView';
 import { PlaygroundView } from '../features/playground/PlaygroundView';
 import { QuizzesIndexView } from '../features/quizzes/QuizzesIndexView';
 import { ProgressView } from '../features/progress/ProgressView';
@@ -18,6 +20,8 @@ export function AppRoutes() {
     <Routes>
       <Route path="/" element={<DashboardView />} />
       <Route path="/learn" element={<CourseLessonsView />} />
+      <Route path="/learn/python" element={<PythonCourseView />} />
+      <Route path="/learn/python/:slug" element={<PythonLessonView />} />
       <Route path="/learn/:slug" element={<LessonView />} />
       <Route path="/practice" element={<PlaygroundView />} />
       <Route path="/quizzes" element={<QuizzesIndexView />} />

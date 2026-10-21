@@ -54,11 +54,11 @@ const COURSES: CourseItem[] = [
   {
     id: 'python-core',
     title: 'Python Programming Fundamentals',
-    category: 'Python & Data Science',
-    badge: 'Coming Soon',
-    badgeVariant: 'outline',
-    status: 'upcoming',
-    modulesCount: 8,
+    category: 'Python & Software Engineering',
+    badge: 'Enrolled & Active',
+    badgeVariant: 'accent',
+    status: 'active',
+    modulesCount: 12,
     duration: '6-8 hours',
     logo: PythonLogo,
   },
@@ -168,12 +168,14 @@ export function DashboardView() {
           {COURSES.map((course) => {
             const Logo = course.logo;
             const isSQL = course.id === 'sql-relational';
+            const isPython = course.id === 'python-core';
+            const isActive = isSQL || isPython;
 
             return (
               <Card
                 key={course.id}
                 className={`p-6 flex flex-col justify-between transition-all space-y-5 relative overflow-hidden bg-surface ${
-                  isSQL
+                  isActive
                     ? 'border-primary/50 shadow-card hover:border-primary'
                     : 'border-border/80 opacity-90'
                 }`}
@@ -181,7 +183,7 @@ export function DashboardView() {
                 {/* Course Header Tag */}
                 <div
                   className={`absolute top-0 right-0 text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider ${
-                    isSQL
+                    isActive
                       ? 'bg-secondary text-white'
                       : 'bg-subtle text-text-muted border-l border-b border-border'
                   }`}
@@ -204,7 +206,7 @@ export function DashboardView() {
                     </h3>
                   </div>
 
-                  {/* Course Details (No bulky description paragraphs) */}
+                  {/* Course Details */}
                   {isSQL ? (
                     <div className="pt-2 space-y-2">
                       <div className="space-y-1">
@@ -228,6 +230,21 @@ export function DashboardView() {
                           <span>Engine:</span>
                           <span className="font-semibold text-primary">In-Browser SQLite WASM</span>
                         </div>
+                      </div>
+                    </div>
+                  ) : isPython ? (
+                    <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
+                      <div className="flex items-center justify-between">
+                        <span>Syllabus:</span>
+                        <span className="font-semibold text-text-main">12 Lessons (Zero to OOP)</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Interactive Tasks:</span>
+                        <span className="font-semibold text-text-main">24 Coding Challenges</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Engine:</span>
+                        <span className="font-semibold text-[#3776AB]">In-Browser Python 3 Console</span>
                       </div>
                     </div>
                   ) : (
@@ -269,6 +286,28 @@ export function DashboardView() {
                         className="text-xs"
                       >
                         <span>{hasStartedAny ? 'Continue Course' : 'Start Course'}</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
+                    </>
+                  ) : isPython ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate('/learn/python')}
+                        className="text-xs"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Syllabus</span>
+                      </Button>
+
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => navigate('/learn/python/hello-python-print')}
+                        className="text-xs bg-[#3776AB] hover:bg-[#2b5e89]"
+                      >
+                        <span>Start Python</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Button>
                     </>

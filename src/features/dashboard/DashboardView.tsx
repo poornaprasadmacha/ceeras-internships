@@ -99,9 +99,13 @@ const COURSES: CourseItem[] = [
 
 export function DashboardView() {
   const navigate = useNavigate();
-  const { stats, bookmarks } = useProgress();
+  const { stats, bookmarks, lessonsProgress } = useProgress();
 
-  const hasStartedAny = stats.solvedExercises > 0 || stats.quizzesTaken > 0 || stats.completedLessons > 0;
+  const hasStartedAny =
+    stats.solvedExercises > 0 ||
+    stats.quizzesTaken > 0 ||
+    stats.completedLessons > 0 ||
+    Object.values(lessonsProgress).some((l) => l.isStarted || l.isCompleted);
 
   return (
     <div className="space-y-12 pb-16">
@@ -283,123 +287,127 @@ export function DashboardView() {
         </div>
       </section>
 
-      {/* REAL STUDY ANALYTICS */}
-      <section className="space-y-4 pt-4 border-t border-border/60">
-        <h2 className="font-raleway text-xl font-bold text-text-main">
-          Your Study Analytics
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Card className="p-4 space-y-1.5 bg-surface">
-            <div className="flex items-center justify-between text-text-muted">
-              <span className="text-xs font-medium">Completed Lessons</span>
-              <BookOpen className="w-4 h-4 text-primary" />
-            </div>
-            <div className="text-2xl font-bold font-mono text-text-main">
-              {stats.completedLessons} / {stats.totalLessons}
-            </div>
-            <span className="text-[11px] text-text-muted block">
-              {stats.completedLessons === stats.totalLessons
-                ? 'All modules completed'
-                : `${stats.totalLessons - stats.completedLessons} remaining`}
-            </span>
-          </Card>
-
-          <Card className="p-4 space-y-1.5 bg-surface">
-            <div className="flex items-center justify-between text-text-muted">
-              <span className="text-xs font-medium">Exercises Solved</span>
-              <CheckCircle2 className="w-4 h-4 text-success" />
-            </div>
-            <div className="text-2xl font-bold font-mono text-text-main">
-              {stats.solvedExercises} / {stats.totalExercises}
-            </div>
-            <span className="text-[11px] text-text-muted block">
-              {stats.exercisePercentage}% of total tasks
-            </span>
-          </Card>
-
-          <Card className="p-4 space-y-1.5 bg-surface">
-            <div className="flex items-center justify-between text-text-muted">
-              <span className="text-xs font-medium">Quiz Average</span>
-              <CheckSquare className="w-4 h-4 text-secondary" />
-            </div>
-            <div className="text-2xl font-bold font-mono text-text-main">
-              {stats.quizzesTaken > 0 ? `${stats.averageQuizScore}%` : '—'}
-            </div>
-            <span className="text-[11px] text-text-muted block">
-              {stats.quizzesTaken} {stats.quizzesTaken === 1 ? 'attempt' : 'attempts'} logged
-            </span>
-          </Card>
-
-          <Card className="p-4 space-y-1.5 bg-surface">
-            <div className="flex items-center justify-between text-text-muted">
-              <span className="text-xs font-medium">Study Streak</span>
-              <Flame className="w-4 h-4 text-warning" />
-            </div>
-            <div className="text-2xl font-bold font-mono text-text-main">
-              {stats.currentStreakDays} {stats.currentStreakDays === 1 ? 'day' : 'days'}
-            </div>
-            <span className="text-[11px] text-text-muted block">
-              {stats.currentStreakDays > 0 ? 'Consecutive days active' : 'Start today'}
-            </span>
-          </Card>
-        </div>
-      </section>
-
-      {/* REVIEW TEST & BOOKMARKS */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card variant="subtle" className="p-6 space-y-4 flex flex-col justify-between border border-border">
-          <div className="space-y-2">
-            <Badge variant="accent" size="sm">
-              Comprehensive Review
-            </Badge>
-            <h3 className="font-raleway text-lg font-bold text-text-main">
-              Foundation Review Test
-            </h3>
-            <p className="text-xs text-text-muted leading-relaxed">
-              Consolidate your knowledge from Lessons 1 &amp; 2 with our 10-question assessment covering relational concepts, column selection, syntax, and query predictions.
-            </p>
-          </div>
-
-          <div className="pt-3 flex items-center justify-between border-t border-border/50">
-            <span className="text-xs text-text-muted">Pass Mark: 80%</span>
-            <Button variant="primary" size="sm" onClick={() => navigate('/quizzes')}>
-              <span>Start Review Test</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Button>
-          </div>
-        </Card>
-
-        <Card className="p-6 space-y-4 bg-surface border border-border">
-          <div className="flex items-center justify-between">
-            <h3 className="font-raleway text-base font-bold text-text-main flex items-center gap-2">
-              <Bookmark className="w-4 h-4 text-primary" />
-              <span>Bookmarked Lessons</span>
-            </h3>
-            <Link to="/bookmarks" className="text-xs text-primary hover:underline">
-              View all
-            </Link>
-          </div>
-
-          {bookmarks.length === 0 ? (
-            <p className="text-xs text-text-muted py-4">
-              No bookmarked lessons yet. Click the bookmark icon inside any lesson to save it here for quick access.
-            </p>
-          ) : (
-            <div className="space-y-2">
-              {bookmarks.slice(0, 3).map((b) => (
-                <div
-                  key={b.id}
-                  onClick={() => navigate(`/learn/${getLessonById(b.lessonId)?.slug || ''}`)}
-                  className="p-2.5 rounded-md bg-subtle hover:bg-border/60 transition-colors cursor-pointer flex items-center justify-between text-xs"
-                >
-                  <span className="font-medium text-text-main truncate">{b.title}</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-text-muted shrink-0" />
+      {/* STUDY ANALYTICS & REVIEW: Only visible once the student starts learning a course */}
+      {hasStartedAny && (
+        <>
+          <section className="space-y-4 pt-4 border-t border-border/60 animate-fadeIn">
+            <h2 className="font-raleway text-xl font-bold text-text-main">
+              Your Study Analytics
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Card className="p-4 space-y-1.5 bg-surface">
+                <div className="flex items-center justify-between text-text-muted">
+                  <span className="text-xs font-medium">Completed Lessons</span>
+                  <BookOpen className="w-4 h-4 text-primary" />
                 </div>
-              ))}
+                <div className="text-2xl font-bold font-mono text-text-main">
+                  {stats.completedLessons} / {stats.totalLessons}
+                </div>
+                <span className="text-[11px] text-text-muted block">
+                  {stats.completedLessons === stats.totalLessons
+                    ? 'All modules completed'
+                    : `${stats.totalLessons - stats.completedLessons} remaining`}
+                </span>
+              </Card>
+
+              <Card className="p-4 space-y-1.5 bg-surface">
+                <div className="flex items-center justify-between text-text-muted">
+                  <span className="text-xs font-medium">Exercises Solved</span>
+                  <CheckCircle2 className="w-4 h-4 text-success" />
+                </div>
+                <div className="text-2xl font-bold font-mono text-text-main">
+                  {stats.solvedExercises} / {stats.totalExercises}
+                </div>
+                <span className="text-[11px] text-text-muted block">
+                  {stats.exercisePercentage}% of total tasks
+                </span>
+              </Card>
+
+              <Card className="p-4 space-y-1.5 bg-surface">
+                <div className="flex items-center justify-between text-text-muted">
+                  <span className="text-xs font-medium">Quiz Average</span>
+                  <CheckSquare className="w-4 h-4 text-secondary" />
+                </div>
+                <div className="text-2xl font-bold font-mono text-text-main">
+                  {stats.quizzesTaken > 0 ? `${stats.averageQuizScore}%` : '—'}
+                </div>
+                <span className="text-[11px] text-text-muted block">
+                  {stats.quizzesTaken} {stats.quizzesTaken === 1 ? 'attempt' : 'attempts'} logged
+                </span>
+              </Card>
+
+              <Card className="p-4 space-y-1.5 bg-surface">
+                <div className="flex items-center justify-between text-text-muted">
+                  <span className="text-xs font-medium">Study Streak</span>
+                  <Flame className="w-4 h-4 text-warning" />
+                </div>
+                <div className="text-2xl font-bold font-mono text-text-main">
+                  {stats.currentStreakDays} {stats.currentStreakDays === 1 ? 'day' : 'days'}
+                </div>
+                <span className="text-[11px] text-text-muted block">
+                  {stats.currentStreakDays > 0 ? 'Consecutive days active' : 'Start today'}
+                </span>
+              </Card>
             </div>
-          )}
-        </Card>
-      </section>
+          </section>
+
+          {/* REVIEW TEST & BOOKMARKS */}
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fadeIn">
+            <Card variant="subtle" className="p-6 space-y-4 flex flex-col justify-between border border-border">
+              <div className="space-y-2">
+                <Badge variant="accent" size="sm">
+                  Comprehensive Review
+                </Badge>
+                <h3 className="font-raleway text-lg font-bold text-text-main">
+                  Foundation Review Test
+                </h3>
+                <p className="text-xs text-text-muted leading-relaxed">
+                  Consolidate your knowledge from the interactive SQL curriculum with our 10-question assessment covering relational concepts, column selection, syntax, and query predictions.
+                </p>
+              </div>
+
+              <div className="pt-3 flex items-center justify-between border-t border-border/50">
+                <span className="text-xs text-text-muted">Pass Mark: 80%</span>
+                <Button variant="primary" size="sm" onClick={() => navigate('/quizzes')}>
+                  <span>Start Review Test</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Button>
+              </div>
+            </Card>
+
+            <Card className="p-6 space-y-4 bg-surface border border-border">
+              <div className="flex items-center justify-between">
+                <h3 className="font-raleway text-base font-bold text-text-main flex items-center gap-2">
+                  <Bookmark className="w-4 h-4 text-primary" />
+                  <span>Bookmarked Lessons</span>
+                </h3>
+                <Link to="/bookmarks" className="text-xs text-primary hover:underline">
+                  View all
+                </Link>
+              </div>
+
+              {bookmarks.length === 0 ? (
+                <p className="text-xs text-text-muted py-4">
+                  No bookmarked lessons yet. Click the bookmark icon inside any lesson to save it here for quick access.
+                </p>
+              ) : (
+                <div className="space-y-2">
+                  {bookmarks.slice(0, 3).map((b) => (
+                    <div
+                      key={b.id}
+                      onClick={() => navigate(`/learn/${getLessonById(b.lessonId)?.slug || ''}`)}
+                      className="p-2.5 rounded-md bg-subtle hover:bg-border/60 transition-colors cursor-pointer flex items-center justify-between text-xs"
+                    >
+                      <span className="font-medium text-text-main truncate">{b.title}</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-text-muted shrink-0" />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Card>
+          </section>
+        </>
+      )}
     </div>
   );
 }

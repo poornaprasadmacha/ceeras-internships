@@ -12,6 +12,13 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import {
+  SqlLogo,
+  PythonLogo,
+  NumpyLogo,
+  PandasLogo,
+  JavaScriptLogo,
+} from '../ui/LanguageLogos';
 import { useTheme } from '../../hooks/useTheme';
 import { THEMES } from '../../lib/constants';
 
@@ -121,7 +128,7 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                   onClick={() => setCoursesOpen(false)}
                   className="flex items-start gap-2.5 p-2 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors border border-primary/20"
                 >
-                  <Database className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                  <SqlLogo className="w-5 h-5 shrink-0 mt-0.5 rounded" />
                   <div>
                     <span className="font-semibold text-xs text-text-main block">
                       SQL &amp; Relational Databases
@@ -137,19 +144,31 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                 </div>
                 <div className="p-2 space-y-2 text-xs">
                   <div className="flex items-center justify-between text-text-main">
-                    <span className="font-medium">Python Programming</span>
+                    <span className="flex items-center gap-2 font-medium">
+                      <PythonLogo className="w-4 h-4 shrink-0" />
+                      <span>Python Programming</span>
+                    </span>
                     <span className="text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Soon</span>
                   </div>
                   <div className="flex items-center justify-between text-text-main">
-                    <span className="font-medium">NumPy for Computing</span>
+                    <span className="flex items-center gap-2 font-medium">
+                      <NumpyLogo className="w-4 h-4 shrink-0 rounded" />
+                      <span>NumPy for Computing</span>
+                    </span>
                     <span className="text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Soon</span>
                   </div>
                   <div className="flex items-center justify-between text-text-main">
-                    <span className="font-medium">Data Science &amp; Analytics</span>
+                    <span className="flex items-center gap-2 font-medium">
+                      <PandasLogo className="w-4 h-4 shrink-0 rounded" />
+                      <span>Data Science &amp; Analytics</span>
+                    </span>
                     <span className="text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Soon</span>
                   </div>
                   <div className="flex items-center justify-between text-text-main">
-                    <span className="font-medium">Modern JavaScript</span>
+                    <span className="flex items-center gap-2 font-medium">
+                      <JavaScriptLogo className="w-4 h-4 shrink-0 rounded" />
+                      <span>Modern JavaScript</span>
+                    </span>
                     <span className="text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Soon</span>
                   </div>
                 </div>
@@ -308,7 +327,7 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center gap-2 py-1.5 text-sm text-primary font-medium"
             >
-              <Database className="w-4 h-4" />
+              <SqlLogo className="w-4 h-4 rounded-xs" />
               <span>SQL &amp; Relational Databases</span>
             </Link>
           </div>

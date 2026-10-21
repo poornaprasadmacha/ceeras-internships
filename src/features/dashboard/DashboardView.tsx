@@ -19,6 +19,13 @@ import {
   Code2,
   BarChart3,
 } from 'lucide-react';
+import {
+  SqlLogo,
+  PythonLogo,
+  NumpyLogo,
+  PandasLogo,
+  JavaScriptLogo,
+} from '../../components/ui/LanguageLogos';
 
 interface CourseItem {
   id: string;
@@ -27,10 +34,9 @@ interface CourseItem {
   badge: string;
   badgeVariant: 'accent' | 'outline';
   status: 'active' | 'upcoming';
-  description: string;
   modulesCount: number;
   duration: string;
-  icon: React.ElementType;
+  logo: React.ComponentType<{ className?: string; size?: number }>;
 }
 
 const COURSES: CourseItem[] = [
@@ -41,11 +47,9 @@ const COURSES: CourseItem[] = [
     badge: 'Enrolled & Active',
     badgeVariant: 'accent',
     status: 'active',
-    description:
-      'Master relational databases from zero to advanced: SELECT, WHERE constraints, joins, NULLs, expressions, aggregations, GROUP BY, subqueries, and DDL/DML data manipulation with instant in-browser SQLite execution.',
     modulesCount: 16,
     duration: '10-12 hours',
-    icon: Database,
+    logo: SqlLogo,
   },
   {
     id: 'python-core',
@@ -54,11 +58,9 @@ const COURSES: CourseItem[] = [
     badge: 'Coming Soon',
     badgeVariant: 'outline',
     status: 'upcoming',
-    description:
-      'Learn modern Python 3 from scratch. Master variables, control flow, functions, lists, dictionaries, and object-oriented principles with instant in-browser REPL execution.',
     modulesCount: 8,
     duration: '6-8 hours',
-    icon: Terminal,
+    logo: PythonLogo,
   },
   {
     id: 'numpy-computing',
@@ -67,11 +69,9 @@ const COURSES: CourseItem[] = [
     badge: 'Coming Soon',
     badgeVariant: 'outline',
     status: 'upcoming',
-    description:
-      'High-performance numerical computing with NumPy. Learn n-dimensional array creation, multidimensional slicing, vectorization, linear algebra, and broadcasting rules.',
     modulesCount: 6,
     duration: '4-5 hours',
-    icon: Layers,
+    logo: NumpyLogo,
   },
   {
     id: 'data-science',
@@ -80,11 +80,9 @@ const COURSES: CourseItem[] = [
     badge: 'Coming Soon',
     badgeVariant: 'outline',
     status: 'upcoming',
-    description:
-      'Wrangle, clean, analyze, and visualize real-world tabular data. Combine SQL and Pandas to perform exploratory analysis, statistical summaries, and insightful data reporting.',
     modulesCount: 10,
     duration: '10-12 hours',
-    icon: BarChart3,
+    logo: PandasLogo,
   },
   {
     id: 'javascript-modern',
@@ -93,11 +91,9 @@ const COURSES: CourseItem[] = [
     badge: 'Coming Soon',
     badgeVariant: 'outline',
     status: 'upcoming',
-    description:
-      'Modern ECMAScript standard: closures, asynchronous async/await, DOM manipulation, promises, modern fetch API, and robust client-side web application logic.',
     modulesCount: 9,
     duration: '8-10 hours',
-    icon: Code2,
+    logo: JavaScriptLogo,
   },
 ];
 
@@ -166,7 +162,7 @@ export function DashboardView() {
         {/* Courses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {COURSES.map((course) => {
-            const Icon = course.icon;
+            const Logo = course.logo;
             const isSQL = course.id === 'sql-relational';
 
             return (
@@ -189,9 +185,10 @@ export function DashboardView() {
                   {course.badge}
                 </div>
 
-                <div className="space-y-3 pt-2">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-                    <Icon className="w-6 h-6" />
+                <div className="space-y-4 pt-2">
+                  {/* Official Language Logo */}
+                  <div className="w-14 h-14 rounded-2xl bg-subtle/80 border border-border/80 flex items-center justify-center p-2.5 shadow-xs">
+                    <Logo className="w-full h-full object-contain" />
                   </div>
 
                   <div>
@@ -203,11 +200,7 @@ export function DashboardView() {
                     </h3>
                   </div>
 
-                  <p className="text-xs text-text-muted leading-relaxed line-clamp-3">
-                    {course.description}
-                  </p>
-
-                  {/* Course Details */}
+                  {/* Course Details (No bulky description paragraphs) */}
                   {isSQL ? (
                     <div className="pt-2 space-y-2">
                       <div className="space-y-1">

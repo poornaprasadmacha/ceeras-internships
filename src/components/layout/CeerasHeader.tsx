@@ -20,6 +20,7 @@ import {
   NumpyLogo,
   PandasLogo,
   GitLogo,
+  VsCodeLogo,
   DataScienceLogo,
   JavaScriptLogo,
   ScikitLearnLogo,
@@ -42,6 +43,8 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
     const q = searchQuery.toLowerCase();
     if (q.includes('sql') || q.includes('select') || q.includes('table') || q.includes('lesson')) {
       navigate('/learn');
+    } else if (q.includes('vscode') || q.includes('vs code') || q.includes('editor')) {
+      navigate('/learn/vscode');
     } else if (q.includes('quiz') || q.includes('test')) {
       navigate('/quizzes');
     } else if (q.includes('practice') || q.includes('sandbox')) {
@@ -252,6 +255,22 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                     </span>
                     <span className="text-[11px] text-text-muted block">
                       12 Lessons • Branches &amp; PR Workflow
+                    </span>
+                  </div>
+                </Link>
+
+                <Link
+                  to="/learn/vscode"
+                  onClick={() => setCoursesOpen(false)}
+                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
+                >
+                  <VsCodeLogo className="w-5 h-5 shrink-0 mt-0.5 rounded" />
+                  <div>
+                    <span className="font-semibold text-xs text-text-main block">
+                      VS Code (IDE &amp; Productivity)
+                    </span>
+                    <span className="text-[11px] text-text-muted block">
+                      12 Lessons • Simulator &amp; Settings
                     </span>
                   </div>
                 </Link>
@@ -500,6 +519,14 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
             >
               <GitLogo className="w-4 h-4 rounded-xs" />
               <span>Git &amp; GitHub</span>
+            </Link>
+            <Link
+              to="/learn/vscode"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
+            >
+              <VsCodeLogo className="w-4 h-4 rounded-xs" />
+              <span>VS Code Mastery</span>
             </Link>
             <Link
               to="/learn/datascience"

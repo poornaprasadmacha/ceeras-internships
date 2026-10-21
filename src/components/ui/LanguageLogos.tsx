@@ -411,3 +411,50 @@ export function GitHubLogo({ className = 'w-10 h-10', size }: LogoProps) {
     </svg>
   );
 }
+
+
+/**
+ * Official Visual Studio Code origami ribbon vector logo
+ */
+export function VsCodeLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Visual Studio Code logo"
+    >
+      <rect width="128" height="128" rx="20" fill="#181824" />
+      {/* VS Code origami folded ribbon */}
+      <path
+        d="M96 22L70 42L48 26L36 32V96L48 102L70 86L96 106V22Z"
+        fill="#0066B8"
+      />
+      {/* Upper diagonal wing */}
+      <path
+        d="M96 22L48 58L36 32L78 20L96 22Z"
+        fill="#1F8AD2"
+      />
+      {/* Lower diagonal wing */}
+      <path
+        d="M96 106L48 70L36 96L78 108L96 106Z"
+        fill="#007ACC"
+      />
+      {/* Front right chevron */}
+      <path
+        d="M96 22L70 42V86L96 106V22Z"
+        fill="#0098FF"
+      />
+      {/* Left chevron bow */}
+      <path
+        d="M48 26L36 32L24 44V84L36 96L48 102V26Z"
+        fill="#005A9E"
+        opacity="0.8"
+      />
+    </svg>
+  );
+}

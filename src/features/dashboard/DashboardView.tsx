@@ -27,6 +27,7 @@ import {
   NumpyLogo,
   PandasLogo,
   GitLogo,
+  VsCodeLogo,
   DataScienceLogo,
   JavaScriptLogo,
   ScikitLearnLogo,
@@ -121,6 +122,17 @@ const COURSES: CourseItem[] = [
     modulesCount: 12,
     duration: '6-8 hours',
     logo: GitLogo,
+  },
+  {
+    id: 'vscode-mastery',
+    title: 'Visual Studio Code Mastery & Productivity',
+    category: 'IDE & Developer Tooling',
+    badge: 'Enrolled & Active',
+    badgeVariant: 'accent',
+    status: 'active',
+    modulesCount: 12,
+    duration: '6-8 hours',
+    logo: VsCodeLogo,
   },
   {
     id: 'data-science',
@@ -242,6 +254,15 @@ export function DashboardView() {
     }
   })();
 
+  const hasStartedVsCode = (() => {
+    try {
+      const v = localStorage.getItem('ceeras_vscode_solved');
+      return v ? Object.keys(JSON.parse(v)).length > 0 : false;
+    } catch {
+      return false;
+    }
+  })();
+
   const hasStartedAny =
     stats.solvedExercises > 0 ||
     stats.quizzesTaken > 0 ||
@@ -255,6 +276,7 @@ export function DashboardView() {
     hasStartedNumpy ||
     hasStartedPandas ||
     hasStartedGit ||
+    hasStartedVsCode ||
     Object.values(lessonsProgress).some((l) => l.isStarted || l.isCompleted);
 
   return (
@@ -327,7 +349,8 @@ export function DashboardView() {
             const isNumpy = course.id === 'numpy-computing';
             const isPandas = course.id === 'pandas-data';
             const isGit = course.id === 'git-github';
-            const isActive = isSQL || isPython || isHtml || isCss || isJs || isDs || isML || isNumpy || isPandas || isGit;
+            const isVsCode = course.id === 'vscode-mastery';
+            const isActive = isSQL || isPython || isHtml || isCss || isJs || isDs || isML || isNumpy || isPandas || isGit || isVsCode;
 
             return (
               <Card
@@ -523,6 +546,21 @@ export function DashboardView() {
                       <div className="flex items-center justify-between">
                         <span>Engine:</span>
                         <span className="font-semibold text-[#F05032]">In-Browser Git Object Sandbox</span>
+                      </div>
+                    </div>
+                  ) : isVsCode ? (
+                    <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
+                      <div className="flex items-center justify-between">
+                        <span>Syllabus:</span>
+                        <span className="font-semibold text-text-main">12 Lessons (Zero to Dev Containers)</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Interactive Tasks:</span>
+                        <span className="font-semibold text-text-main">In-Browser IDE Simulator &amp; Settings</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Engine:</span>
+                        <span className="font-semibold text-[#007ACC]">In-Browser VS Code Workspace Engine</span>
                       </div>
                     </div>
                   ) : (
@@ -762,6 +800,28 @@ export function DashboardView() {
                         className="text-xs bg-[#F05032] hover:bg-[#d44327] text-white font-bold"
                       >
                         <span>Start Git</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
+                    </>
+                  ) : isVsCode ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate('/learn/vscode')}
+                        className="text-xs"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Syllabus</span>
+                      </Button>
+
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => navigate('/learn/vscode/vscode-interface-architecture-and-anatomy')}
+                        className="text-xs bg-[#007ACC] hover:bg-[#0062a3] text-white font-bold"
+                      >
+                        <span>Start VS Code</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Button>
                     </>

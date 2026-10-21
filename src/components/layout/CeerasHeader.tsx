@@ -205,6 +205,22 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                   </div>
                 </Link>
 
+                <Link
+                  to="/learn/datascience"
+                  onClick={() => setCoursesOpen(false)}
+                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
+                >
+                  <PandasLogo className="w-5 h-5 shrink-0 mt-0.5 rounded" />
+                  <div>
+                    <span className="font-semibold text-xs text-text-main block">
+                      Data Science (Statistics, EDA &amp; ML)
+                    </span>
+                    <span className="text-[11px] text-text-muted block">
+                      14 Lessons • Tabular Engine &amp; Plotter
+                    </span>
+                  </div>
+                </Link>
+
                 <div className="px-2 pt-2 text-[11px] font-bold text-text-muted uppercase tracking-wider border-t border-border/50">
                   Upcoming Academy Tracks
                 </div>
@@ -213,13 +229,6 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                     <span className="flex items-center gap-2 font-medium">
                       <NumpyLogo className="w-4 h-4 shrink-0 rounded" />
                       <span>NumPy for Computing</span>
-                    </span>
-                    <span className="text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Soon</span>
-                  </div>
-                  <div className="flex items-center justify-between text-text-main">
-                    <span className="flex items-center gap-2 font-medium">
-                      <PandasLogo className="w-4 h-4 shrink-0 rounded" />
-                      <span>Data Science &amp; Analytics</span>
                     </span>
                     <span className="text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Soon</span>
                   </div>
@@ -370,17 +379,57 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
             Contact Us
           </Link>
 
-          <div className="pt-2 border-t border-border">
+          <div className="pt-2 border-t border-border space-y-1">
             <span className="text-xs font-semibold text-text-muted uppercase tracking-wider block mb-2">
-              Courses
+              Active Courses
             </span>
             <Link
               to="/learn"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 py-1.5 text-sm text-primary font-medium"
+              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
             >
               <SqlLogo className="w-4 h-4 rounded-xs" />
               <span>SQL &amp; Relational Databases</span>
+            </Link>
+            <Link
+              to="/learn/python"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
+            >
+              <PythonLogo className="w-4 h-4" />
+              <span>Python Programming</span>
+            </Link>
+            <Link
+              to="/learn/html"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
+            >
+              <HtmlLogo className="w-4 h-4" />
+              <span>HTML5 Web Architecture</span>
+            </Link>
+            <Link
+              to="/learn/css"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
+            >
+              <CssLogo className="w-4 h-4" />
+              <span>CSS3 Responsive Design</span>
+            </Link>
+            <Link
+              to="/learn/javascript"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
+            >
+              <JavaScriptLogo className="w-4 h-4 rounded-xs" />
+              <span>Modern JavaScript</span>
+            </Link>
+            <Link
+              to="/learn/datascience"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
+            >
+              <PandasLogo className="w-4 h-4 rounded-xs" />
+              <span>Data Science &amp; ML</span>
             </Link>
           </div>
 

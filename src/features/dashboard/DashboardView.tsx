@@ -99,13 +99,13 @@ const COURSES: CourseItem[] = [
   },
   {
     id: 'data-science',
-    title: 'Data Science & Tabular Analytics',
+    title: 'Data Science (Statistics, EDA & ML)',
     category: 'Python & Data Science',
-    badge: 'Coming Soon',
-    badgeVariant: 'outline',
-    status: 'upcoming',
-    modulesCount: 10,
-    duration: '10-12 hours',
+    badge: 'Enrolled & Active',
+    badgeVariant: 'accent',
+    status: 'active',
+    modulesCount: 14,
+    duration: '8-10 hours',
     logo: PandasLogo,
   },
   {
@@ -161,6 +161,15 @@ export function DashboardView() {
     }
   })();
 
+  const hasStartedDs = (() => {
+    try {
+      const d = localStorage.getItem('ceeras_ds_solved');
+      return d ? Object.keys(JSON.parse(d)).length > 0 : false;
+    } catch {
+      return false;
+    }
+  })();
+
   const hasStartedAny =
     stats.solvedExercises > 0 ||
     stats.quizzesTaken > 0 ||
@@ -169,6 +178,7 @@ export function DashboardView() {
     hasStartedHtml ||
     hasStartedCss ||
     hasStartedJs ||
+    hasStartedDs ||
     Object.values(lessonsProgress).some((l) => l.isStarted || l.isCompleted);
 
   return (
@@ -236,7 +246,8 @@ export function DashboardView() {
             const isHtml = course.id === 'html-core';
             const isCss = course.id === 'css-core';
             const isJs = course.id === 'javascript-modern';
-            const isActive = isSQL || isPython || isHtml || isCss || isJs;
+            const isDs = course.id === 'data-science';
+            const isActive = isSQL || isPython || isHtml || isCss || isJs || isDs;
 
             return (
               <Card
@@ -357,6 +368,21 @@ export function DashboardView() {
                       <div className="flex items-center justify-between">
                         <span>Engine:</span>
                         <span className="font-semibold text-amber-600 dark:text-amber-400">In-Browser Live JS Runtime</span>
+                      </div>
+                    </div>
+                  ) : isDs ? (
+                    <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
+                      <div className="flex items-center justify-between">
+                        <span>Syllabus:</span>
+                        <span className="font-semibold text-text-main">14 Lessons (Zero to Hero)</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Interactive Tasks:</span>
+                        <span className="font-semibold text-text-main">In-Browser DataFrames &amp; SVG Plots</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Engine:</span>
+                        <span className="font-semibold text-[#E70488]">In-Browser Statistics &amp; Plotter</span>
                       </div>
                     </div>
                   ) : (
@@ -486,6 +512,28 @@ export function DashboardView() {
                         className="text-xs bg-amber-500 hover:bg-amber-600 text-black font-bold"
                       >
                         <span>Start JS</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
+                    </>
+                  ) : isDs ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate('/learn/datascience')}
+                        className="text-xs"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Syllabus</span>
+                      </Button>
+
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => navigate('/learn/datascience/intro-to-data-science-and-datasets')}
+                        className="text-xs bg-[#130754] hover:bg-[#1f0c82] text-white font-bold"
+                      >
+                        <span>Start Data Science</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Button>
                     </>

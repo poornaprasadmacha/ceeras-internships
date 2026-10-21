@@ -47,8 +47,8 @@ const COURSES: CourseItem[] = [
     badge: 'Enrolled & Active',
     badgeVariant: 'accent',
     status: 'active',
-    modulesCount: 16,
-    duration: '10-12 hours',
+    modulesCount: 24,
+    duration: '14-16 hours',
     logo: SqlLogo,
   },
   {
@@ -218,11 +218,11 @@ export function DashboardView() {
                       <div className="space-y-1.5 pt-2 text-xs text-text-muted">
                         <div className="flex items-center justify-between">
                           <span>Syllabus:</span>
-                          <span className="font-semibold text-text-main">16 Lessons (Zero to Advanced)</span>
+                          <span className="font-semibold text-text-main">24 Lessons (Zero to Senior Advanced)</span>
                         </div>
                         <div className="flex items-center justify-between">
                           <span>Exercises:</span>
-                          <span className="font-semibold text-text-main">40+ Hands-On Queries</span>
+                          <span className="font-semibold text-text-main">50+ Hands-On Queries</span>
                         </div>
                         <div className="flex items-center justify-between">
                           <span>Engine:</span>

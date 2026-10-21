@@ -27,7 +27,7 @@ export function CourseLessonsView() {
           Step-by-step interactive SQL curriculum. Learn core theory, write real queries in isolated SQLite sandboxes, and verify your answers immediately.
         </p>
         <div className="flex items-center gap-4 text-xs text-text-muted pt-1">
-          <span>{LESSON_MANIFEST.length} Comprehensive Lessons (Zero to Advanced)</span>
+          <span>{LESSON_MANIFEST.length} Comprehensive Lessons (Zero to Senior Advanced)</span>
           <span>•</span>
           <span>~{totalTime} minutes total study time</span>
         </div>

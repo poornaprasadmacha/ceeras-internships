@@ -15,6 +15,14 @@ import { lesson13 } from './lesson13';
 import { lesson14 } from './lesson14';
 import { lesson15 } from './lesson15';
 import { lesson16 } from './lesson16';
+import { lesson17 } from './lesson17';
+import { lesson18 } from './lesson18';
+import { lesson19 } from './lesson19';
+import { lesson20 } from './lesson20';
+import { lesson21 } from './lesson21';
+import { lesson22 } from './lesson22';
+import { lesson23 } from './lesson23';
+import { lesson24 } from './lesson24';
 
 import { libraryBooksDataset } from '../datasets/libraryBooks';
 import { courseCatalogDataset } from '../datasets/courseCatalog';
@@ -32,6 +40,14 @@ import { inventoryStockDataset } from '../datasets/inventoryStock';
 import { auditLogsDataset } from '../datasets/auditLogs';
 import { cleanDatabaseDataset } from '../datasets/cleanDatabase';
 import { campusFacilitiesDataset } from '../datasets/campusFacilities';
+import { flightBookingsDataset } from '../datasets/flightBookings';
+import { techSalariesDataset } from '../datasets/techSalaries';
+import { storeCustomersDataset } from '../datasets/storeCustomers';
+import { softwareProjectsDataset } from '../datasets/softwareProjects';
+import { trackAthletesDataset } from '../datasets/trackAthletes';
+import { dailyRevenueDataset } from '../datasets/dailyRevenue';
+import { medicalClinicsDataset } from '../datasets/medicalClinics';
+import { appUserLogsDataset } from '../datasets/appUserLogs';
 
 export const LESSON_MANIFEST: LessonDefinition[] = [
   lesson1,
@@ -50,6 +66,14 @@ export const LESSON_MANIFEST: LessonDefinition[] = [
   lesson14,
   lesson15,
   lesson16,
+  lesson17,
+  lesson18,
+  lesson19,
+  lesson20,
+  lesson21,
+  lesson22,
+  lesson23,
+  lesson24,
 ];
 
 export const ALL_DATASETS: DatasetDefinition[] = [
@@ -69,6 +93,14 @@ export const ALL_DATASETS: DatasetDefinition[] = [
   auditLogsDataset,
   cleanDatabaseDataset,
   campusFacilitiesDataset,
+  flightBookingsDataset,
+  techSalariesDataset,
+  storeCustomersDataset,
+  softwareProjectsDataset,
+  trackAthletesDataset,
+  dailyRevenueDataset,
+  medicalClinicsDataset,
+  appUserLogsDataset,
 ];
 
 export function getLessonById(id: string): LessonDefinition | undefined {

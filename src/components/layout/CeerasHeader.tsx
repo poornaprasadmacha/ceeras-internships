@@ -134,7 +134,7 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                       SQL &amp; Relational Databases
                     </span>
                     <span className="text-[11px] text-text-muted block">
-                      16 Lessons (Zero to Advanced) • In-browser SQLite WASM
+                      24 Lessons (Zero to Senior Advanced) • In-browser SQLite WASM
                     </span>
                   </div>
                 </Link>

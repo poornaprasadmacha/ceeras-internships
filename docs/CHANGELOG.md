@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [0.3.0] - Ultimate SQL Curriculum (24 Lessons Zero to Senior Advanced) - 2026-10-21
+
+### Added
+- **Complete Expansion to 24-Lesson Ultimate Curriculum**:
+  - Expanded from 16 to 24 comprehensive interactive lessons covering all topics of relational database engineering from zero to senior advanced:
+    - **Lesson 17**: Conditional Logic with `CASE WHEN` (`FlightBookings` dataset)
+    - **Lesson 18**: Subqueries & Nested Queries (`TechEmployees` dataset - scalar, list, and benchmark queries)
+    - **Lesson 19**: Set Operations (`OnlineCustomers` & `RetailCustomers` - `UNION`, `UNION ALL`, `INTERSECT`, `EXCEPT`)
+    - **Lesson 20**: Common Table Expressions (`SoftwareProjects` & `ProjectHours` - `WITH ... AS (...)`)
+    - **Lesson 21**: Window Functions & Leaderboards (`TrackAthletes` - `ROW_NUMBER()`, `RANK()`, `OVER (PARTITION BY ... ORDER BY ...)`)
+    - **Lesson 22**: Window Aggregates & Running Totals (`DailyRevenue` - `SUM() OVER (...)`, chronological running balances)
+    - **Lesson 23**: Database Views & Virtual Abstractions (`DoctorRoster` - `CREATE VIEW ... AS SELECT ...`, `DROP VIEW`)
+    - **Lesson 24**: Indexes & Query Performance Tuning (`AppUserLogs` - `CREATE INDEX`, B-Trees, latency optimization)
+  - 8 new original datasets with clean schemas, sample rows, and isolated in-browser SQLite WebAssembly execution.
+  - Interactive exercises, dynamic quick-code chips, and concept quizzes for every new module.
+
 ## [0.2.0] - Theme Switcher & Kid-Friendly UI/UX Polish - 2026-10-21
 
 ### Added

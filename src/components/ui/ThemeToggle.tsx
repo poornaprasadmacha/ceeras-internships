@@ -6,10 +6,11 @@ import { cn } from '../../lib/utils';
 
 export interface ThemeToggleProps {
   compact?: boolean;
+  showLabels?: boolean;
   className?: string;
 }
 
-export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
+export function ThemeToggle({ compact = false, showLabels = false, className }: ThemeToggleProps) {
   const { theme, setTheme } = useTheme();
 
   const themeIcons: Record<ThemeName, React.ReactNode> = {
@@ -40,14 +41,11 @@ export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
         aria-label={`Current theme: ${theme}. Tap to switch mode`}
         title={`Current mode: ${theme}. Tap to switch`}
         className={cn(
-          'flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-subtle border border-border text-xs font-semibold text-text-main hover:bg-border/60 transition-all active:scale-95 cursor-pointer shadow-subtle',
+          'w-8 h-8 rounded-full flex items-center justify-center bg-subtle border border-border text-text-main hover:bg-border/60 transition-all active:scale-95 cursor-pointer shadow-subtle',
           className
         )}
       >
         {themeIcons[theme]}
-        <span className="text-[11px] font-medium hidden xs:inline">
-          {themeShortLabels[theme]}
-        </span>
       </button>
     );
   }
@@ -71,15 +69,17 @@ export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
             aria-checked={isSelected}
             onClick={() => setTheme(t.id)}
             title={t.description}
+            aria-label={`${t.label} mode`}
             className={cn(
-              'flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium transition-all cursor-pointer',
+              'flex items-center justify-center rounded-full text-xs font-medium transition-all cursor-pointer',
+              showLabels ? 'gap-1 px-2.5 py-1' : 'w-7 h-7',
               isSelected
-                ? 'bg-surface text-primary shadow-xs font-bold scale-[1.02]'
+                ? 'bg-surface text-primary shadow-xs font-bold scale-[1.05]'
                 : 'text-text-muted hover:text-text-main hover:bg-surface/50'
             )}
           >
             {themeIcons[t.id]}
-            <span className="hidden sm:inline">{themeShortLabels[t.id]}</span>
+            {showLabels && <span>{themeShortLabels[t.id]}</span>}
           </button>
         );
       })}

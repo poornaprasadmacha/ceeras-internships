@@ -23,6 +23,7 @@ import {
   SqlLogo,
   PythonLogo,
   HtmlLogo,
+  CssLogo,
   NumpyLogo,
   PandasLogo,
   JavaScriptLogo,
@@ -73,6 +74,17 @@ const COURSES: CourseItem[] = [
     modulesCount: 12,
     duration: '6-8 hours',
     logo: HtmlLogo,
+  },
+  {
+    id: 'css-core',
+    title: 'CSS3 & Modern Responsive Design',
+    category: 'Web Development & Frontend',
+    badge: 'Enrolled & Active',
+    badgeVariant: 'accent',
+    status: 'active',
+    modulesCount: 12,
+    duration: '6-8 hours',
+    logo: CssLogo,
   },
   {
     id: 'numpy-computing',
@@ -131,12 +143,22 @@ export function DashboardView() {
     }
   })();
 
+  const hasStartedCss = (() => {
+    try {
+      const c = localStorage.getItem('ceeras_css_solved');
+      return c ? Object.keys(JSON.parse(c)).length > 0 : false;
+    } catch {
+      return false;
+    }
+  })();
+
   const hasStartedAny =
     stats.solvedExercises > 0 ||
     stats.quizzesTaken > 0 ||
     stats.completedLessons > 0 ||
     hasStartedPython ||
     hasStartedHtml ||
+    hasStartedCss ||
     Object.values(lessonsProgress).some((l) => l.isStarted || l.isCompleted);
 
   return (
@@ -202,7 +224,8 @@ export function DashboardView() {
             const isSQL = course.id === 'sql-relational';
             const isPython = course.id === 'python-core';
             const isHtml = course.id === 'html-core';
-            const isActive = isSQL || isPython || isHtml;
+            const isCss = course.id === 'css-core';
+            const isActive = isSQL || isPython || isHtml || isCss;
 
             return (
               <Card
@@ -295,6 +318,21 @@ export function DashboardView() {
                         <span className="font-semibold text-[#E44D26]">Sandboxed Live Web Preview</span>
                       </div>
                     </div>
+                  ) : isCss ? (
+                    <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
+                      <div className="flex items-center justify-between">
+                        <span>Syllabus:</span>
+                        <span className="font-semibold text-text-main">12 Lessons (Zero to Modern Layouts)</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Interactive Tasks:</span>
+                        <span className="font-semibold text-text-main">Live Component Visualizer &amp; Styles</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Engine:</span>
+                        <span className="font-semibold text-[#1572B6]">Sandboxed Component Visualizer</span>
+                      </div>
+                    </div>
                   ) : (
                     <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
                       <div className="flex items-center justify-between">
@@ -378,6 +416,28 @@ export function DashboardView() {
                         className="text-xs bg-[#E44D26] hover:bg-[#c83d19] text-white"
                       >
                         <span>Start HTML</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
+                    </>
+                  ) : isCss ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate('/learn/css')}
+                        className="text-xs"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Syllabus</span>
+                      </Button>
+
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => navigate('/learn/css/intro-to-css-syntax-and-selectors')}
+                        className="text-xs bg-[#1572B6] hover:bg-[#10568a] text-white"
+                      >
+                        <span>Start CSS</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Button>
                     </>

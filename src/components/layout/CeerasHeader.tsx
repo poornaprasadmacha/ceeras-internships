@@ -16,6 +16,7 @@ import {
   SqlLogo,
   PythonLogo,
   HtmlLogo,
+  CssLogo,
   NumpyLogo,
   PandasLogo,
   JavaScriptLogo,
@@ -168,6 +169,22 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                     </span>
                     <span className="text-[11px] text-text-muted block">
                       12 Lessons • Live Sandboxed Web Preview
+                    </span>
+                  </div>
+                </Link>
+
+                <Link
+                  to="/learn/css"
+                  onClick={() => setCoursesOpen(false)}
+                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
+                >
+                  <CssLogo className="w-5 h-5 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-semibold text-xs text-text-main block">
+                      CSS3 &amp; Modern Responsive Design
+                    </span>
+                    <span className="text-[11px] text-text-muted block">
+                      12 Lessons • Live Component Visualizer
                     </span>
                   </div>
                 </Link>

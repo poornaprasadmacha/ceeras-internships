@@ -19,6 +19,7 @@ import {
   CssLogo,
   NumpyLogo,
   PandasLogo,
+  DataScienceLogo,
   JavaScriptLogo,
   ScikitLearnLogo,
 } from '../ui/LanguageLogos';
@@ -207,11 +208,43 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                 </Link>
 
                 <Link
-                  to="/learn/datascience"
+                  to="/learn/numpy"
+                  onClick={() => setCoursesOpen(false)}
+                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
+                >
+                  <NumpyLogo className="w-5 h-5 shrink-0 mt-0.5 rounded" />
+                  <div>
+                    <span className="font-semibold text-xs text-text-main block">
+                      NumPy (Numerical Computing)
+                    </span>
+                    <span className="text-[11px] text-text-muted block">
+                      12 Lessons • ndarrays &amp; Linear Algebra
+                    </span>
+                  </div>
+                </Link>
+
+                <Link
+                  to="/learn/pandas"
                   onClick={() => setCoursesOpen(false)}
                   className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
                 >
                   <PandasLogo className="w-5 h-5 shrink-0 mt-0.5 rounded" />
+                  <div>
+                    <span className="font-semibold text-xs text-text-main block">
+                      Pandas (DataFrames &amp; EDA)
+                    </span>
+                    <span className="text-[11px] text-text-muted block">
+                      12 Lessons • Tabular Engine &amp; Joins
+                    </span>
+                  </div>
+                </Link>
+
+                <Link
+                  to="/learn/datascience"
+                  onClick={() => setCoursesOpen(false)}
+                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
+                >
+                  <DataScienceLogo className="w-5 h-5 shrink-0 mt-0.5 rounded" />
                   <div>
                     <span className="font-semibold text-xs text-text-main block">
                       Data Science (Statistics, EDA &amp; ML)
@@ -234,22 +267,6 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                     </span>
                     <span className="text-[11px] text-text-muted block">
                       15 Lessons • Model Training &amp; Metrics
-                    </span>
-                  </div>
-                </Link>
-
-                <Link
-                  to="/learn/numpy"
-                  onClick={() => setCoursesOpen(false)}
-                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
-                >
-                  <NumpyLogo className="w-5 h-5 shrink-0 mt-0.5 rounded" />
-                  <div>
-                    <span className="font-semibold text-xs text-text-main block">
-                      NumPy (Numerical Computing)
-                    </span>
-                    <span className="text-[11px] text-text-muted block">
-                      12 Lessons • ndarrays &amp; Linear Algebra
                     </span>
                   </div>
                 </Link>
@@ -444,11 +461,27 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
               <span>Modern JavaScript</span>
             </Link>
             <Link
-              to="/learn/datascience"
+              to="/learn/numpy"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
+            >
+              <NumpyLogo className="w-4 h-4 rounded-xs" />
+              <span>NumPy Computing</span>
+            </Link>
+            <Link
+              to="/learn/pandas"
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
             >
               <PandasLogo className="w-4 h-4 rounded-xs" />
+              <span>Pandas DataFrames</span>
+            </Link>
+            <Link
+              to="/learn/datascience"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
+            >
+              <DataScienceLogo className="w-4 h-4 rounded-xs" />
               <span>Data Science &amp; Tabular</span>
             </Link>
             <Link
@@ -458,14 +491,6 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
             >
               <ScikitLearnLogo className="w-4 h-4 rounded-xs" />
               <span>Machine Learning</span>
-            </Link>
-            <Link
-              to="/learn/numpy"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
-            >
-              <NumpyLogo className="w-4 h-4 rounded-xs" />
-              <span>NumPy Computing</span>
             </Link>
           </div>
 

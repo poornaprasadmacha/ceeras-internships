@@ -264,6 +264,48 @@ export function ScikitLearnLogo({ className = 'w-10 h-10', size }: LogoProps) {
 }
 
 /**
+ * Official Data Science / Analytics vector logo
+ */
+export function DataScienceLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Data Science logo"
+    >
+      <rect width="128" height="128" rx="20" fill="#0C2340" />
+      <defs>
+        <linearGradient id="dsGrad" x1="64" y1="32" x2="64" y2="98" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#00D2FF" stopOpacity="0.25" />
+          <stop stopColor="#00D2FF" stopOpacity="0.0" />
+        </linearGradient>
+      </defs>
+      {/* Distribution curve */}
+      <path
+        d="M20 98 C35 98, 45 32, 64 32 C83 32, 93 98, 108 98"
+        stroke="#00D2FF"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        fill="url(#dsGrad)"
+      />
+      {/* Trend line */}
+      <line x1="28" y1="84" x2="100" y2="44" stroke="#F59E0B" strokeWidth="2.5" strokeDasharray="3 3" />
+      {/* Data points */}
+      <circle cx="36" cy="80" r="4" fill="#E70488" />
+      <circle cx="52" cy="72" r="4.5" fill="#10B981" />
+      <circle cx="68" cy="54" r="4.5" fill="#3B82F6" />
+      <circle cx="84" cy="52" r="4" fill="#F59E0B" />
+      <circle cx="96" cy="42" r="4" fill="#EC4899" />
+    </svg>
+  );
+}
+
+/**
  * Machine Learning Neural Vector Logo
  */
 export function MachineLearningLogo({ className = 'w-10 h-10', size }: LogoProps) {

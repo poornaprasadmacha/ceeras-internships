@@ -26,6 +26,7 @@ import {
   CssLogo,
   NumpyLogo,
   PandasLogo,
+  DataScienceLogo,
   JavaScriptLogo,
   ScikitLearnLogo,
 } from '../../components/ui/LanguageLogos';
@@ -99,6 +100,17 @@ const COURSES: CourseItem[] = [
     logo: NumpyLogo,
   },
   {
+    id: 'pandas-data',
+    title: 'Pandas for Data Analysis & Manipulation',
+    category: 'Python & Data Science',
+    badge: 'Enrolled & Active',
+    badgeVariant: 'accent',
+    status: 'active',
+    modulesCount: 12,
+    duration: '6-8 hours',
+    logo: PandasLogo,
+  },
+  {
     id: 'data-science',
     title: 'Data Science (Statistics, EDA & ML)',
     category: 'Python & Data Science',
@@ -107,7 +119,7 @@ const COURSES: CourseItem[] = [
     status: 'active',
     modulesCount: 14,
     duration: '8-10 hours',
-    logo: PandasLogo,
+    logo: DataScienceLogo,
   },
   {
     id: 'javascript-modern',
@@ -200,6 +212,15 @@ export function DashboardView() {
     }
   })();
 
+  const hasStartedPandas = (() => {
+    try {
+      const p = localStorage.getItem('ceeras_pandas_solved');
+      return p ? Object.keys(JSON.parse(p)).length > 0 : false;
+    } catch {
+      return false;
+    }
+  })();
+
   const hasStartedAny =
     stats.solvedExercises > 0 ||
     stats.quizzesTaken > 0 ||
@@ -211,6 +232,7 @@ export function DashboardView() {
     hasStartedDs ||
     hasStartedMl ||
     hasStartedNumpy ||
+    hasStartedPandas ||
     Object.values(lessonsProgress).some((l) => l.isStarted || l.isCompleted);
 
   return (
@@ -281,7 +303,8 @@ export function DashboardView() {
             const isDs = course.id === 'data-science';
             const isML = course.id === 'machine-learning';
             const isNumpy = course.id === 'numpy-computing';
-            const isActive = isSQL || isPython || isHtml || isCss || isJs || isDs || isML || isNumpy;
+            const isPandas = course.id === 'pandas-data';
+            const isActive = isSQL || isPython || isHtml || isCss || isJs || isDs || isML || isNumpy || isPandas;
 
             return (
               <Card
@@ -447,6 +470,21 @@ export function DashboardView() {
                       <div className="flex items-center justify-between">
                         <span>Engine:</span>
                         <span className="font-semibold text-[#4DABCF]">In-Browser Numerical C-Memory Engine</span>
+                      </div>
+                    </div>
+                  ) : isPandas ? (
+                    <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
+                      <div className="flex items-center justify-between">
+                        <span>Syllabus:</span>
+                        <span className="font-semibold text-text-main">12 Lessons (Zero to Hero Pandas)</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Interactive Tasks:</span>
+                        <span className="font-semibold text-text-main">In-Browser Series, DataFrames &amp; Tables</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Engine:</span>
+                        <span className="font-semibold text-[#130754] dark:text-[#00D2FF]">In-Browser Tabular Data Engine</span>
                       </div>
                     </div>
                   ) : (
@@ -642,6 +680,28 @@ export function DashboardView() {
                         className="text-xs bg-[#013243] hover:bg-[#024059] text-white font-bold"
                       >
                         <span>Start NumPy</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
+                    </>
+                  ) : isPandas ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate('/learn/pandas')}
+                        className="text-xs"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Syllabus</span>
+                      </Button>
+
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => navigate('/learn/pandas/intro-to-pandas-series-and-dataframes')}
+                        className="text-xs bg-[#130754] hover:bg-[#1f0c82] text-white font-bold"
+                      >
+                        <span>Start Pandas</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Button>
                     </>

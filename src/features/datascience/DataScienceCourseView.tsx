@@ -4,7 +4,7 @@ import { DATA_SCIENCE_LESSONS } from '../../data/dataScienceLessons';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
-import { PandasLogo } from '../../components/ui/LanguageLogos';
+import { DataScienceLogo } from '../../components/ui/LanguageLogos';
 import { Clock, ArrowRight, BarChart3, CheckCircle2 } from 'lucide-react';
 
 export function DataScienceCourseView() {
@@ -40,7 +40,7 @@ export function DataScienceCourseView() {
       <div className="border-b border-border pb-6 space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-subtle/80 border border-border/80 flex items-center justify-center p-2 shadow-xs">
-            <PandasLogo className="w-full h-full object-contain rounded-xl" />
+            <DataScienceLogo className="w-full h-full object-contain rounded-xl" />
           </div>
           <div>
             <Badge variant="accent" size="sm" className="bg-[#130754]/15 text-[#130754] dark:text-[#E70488] border-[#130754]/30 mb-1">

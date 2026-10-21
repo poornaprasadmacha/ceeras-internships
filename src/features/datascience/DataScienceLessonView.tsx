@@ -11,7 +11,7 @@ import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Tabs } from '../../components/ui/Tabs';
-import { PandasLogo } from '../../components/ui/LanguageLogos';
+import { DataScienceLogo } from '../../components/ui/LanguageLogos';
 import {
   Clock,
   CheckCircle2,
@@ -87,7 +87,7 @@ export function DataScienceLessonView() {
       <div className="flex items-center justify-between gap-2 text-xs text-text-muted">
         <div className="flex items-center gap-2">
           <Link to="/learn/datascience" className="hover:text-text-main flex items-center gap-1.5 font-medium">
-            <PandasLogo className="w-3.5 h-3.5 rounded" />
+            <DataScienceLogo className="w-3.5 h-3.5 rounded" />
             <span>Data Science Track</span>
           </Link>
           <span>/</span>

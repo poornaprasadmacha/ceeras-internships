@@ -51,12 +51,12 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Sidebar container */}
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-40 w-64 bg-surface border-r border-border flex flex-col transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:z-auto',
+          'fixed inset-y-0 left-0 z-40 w-64 bg-surface border-r border-border flex flex-col transition-transform duration-200 ease-in-out lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen lg:self-start lg:shrink-0 lg:z-30',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {/* Brand header */}
-        <div className="p-4 border-b border-border flex items-center justify-between">
+        <div className="h-14 p-4 border-b border-border flex items-center justify-between shrink-0">
           <NavLink to="/" onClick={onClose} className="flex items-center gap-2 group">
             <span className="font-raleway font-extrabold text-xl tracking-widest text-[#0E5E77] group-hover:text-primary transition-colors">
               CEERAS
@@ -98,7 +98,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         </nav>
 
         {/* Progress summary widget */}
-        <div className="p-4 border-t border-border bg-subtle/40 space-y-2">
+        <div className="p-4 border-t border-border bg-subtle/40 space-y-2 shrink-0">
           <div className="flex items-center justify-between text-xs font-semibold text-text-main">
             <span>Course Progress</span>
             <span className="font-mono text-primary">{stats.coursePercentage}%</span>

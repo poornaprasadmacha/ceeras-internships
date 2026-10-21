@@ -27,6 +27,7 @@ import {
   NumpyLogo,
   PandasLogo,
   JavaScriptLogo,
+  ScikitLearnLogo,
 } from '../../components/ui/LanguageLogos';
 
 interface CourseItem {
@@ -119,6 +120,17 @@ const COURSES: CourseItem[] = [
     duration: '8-10 hours',
     logo: JavaScriptLogo,
   },
+  {
+    id: 'machine-learning',
+    title: 'Machine Learning (Algorithms & Ensembles)',
+    category: 'AI & Data Science',
+    badge: 'Enrolled & Active',
+    badgeVariant: 'accent',
+    status: 'active',
+    modulesCount: 15,
+    duration: '10-12 hours',
+    logo: ScikitLearnLogo,
+  },
 ];
 
 export function DashboardView() {
@@ -170,6 +182,15 @@ export function DashboardView() {
     }
   })();
 
+  const hasStartedMl = (() => {
+    try {
+      const m = localStorage.getItem('ceeras_ml_solved');
+      return m ? Object.keys(JSON.parse(m)).length > 0 : false;
+    } catch {
+      return false;
+    }
+  })();
+
   const hasStartedAny =
     stats.solvedExercises > 0 ||
     stats.quizzesTaken > 0 ||
@@ -179,6 +200,7 @@ export function DashboardView() {
     hasStartedCss ||
     hasStartedJs ||
     hasStartedDs ||
+    hasStartedMl ||
     Object.values(lessonsProgress).some((l) => l.isStarted || l.isCompleted);
 
   return (
@@ -247,7 +269,8 @@ export function DashboardView() {
             const isCss = course.id === 'css-core';
             const isJs = course.id === 'javascript-modern';
             const isDs = course.id === 'data-science';
-            const isActive = isSQL || isPython || isHtml || isCss || isJs || isDs;
+            const isML = course.id === 'machine-learning';
+            const isActive = isSQL || isPython || isHtml || isCss || isJs || isDs || isML;
 
             return (
               <Card
@@ -383,6 +406,21 @@ export function DashboardView() {
                       <div className="flex items-center justify-between">
                         <span>Engine:</span>
                         <span className="font-semibold text-[#E70488]">In-Browser Statistics &amp; Plotter</span>
+                      </div>
+                    </div>
+                  ) : isML ? (
+                    <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
+                      <div className="flex items-center justify-between">
+                        <span>Syllabus:</span>
+                        <span className="font-semibold text-text-main">15 Lessons (Zero to Hero ML)</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Interactive Tasks:</span>
+                        <span className="font-semibold text-text-main">In-Browser Model Training &amp; Plots</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Engine:</span>
+                        <span className="font-semibold text-[#F89939]">In-Browser ML Sandbox &amp; Metrics</span>
                       </div>
                     </div>
                   ) : (
@@ -534,6 +572,28 @@ export function DashboardView() {
                         className="text-xs bg-[#130754] hover:bg-[#1f0c82] text-white font-bold"
                       >
                         <span>Start Data Science</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
+                    </>
+                  ) : isML ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate('/learn/machinelearning')}
+                        className="text-xs"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Syllabus</span>
+                      </Button>
+
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => navigate('/learn/machinelearning/intro-to-machine-learning-paradigms')}
+                        className="text-xs bg-[#1E293B] hover:bg-[#334155] text-white font-bold"
+                      >
+                        <span>Start ML</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Button>
                     </>

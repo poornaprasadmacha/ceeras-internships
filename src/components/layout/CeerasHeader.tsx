@@ -20,6 +20,7 @@ import {
   NumpyLogo,
   PandasLogo,
   JavaScriptLogo,
+  ScikitLearnLogo,
 } from '../ui/LanguageLogos';
 import { useTheme } from '../../hooks/useTheme';
 import { THEMES } from '../../lib/constants';
@@ -217,6 +218,22 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                     </span>
                     <span className="text-[11px] text-text-muted block">
                       14 Lessons • Tabular Engine &amp; Plotter
+                    </span>
+                  </div>
+                </Link>
+
+                <Link
+                  to="/learn/machinelearning"
+                  onClick={() => setCoursesOpen(false)}
+                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
+                >
+                  <ScikitLearnLogo className="w-5 h-5 shrink-0 mt-0.5 rounded" />
+                  <div>
+                    <span className="font-semibold text-xs text-text-main block">
+                      Machine Learning (Algorithms &amp; NN)
+                    </span>
+                    <span className="text-[11px] text-text-muted block">
+                      15 Lessons • Model Training &amp; Metrics
                     </span>
                   </div>
                 </Link>
@@ -429,7 +446,15 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
               className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
             >
               <PandasLogo className="w-4 h-4 rounded-xs" />
-              <span>Data Science &amp; ML</span>
+              <span>Data Science &amp; Tabular</span>
+            </Link>
+            <Link
+              to="/learn/machinelearning"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
+            >
+              <ScikitLearnLogo className="w-4 h-4 rounded-xs" />
+              <span>Machine Learning</span>
             </Link>
           </div>
 

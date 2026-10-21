@@ -224,3 +224,91 @@ export function SqlLogo({ className = 'w-10 h-10', size }: LogoProps) {
     </svg>
   );
 }
+
+/**
+ * Official Scikit-Learn / Machine Learning vector logo
+ */
+export function ScikitLearnLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Scikit-Learn Machine Learning logo"
+    >
+      <rect width="128" height="128" rx="20" fill="#1E293B" />
+      {/* Orange circle node */}
+      <circle cx="48" cy="50" r="28" fill="#F89939" />
+      {/* Blue circle node */}
+      <circle cx="80" cy="78" r="28" fill="#3499CD" fillOpacity="0.9" />
+      {/* Intersection & Neural Network lines */}
+      <path
+        d="M48 50L80 78"
+        stroke="#FFFFFF"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+      />
+      <circle cx="48" cy="50" r="7" fill="#FFFFFF" />
+      <circle cx="80" cy="78" r="7" fill="#FFFFFF" />
+      {/* Satellite node */}
+      <circle cx="82" cy="42" r="12" fill="#3499CD" />
+      <circle cx="46" cy="86" r="12" fill="#F89939" />
+      <line x1="48" y1="50" x2="82" y2="42" stroke="#FFFFFF" strokeWidth="2" strokeDasharray="3 3" />
+      <line x1="80" y1="78" x2="46" y2="86" stroke="#FFFFFF" strokeWidth="2" strokeDasharray="3 3" />
+    </svg>
+  );
+}
+
+/**
+ * Machine Learning Neural Vector Logo
+ */
+export function MachineLearningLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Machine Learning logo"
+    >
+      <rect width="128" height="128" rx="20" fill="#0F172A" />
+      {/* Neural Network Nodes & Links */}
+      <g stroke="#38BDF8" strokeWidth="2.5" strokeOpacity="0.6">
+        <line x1="32" y1="40" x2="64" y2="30" />
+        <line x1="32" y1="40" x2="64" y2="64" />
+        <line x1="32" y1="64" x2="64" y2="30" />
+        <line x1="32" y1="64" x2="64" y2="64" />
+        <line x1="32" y1="64" x2="64" y2="98" />
+        <line x1="32" y1="88" x2="64" y2="64" />
+        <line x1="32" y1="88" x2="64" y2="98" />
+
+        <line x1="64" y1="30" x2="96" y2="48" />
+        <line x1="64" y1="30" x2="96" y2="80" />
+        <line x1="64" y1="64" x2="96" y2="48" />
+        <line x1="64" y1="64" x2="96" y2="80" />
+        <line x1="64" y1="98" x2="96" y2="48" />
+        <line x1="64" y1="98" x2="96" y2="80" />
+      </g>
+      {/* Layer 1 Nodes (Input) */}
+      <circle cx="32" cy="40" r="7" fill="#818CF8" />
+      <circle cx="32" cy="64" r="7" fill="#818CF8" />
+      <circle cx="32" cy="88" r="7" fill="#818CF8" />
+
+      {/* Layer 2 Nodes (Hidden) */}
+      <circle cx="64" cy="30" r="8" fill="#38BDF8" />
+      <circle cx="64" cy="64" r="8" fill="#38BDF8" />
+      <circle cx="64" cy="98" r="8" fill="#38BDF8" />
+
+      {/* Layer 3 Nodes (Output) */}
+      <circle cx="96" cy="48" r="7" fill="#F43F5E" />
+      <circle cx="96" cy="80" r="7" fill="#F43F5E" />
+    </svg>
+  );
+}

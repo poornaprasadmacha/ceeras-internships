@@ -15,6 +15,8 @@ import { DataScienceCourseView } from '../features/datascience/DataScienceCourse
 import { DataScienceLessonView } from '../features/datascience/DataScienceLessonView';
 import { MachineLearningCourseView } from '../features/machinelearning/MachineLearningCourseView';
 import { MachineLearningLessonView } from '../features/machinelearning/MachineLearningLessonView';
+import { NumpyCourseView } from '../features/numpy/NumpyCourseView';
+import { NumpyLessonView } from '../features/numpy/NumpyLessonView';
 import { PlaygroundView } from '../features/playground/PlaygroundView';
 import { QuizzesIndexView } from '../features/quizzes/QuizzesIndexView';
 import { ProgressView } from '../features/progress/ProgressView';
@@ -42,6 +44,8 @@ export function AppRoutes() {
       <Route path="/learn/datascience/:slug" element={<DataScienceLessonView />} />
       <Route path="/learn/machinelearning" element={<MachineLearningCourseView />} />
       <Route path="/learn/machinelearning/:slug" element={<MachineLearningLessonView />} />
+      <Route path="/learn/numpy" element={<NumpyCourseView />} />
+      <Route path="/learn/numpy/:slug" element={<NumpyLessonView />} />
       <Route path="/learn/:slug" element={<LessonView />} />
       <Route path="/practice" element={<PlaygroundView />} />
       <Route path="/quizzes" element={<QuizzesIndexView />} />

@@ -238,18 +238,21 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                   </div>
                 </Link>
 
-                <div className="px-2 pt-2 text-[11px] font-bold text-text-muted uppercase tracking-wider border-t border-border/50">
-                  Upcoming Academy Tracks
-                </div>
-                <div className="p-2 space-y-2 text-xs">
-                  <div className="flex items-center justify-between text-text-main">
-                    <span className="flex items-center gap-2 font-medium">
-                      <NumpyLogo className="w-4 h-4 shrink-0 rounded" />
-                      <span>NumPy for Computing</span>
+                <Link
+                  to="/learn/numpy"
+                  onClick={() => setCoursesOpen(false)}
+                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
+                >
+                  <NumpyLogo className="w-5 h-5 shrink-0 mt-0.5 rounded" />
+                  <div>
+                    <span className="font-semibold text-xs text-text-main block">
+                      NumPy (Numerical Computing)
                     </span>
-                    <span className="text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Soon</span>
+                    <span className="text-[11px] text-text-muted block">
+                      12 Lessons • ndarrays &amp; Linear Algebra
+                    </span>
                   </div>
-                </div>
+                </Link>
               </div>
             )}
           </div>
@@ -455,6 +458,14 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
             >
               <ScikitLearnLogo className="w-4 h-4 rounded-xs" />
               <span>Machine Learning</span>
+            </Link>
+            <Link
+              to="/learn/numpy"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
+            >
+              <NumpyLogo className="w-4 h-4 rounded-xs" />
+              <span>NumPy Computing</span>
             </Link>
           </div>
 

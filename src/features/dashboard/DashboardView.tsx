@@ -91,11 +91,11 @@ const COURSES: CourseItem[] = [
     id: 'numpy-computing',
     title: 'NumPy for Numerical Computing',
     category: 'Python & Data Science',
-    badge: 'Coming Soon',
-    badgeVariant: 'outline',
-    status: 'upcoming',
-    modulesCount: 6,
-    duration: '4-5 hours',
+    badge: 'Enrolled & Active',
+    badgeVariant: 'accent',
+    status: 'active',
+    modulesCount: 12,
+    duration: '6-8 hours',
     logo: NumpyLogo,
   },
   {
@@ -191,6 +191,15 @@ export function DashboardView() {
     }
   })();
 
+  const hasStartedNumpy = (() => {
+    try {
+      const n = localStorage.getItem('ceeras_numpy_solved');
+      return n ? Object.keys(JSON.parse(n)).length > 0 : false;
+    } catch {
+      return false;
+    }
+  })();
+
   const hasStartedAny =
     stats.solvedExercises > 0 ||
     stats.quizzesTaken > 0 ||
@@ -201,6 +210,7 @@ export function DashboardView() {
     hasStartedJs ||
     hasStartedDs ||
     hasStartedMl ||
+    hasStartedNumpy ||
     Object.values(lessonsProgress).some((l) => l.isStarted || l.isCompleted);
 
   return (
@@ -270,7 +280,8 @@ export function DashboardView() {
             const isJs = course.id === 'javascript-modern';
             const isDs = course.id === 'data-science';
             const isML = course.id === 'machine-learning';
-            const isActive = isSQL || isPython || isHtml || isCss || isJs || isDs || isML;
+            const isNumpy = course.id === 'numpy-computing';
+            const isActive = isSQL || isPython || isHtml || isCss || isJs || isDs || isML || isNumpy;
 
             return (
               <Card
@@ -421,6 +432,21 @@ export function DashboardView() {
                       <div className="flex items-center justify-between">
                         <span>Engine:</span>
                         <span className="font-semibold text-[#F89939]">In-Browser ML Sandbox &amp; Metrics</span>
+                      </div>
+                    </div>
+                  ) : isNumpy ? (
+                    <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
+                      <div className="flex items-center justify-between">
+                        <span>Syllabus:</span>
+                        <span className="font-semibold text-text-main">12 Lessons (Zero to Hero NumPy)</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Interactive Tasks:</span>
+                        <span className="font-semibold text-text-main">In-Browser ndarrays &amp; Matrix Layouts</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Engine:</span>
+                        <span className="font-semibold text-[#4DABCF]">In-Browser Numerical C-Memory Engine</span>
                       </div>
                     </div>
                   ) : (
@@ -594,6 +620,28 @@ export function DashboardView() {
                         className="text-xs bg-[#1E293B] hover:bg-[#334155] text-white font-bold"
                       >
                         <span>Start ML</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
+                    </>
+                  ) : isNumpy ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate('/learn/numpy')}
+                        className="text-xs"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Syllabus</span>
+                      </Button>
+
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => navigate('/learn/numpy/intro-to-numpy-and-ndarrays')}
+                        className="text-xs bg-[#013243] hover:bg-[#024059] text-white font-bold"
+                      >
+                        <span>Start NumPy</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Button>
                     </>

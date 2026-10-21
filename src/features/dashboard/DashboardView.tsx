@@ -22,6 +22,7 @@ import {
 import {
   SqlLogo,
   PythonLogo,
+  HtmlLogo,
   NumpyLogo,
   PandasLogo,
   JavaScriptLogo,
@@ -63,6 +64,17 @@ const COURSES: CourseItem[] = [
     logo: PythonLogo,
   },
   {
+    id: 'html-core',
+    title: 'HTML5 & Modern Web Architecture',
+    category: 'Web Development & Frontend',
+    badge: 'Enrolled & Active',
+    badgeVariant: 'accent',
+    status: 'active',
+    modulesCount: 12,
+    duration: '6-8 hours',
+    logo: HtmlLogo,
+  },
+  {
     id: 'numpy-computing',
     title: 'NumPy for Numerical Computing',
     category: 'Python & Data Science',
@@ -101,10 +113,30 @@ export function DashboardView() {
   const navigate = useNavigate();
   const { stats, bookmarks, lessonsProgress } = useProgress();
 
+  const hasStartedPython = (() => {
+    try {
+      const p = localStorage.getItem('ceeras_python_solved');
+      return p ? Object.keys(JSON.parse(p)).length > 0 : false;
+    } catch {
+      return false;
+    }
+  })();
+
+  const hasStartedHtml = (() => {
+    try {
+      const h = localStorage.getItem('ceeras_html_solved');
+      return h ? Object.keys(JSON.parse(h)).length > 0 : false;
+    } catch {
+      return false;
+    }
+  })();
+
   const hasStartedAny =
     stats.solvedExercises > 0 ||
     stats.quizzesTaken > 0 ||
     stats.completedLessons > 0 ||
+    hasStartedPython ||
+    hasStartedHtml ||
     Object.values(lessonsProgress).some((l) => l.isStarted || l.isCompleted);
 
   return (
@@ -169,7 +201,8 @@ export function DashboardView() {
             const Logo = course.logo;
             const isSQL = course.id === 'sql-relational';
             const isPython = course.id === 'python-core';
-            const isActive = isSQL || isPython;
+            const isHtml = course.id === 'html-core';
+            const isActive = isSQL || isPython || isHtml;
 
             return (
               <Card
@@ -247,6 +280,21 @@ export function DashboardView() {
                         <span className="font-semibold text-[#3776AB]">In-Browser Python 3 Console</span>
                       </div>
                     </div>
+                  ) : isHtml ? (
+                    <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
+                      <div className="flex items-center justify-between">
+                        <span>Syllabus:</span>
+                        <span className="font-semibold text-text-main">12 Lessons (Zero to HTML5 Master)</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Interactive Tasks:</span>
+                        <span className="font-semibold text-text-main">Live Browser Preview &amp; DOM Tests</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Engine:</span>
+                        <span className="font-semibold text-[#E44D26]">Sandboxed Live Web Preview</span>
+                      </div>
+                    </div>
                   ) : (
                     <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
                       <div className="flex items-center justify-between">
@@ -308,6 +356,28 @@ export function DashboardView() {
                         className="text-xs bg-[#3776AB] hover:bg-[#2b5e89]"
                       >
                         <span>Start Python</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
+                    </>
+                  ) : isHtml ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate('/learn/html')}
+                        className="text-xs"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Syllabus</span>
+                      </Button>
+
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => navigate('/learn/html/intro-to-html-and-tags')}
+                        className="text-xs bg-[#E44D26] hover:bg-[#c83d19] text-white"
+                      >
+                        <span>Start HTML</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Button>
                     </>

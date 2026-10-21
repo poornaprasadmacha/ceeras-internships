@@ -6,6 +6,31 @@ export interface LogoProps {
 }
 
 /**
+ * Official HTML5 Orange Shield vector logo
+ */
+export function HtmlLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="HTML5 logo"
+    >
+      <rect width="128" height="128" rx="20" fill="#E44D26" />
+      <path d="M22 18L30 108L64 118L98 108L106 18H22Z" fill="#F16529" />
+      <path d="M64 26V110L91 102L98 26H64Z" fill="#E44D26" opacity="0.4" />
+      <path
+        d="M40 38H88L86 52H52L54 64H84L82 86L64 91L46 86L45 74H57L58 80L64 82L70 80L71 74H43L40 38Z"
+        fill="#FFFFFF"
+      />
+    </svg>
+  );
+}
+
+/**
  * Official Python dual-snake vector logo
  */
 export function PythonLogo({ className = 'w-10 h-10', size }: LogoProps) {

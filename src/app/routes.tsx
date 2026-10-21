@@ -5,6 +5,8 @@ import { CourseLessonsView } from '../features/lessons/CourseLessonsView';
 import { LessonView } from '../features/lessons/LessonView';
 import { PythonCourseView } from '../features/python/PythonCourseView';
 import { PythonLessonView } from '../features/python/PythonLessonView';
+import { HtmlCourseView } from '../features/html/HtmlCourseView';
+import { HtmlLessonView } from '../features/html/HtmlLessonView';
 import { PlaygroundView } from '../features/playground/PlaygroundView';
 import { QuizzesIndexView } from '../features/quizzes/QuizzesIndexView';
 import { ProgressView } from '../features/progress/ProgressView';
@@ -22,6 +24,8 @@ export function AppRoutes() {
       <Route path="/learn" element={<CourseLessonsView />} />
       <Route path="/learn/python" element={<PythonCourseView />} />
       <Route path="/learn/python/:slug" element={<PythonLessonView />} />
+      <Route path="/learn/html" element={<HtmlCourseView />} />
+      <Route path="/learn/html/:slug" element={<HtmlLessonView />} />
       <Route path="/learn/:slug" element={<LessonView />} />
       <Route path="/practice" element={<PlaygroundView />} />
       <Route path="/quizzes" element={<QuizzesIndexView />} />

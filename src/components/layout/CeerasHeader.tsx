@@ -15,6 +15,7 @@ import { ThemeToggle } from '../ui/ThemeToggle';
 import {
   SqlLogo,
   PythonLogo,
+  HtmlLogo,
   NumpyLogo,
   PandasLogo,
   JavaScriptLogo,
@@ -119,14 +120,14 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
             </button>
 
             {coursesOpen && (
-              <div className="absolute top-full left-0 w-72 bg-surface border border-border rounded-xl shadow-card p-2 space-y-1 z-50">
+              <div className="absolute top-full left-0 w-80 bg-surface border border-border rounded-xl shadow-card p-2 space-y-1 z-50">
                 <div className="px-2 py-1 text-[11px] font-bold text-text-muted uppercase tracking-wider">
-                  Active Course
+                  Active Courses
                 </div>
                 <Link
                   to="/learn"
                   onClick={() => setCoursesOpen(false)}
-                  className="flex items-start gap-2.5 p-2 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors border border-primary/20"
+                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
                 >
                   <SqlLogo className="w-5 h-5 shrink-0 mt-0.5 rounded" />
                   <div>
@@ -134,7 +135,39 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                       SQL &amp; Relational Databases
                     </span>
                     <span className="text-[11px] text-text-muted block">
-                      24 Lessons (Zero to Senior Advanced) • In-browser SQLite WASM
+                      24 Lessons • In-browser SQLite WASM
+                    </span>
+                  </div>
+                </Link>
+
+                <Link
+                  to="/learn/python"
+                  onClick={() => setCoursesOpen(false)}
+                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
+                >
+                  <PythonLogo className="w-5 h-5 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-semibold text-xs text-text-main block">
+                      Python Programming Fundamentals
+                    </span>
+                    <span className="text-[11px] text-text-muted block">
+                      12 Lessons • In-browser Terminal Console
+                    </span>
+                  </div>
+                </Link>
+
+                <Link
+                  to="/learn/html"
+                  onClick={() => setCoursesOpen(false)}
+                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
+                >
+                  <HtmlLogo className="w-5 h-5 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-semibold text-xs text-text-main block">
+                      HTML5 &amp; Modern Web Architecture
+                    </span>
+                    <span className="text-[11px] text-text-muted block">
+                      12 Lessons • Live Sandboxed Web Preview
                     </span>
                   </div>
                 </Link>
@@ -143,13 +176,6 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                   Upcoming Academy Tracks
                 </div>
                 <div className="p-2 space-y-2 text-xs">
-                  <div className="flex items-center justify-between text-text-main">
-                    <span className="flex items-center gap-2 font-medium">
-                      <PythonLogo className="w-4 h-4 shrink-0" />
-                      <span>Python Programming</span>
-                    </span>
-                    <span className="text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Soon</span>
-                  </div>
                   <div className="flex items-center justify-between text-text-main">
                     <span className="flex items-center gap-2 font-medium">
                       <NumpyLogo className="w-4 h-4 shrink-0 rounded" />

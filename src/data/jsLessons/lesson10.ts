@@ -1,0 +1,128 @@
+import { JsLessonDefinition } from '../../types/jsLesson';
+
+export const jsLesson10: JsLessonDefinition = {
+  id: 'js-lesson-10',
+  number: 10,
+  slug: 'higher-order-array-methods',
+  title: 'Higher-Order Array Methods (map, filter, reduce)',
+  shortDescription: 'Master modern functional array transformations using map() for 1-to-1 conversion, filter() for subsets, and reduce() for aggregations.',
+  estimatedMinutes: 9,
+  learningObjectives: [
+    'Transform array elements without mutating original data using .map()',
+    'Filter elements based on boolean predicate conditions with .filter()',
+    'Aggregate array elements into a single value using .reduce()',
+  ],
+  prerequisites: ['Lesson 6: Functions & Arrow Syntax.', 'Lesson 7: Working with Arrays.'],
+  sections: [
+    {
+      id: 'sec-10-1',
+      title: 'The Modern Array Trio: map and filter',
+      content: `Instead of writing manual \`for\` loops with accumulators, modern JavaScript uses functional array methods:
+
+• **\`.map()\`**: Transforms every item and returns a **brand new array of identical length**:
+\`\`\`javascript
+const prices = [10, 20, 30];
+const withTax = prices.map(p => p * 1.1);
+// [11, 22, 33]
+\`\`\`
+
+• **\`.filter()\`**: Returns a new array containing only elements that pass a test (\`true\`):
+\`\`\`javascript
+const scores = [45, 88, 92, 59];
+const passing = scores.filter(s => s >= 70);
+// [88, 92]
+\`\`\``,
+    },
+    {
+      id: 'sec-10-2',
+      title: 'Aggregating with reduce()',
+      content: `\`reduce()\` combines all elements into a single accumulated result (such as a sum, total, or map):
+
+\`\`\`javascript
+const numbers = [1, 2, 3, 4];
+const sum = numbers.reduce((acc, curr) => acc + curr, 0);
+console.log(sum); // 10
+\`\`\`
+
+• \`acc\`: The running total (accumulator).
+• \`curr\`: The current item being processed.
+• \`0\`: The initial starting value.`,
+      syntaxSummary: [
+        {
+          keyword: 'array.map(fn)',
+          description: 'Transforms every item into a new array.',
+          example: 'nums.map(n => n * 2)',
+        },
+        {
+          keyword: 'array.filter(fn)',
+          description: 'Extracts matching elements into a new array.',
+          example: 'nums.filter(n => n > 10)',
+        },
+        {
+          keyword: 'array.reduce(fn, initial)',
+          description: 'Boils an array down to a single value.',
+          example: 'nums.reduce((sum, n) => sum + n, 0)',
+        },
+      ],
+    },
+  ],
+  exercises: [
+    {
+      id: 'js-ex-10-1',
+      lessonId: 'js-lesson-10',
+      order: 1,
+      title: 'Filter and Double Even Numbers',
+      objective: 'Given const nums = [1, 2, 3, 4, 5, 6];, use .filter(n => n % 2 === 0) to get evens, then .map(n => n * 2) to double them, and print the resulting array.',
+      initialCode: `const nums = [1, 2, 3, 4, 5, 6];\n\n// Filter evens and double them below:\n`,
+      solutionCode: `const nums = [1, 2, 3, 4, 5, 6];\nconst result = nums.filter(n => n % 2 === 0).map(n => n * 2);\nconsole.log(JSON.stringify(result));`,
+      expectedOutput: '[4,8,12]',
+      hint: 'Chain .filter(n => n % 2 === 0).map(n => n * 2) and print JSON.stringify(result);',
+      explanation: 'Chaining higher-order array methods creates declarative, highly readable data pipelines.',
+      quickChips: ['.filter(n => n % 2 === 0)', '.map(n => n * 2)', 'console.log(JSON.stringify(result));'],
+    },
+  ],
+  quiz: [
+    {
+      id: 'q-js-10-1',
+      question: 'Which method returns a new array with the exact same number of elements as the original array, but transformed?',
+      explanation: '.map() transforms each element one-to-one, maintaining the original array length.',
+      difficulty: 'beginner',
+      topicTag: 'javascript',
+      type: 'multiple-choice',
+      options: [
+        { id: 'opt-a', text: 'filter()', isCorrect: false },
+        { id: 'opt-b', text: 'map()', isCorrect: true },
+        { id: 'opt-c', text: 'reduce()', isCorrect: false },
+        { id: 'opt-d', text: 'find()', isCorrect: false },
+      ],
+    },
+    {
+      id: 'q-js-10-2',
+      question: 'Do .map() and .filter() mutate (change) the original array in place?',
+      explanation: 'No, map and filter are non-mutating; they return brand new arrays, leaving the original intact.',
+      difficulty: 'beginner',
+      topicTag: 'javascript',
+      type: 'multiple-choice',
+      options: [
+        { id: 'opt-a', text: 'No, they return a new array and preserve the original', isCorrect: true },
+        { id: 'opt-b', text: 'Yes, they alter the original array elements permanently', isCorrect: false },
+        { id: 'opt-c', text: 'Only when used on numbers', isCorrect: false },
+        { id: 'opt-d', text: 'Only if declared with let', isCorrect: false },
+      ],
+    },
+    {
+      id: 'q-js-10-3',
+      question: 'What is the second argument passed to .reduce() (e.g. [1, 2].reduce((a, b) => a + b, 0))?',
+      explanation: 'The second argument specifies the initial value of the accumulator.',
+      difficulty: 'beginner',
+      topicTag: 'javascript',
+      type: 'multiple-choice',
+      options: [
+        { id: 'opt-a', text: 'The initial accumulator value', isCorrect: true },
+        { id: 'opt-b', text: 'The maximum loop iteration count', isCorrect: false },
+        { id: 'opt-c', text: 'The step size', isCorrect: false },
+        { id: 'opt-d', text: 'The sort order', isCorrect: false },
+      ],
+    },
+  ],
+};

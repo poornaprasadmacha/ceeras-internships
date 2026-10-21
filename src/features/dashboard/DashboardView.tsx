@@ -110,12 +110,12 @@ const COURSES: CourseItem[] = [
   },
   {
     id: 'javascript-modern',
-    title: 'Modern JavaScript Essentials',
-    category: 'Web Development',
-    badge: 'Coming Soon',
-    badgeVariant: 'outline',
-    status: 'upcoming',
-    modulesCount: 9,
+    title: 'Modern JavaScript (ES6+ & Web APIs)',
+    category: 'Web Development & Frontend',
+    badge: 'Enrolled & Active',
+    badgeVariant: 'accent',
+    status: 'active',
+    modulesCount: 14,
     duration: '8-10 hours',
     logo: JavaScriptLogo,
   },
@@ -152,6 +152,15 @@ export function DashboardView() {
     }
   })();
 
+  const hasStartedJs = (() => {
+    try {
+      const j = localStorage.getItem('ceeras_js_solved');
+      return j ? Object.keys(JSON.parse(j)).length > 0 : false;
+    } catch {
+      return false;
+    }
+  })();
+
   const hasStartedAny =
     stats.solvedExercises > 0 ||
     stats.quizzesTaken > 0 ||
@@ -159,6 +168,7 @@ export function DashboardView() {
     hasStartedPython ||
     hasStartedHtml ||
     hasStartedCss ||
+    hasStartedJs ||
     Object.values(lessonsProgress).some((l) => l.isStarted || l.isCompleted);
 
   return (
@@ -225,7 +235,8 @@ export function DashboardView() {
             const isPython = course.id === 'python-core';
             const isHtml = course.id === 'html-core';
             const isCss = course.id === 'css-core';
-            const isActive = isSQL || isPython || isHtml || isCss;
+            const isJs = course.id === 'javascript-modern';
+            const isActive = isSQL || isPython || isHtml || isCss || isJs;
 
             return (
               <Card
@@ -333,6 +344,21 @@ export function DashboardView() {
                         <span className="font-semibold text-[#1572B6]">Sandboxed Component Visualizer</span>
                       </div>
                     </div>
+                  ) : isJs ? (
+                    <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
+                      <div className="flex items-center justify-between">
+                        <span>Syllabus:</span>
+                        <span className="font-semibold text-text-main">14 Lessons (Zero to Advanced JS)</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Interactive Tasks:</span>
+                        <span className="font-semibold text-text-main">Live V8 Console &amp; Algorithm Tests</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Engine:</span>
+                        <span className="font-semibold text-amber-600 dark:text-amber-400">In-Browser Live JS Runtime</span>
+                      </div>
+                    </div>
                   ) : (
                     <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
                       <div className="flex items-center justify-between">
@@ -438,6 +464,28 @@ export function DashboardView() {
                         className="text-xs bg-[#1572B6] hover:bg-[#10568a] text-white"
                       >
                         <span>Start CSS</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
+                    </>
+                  ) : isJs ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate('/learn/javascript')}
+                        className="text-xs"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Syllabus</span>
+                      </Button>
+
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => navigate('/learn/javascript/hello-javascript-and-console')}
+                        className="text-xs bg-amber-500 hover:bg-amber-600 text-black font-bold"
+                      >
+                        <span>Start JS</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Button>
                     </>

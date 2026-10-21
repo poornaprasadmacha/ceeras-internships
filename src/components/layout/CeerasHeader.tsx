@@ -189,6 +189,22 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                   </div>
                 </Link>
 
+                <Link
+                  to="/learn/javascript"
+                  onClick={() => setCoursesOpen(false)}
+                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
+                >
+                  <JavaScriptLogo className="w-5 h-5 shrink-0 mt-0.5 rounded" />
+                  <div>
+                    <span className="font-semibold text-xs text-text-main block">
+                      Modern JavaScript (ES6+ &amp; Web Engine)
+                    </span>
+                    <span className="text-[11px] text-text-muted block">
+                      14 Lessons • Live V8 Console
+                    </span>
+                  </div>
+                </Link>
+
                 <div className="px-2 pt-2 text-[11px] font-bold text-text-muted uppercase tracking-wider border-t border-border/50">
                   Upcoming Academy Tracks
                 </div>
@@ -204,13 +220,6 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                     <span className="flex items-center gap-2 font-medium">
                       <PandasLogo className="w-4 h-4 shrink-0 rounded" />
                       <span>Data Science &amp; Analytics</span>
-                    </span>
-                    <span className="text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Soon</span>
-                  </div>
-                  <div className="flex items-center justify-between text-text-main">
-                    <span className="flex items-center gap-2 font-medium">
-                      <JavaScriptLogo className="w-4 h-4 shrink-0 rounded" />
-                      <span>Modern JavaScript</span>
                     </span>
                     <span className="text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Soon</span>
                   </div>

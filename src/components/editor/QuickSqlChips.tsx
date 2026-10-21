@@ -24,7 +24,6 @@ export function QuickSqlChips({
     'LIKE',
     'ORDER BY',
     'LIMIT',
-    ',',
   ];
 
   // Merge with any specific extra keywords, deduplicated
@@ -35,10 +34,7 @@ export function QuickSqlChips({
       <div className="flex items-center justify-between text-[11px] font-semibold text-text-muted px-0.5">
         <span className="flex items-center gap-1.5 text-primary">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Quick Code Chips (Click to Build Query)</span>
-        </span>
-        <span className="text-[10px] hidden sm:inline text-text-muted">
-          Tap chips to add code
+          <span>Quick Code Chips</span>
         </span>
       </div>
 

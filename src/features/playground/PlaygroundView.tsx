@@ -9,7 +9,6 @@ import { QueryExecutionBar } from '../../components/editor/QueryExecutionBar';
 import { QuickSqlChips } from '../../components/editor/QuickSqlChips';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import { Badge } from '../../components/ui/Badge';
 import { Terminal, Database, Table, RotateCcw } from 'lucide-react';
 import { Database as SqliteDatabase } from 'sql.js';
 
@@ -107,33 +106,32 @@ export function PlaygroundView() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-text-muted">Switch Table:</span>
-          <div className="flex items-center gap-1.5">
-            {ALL_DATASETS.map((ds) => {
-              const isSelected = selectedDataset.id === ds.id;
-              return (
-                <button
-                  key={ds.id}
-                  onClick={() => setSelectedDataset(ds)}
-                  className={`px-3 py-1.5 text-xs font-mono rounded-md border transition-colors cursor-pointer ${
-                    isSelected
-                      ? 'bg-primary text-white border-primary font-semibold'
-                      : 'bg-subtle text-text-main border-border hover:bg-border'
-                  }`}
-                >
-                  {ds.tableName}
-                </button>
-              );
-            })}
-          </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <label htmlFor="dataset-select" className="text-xs font-medium text-text-muted">
+            Switch Table:
+          </label>
+          <select
+            id="dataset-select"
+            value={selectedDataset.id}
+            onChange={(e) => {
+              const ds = ALL_DATASETS.find((d) => d.id === e.target.value);
+              if (ds) setSelectedDataset(ds);
+            }}
+            className="px-3 py-1.5 text-xs font-mono rounded-md border border-border bg-subtle text-text-main focus:outline-none focus:ring-2 focus:ring-primary/40 cursor-pointer"
+          >
+            {ALL_DATASETS.map((ds) => (
+              <option key={ds.id} value={ds.id}>
+                {ds.tableName} ({ds.sampleColumns.length} columns)
+              </option>
+            ))}
+          </select>
 
           <Button
             variant="outline"
             size="sm"
             onClick={handleResetDatabase}
             title="Reload fresh dataset in SQLite"
-            className="text-xs ml-2"
+            className="text-xs"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Reload DB</span>

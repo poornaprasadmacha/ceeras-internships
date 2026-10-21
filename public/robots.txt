@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /settings
+Disallow: /notes
+
+Sitemap: https://querypath.dev/sitemap.xml

@@ -1,0 +1,141 @@
+import { LessonDefinition } from '../../types/lesson';
+import { worldCitiesDataset } from '../datasets/worldCities';
+
+export const lesson4: LessonDefinition = {
+  id: 'lesson_4',
+  number: 4,
+  slug: 'filtering-and-sorting',
+  title: 'Filtering and Sorting Query Results',
+  shortDescription:
+    'Eliminate duplicate rows with DISTINCT, sort outputs ascending or descending with ORDER BY, and paginate results with LIMIT and OFFSET.',
+  estimatedMinutes: 12,
+  learningObjectives: [
+    'Deduplicate result rows using the DISTINCT keyword.',
+    'Sort query results in ascending (ASC) or descending (DESC) order.',
+    'Sort by multiple columns sequentially.',
+    'Limit the number of returned rows using LIMIT.',
+    'Paginate through data pages using OFFSET.',
+  ],
+  prerequisites: ['SELECT, FROM, and WHERE clauses.'],
+  dataset: worldCitiesDataset,
+  sections: [
+    {
+      id: 'section-distinct',
+      title: 'A. Removing Duplicates with DISTINCT',
+      content: `If multiple rows share identical values for selected columns, SQL by default returns all copies. The **DISTINCT** keyword eliminates duplicate entries, returning only unique values.`,
+      codeExample: {
+        sql: `SELECT DISTINCT continent\nFROM WorldCities;`,
+        explanation: 'Returns each unique continent name once, even though multiple cities belong to the same continent.',
+      },
+    },
+    {
+      id: 'section-order-by-limit',
+      title: 'B. Sorting and Paginating with ORDER BY, LIMIT, and OFFSET',
+      content: `• **ORDER BY col ASC**: Sorts smallest to largest / alphabetical (default).
+• **ORDER BY col DESC**: Sorts largest to smallest / reverse alphabetical.
+• **LIMIT N**: Restricts output to the top N rows.
+• **OFFSET M**: Skips the first M rows before returning rows (essential for pagination).`,
+      codeExample: {
+        sql: `SELECT city_name, population_millions\nFROM WorldCities\nORDER BY population_millions DESC\nLIMIT 3;`,
+        explanation: 'Retrieves the 3 most populous cities in the world.',
+      },
+    },
+  ],
+  exercises: [
+    {
+      id: 'ex_4_1',
+      lessonId: 'lesson_4',
+      order: 1,
+      title: 'Exercise 1: List All Unique Continents',
+      objective: 'Write a query to return a list of all unique continents represented in the WorldCities table without duplicates.',
+      initialQuery: 'SELECT continent FROM WorldCities;',
+      solutionQuery: 'SELECT DISTINCT continent FROM WorldCities;',
+      hint: 'Place the DISTINCT keyword immediately after SELECT.',
+      explanation: 'SELECT DISTINCT continent returns unique continent names without repetitions.',
+      expectedColumns: ['continent'],
+    },
+    {
+      id: 'ex_4_2',
+      lessonId: 'lesson_4',
+      order: 2,
+      title: 'Exercise 2: Top 5 Most Populous Cities',
+      objective: 'Select the city_name and population_millions of the top 5 most populated cities, ordered from largest to smallest population.',
+      initialQuery: 'SELECT city_name, population_millions FROM WorldCities',
+      solutionQuery: 'SELECT city_name, population_millions FROM WorldCities ORDER BY population_millions DESC LIMIT 5;',
+      hint: 'Use ORDER BY population_millions DESC LIMIT 5.',
+      explanation: 'DESC sorts in descending order so the highest values appear first, and LIMIT 5 caps the output.',
+      expectedColumns: ['city_name', 'population_millions'],
+      requiresOrder: true,
+    },
+    {
+      id: 'ex_4_3',
+      lessonId: 'lesson_4',
+      order: 3,
+      title: 'Exercise 3: Oldest Cities in History',
+      objective: 'Select the city_name, country, and founded_year for the 3 oldest cities, sorted by founded_year ascending.',
+      initialQuery: 'SELECT city_name, country, founded_year FROM WorldCities',
+      solutionQuery: 'SELECT city_name, country, founded_year FROM WorldCities ORDER BY founded_year ASC LIMIT 3;',
+      hint: 'Use ORDER BY founded_year ASC LIMIT 3.',
+      explanation: 'ASC sorts from the earliest year to the latest.',
+      expectedColumns: ['city_name', 'country', 'founded_year'],
+      requiresOrder: true,
+    },
+    {
+      id: 'ex_4_4',
+      lessonId: 'lesson_4',
+      order: 4,
+      title: 'Exercise 4: Pagination with OFFSET',
+      objective: 'Select the city_name and population_millions for the next 3 cities after the top 3 most populous (cities ranked 4th, 5th, and 6th).',
+      initialQuery: 'SELECT city_name, population_millions FROM WorldCities ORDER BY population_millions DESC',
+      solutionQuery: 'SELECT city_name, population_millions FROM WorldCities ORDER BY population_millions DESC LIMIT 3 OFFSET 3;',
+      hint: 'Use LIMIT 3 OFFSET 3 to skip the first 3 rows and take the next 3.',
+      explanation: 'OFFSET 3 skips the top 3 cities, and LIMIT 3 grabs the next page of results.',
+      expectedColumns: ['city_name', 'population_millions'],
+      requiresOrder: true,
+    },
+  ],
+  quiz: [
+        {
+      id: 'q_4_1',
+      question: 'Where must the DISTINCT keyword be placed in a SQL query?',
+      explanation: 'DISTINCT is placed immediately after SELECT: SELECT DISTINCT column1, column2 FROM ...',
+      difficulty: 'beginner',
+      topicTag: 'Concept Check',
+      type: 'multiple-choice',
+      options: [
+        { id: 'opt_1', text: 'At the end after the WHERE clause', isCorrect: false },
+        { id: 'opt_2', text: 'Directly following the SELECT keyword before the column list', isCorrect: true },
+        { id: 'opt_3', text: 'Directly after the FROM clause', isCorrect: false },
+        { id: 'opt_4', text: 'Inside parentheses after the table name', isCorrect: false }
+      ],
+    },
+        {
+      id: 'q_4_2',
+      question: 'What is the default sort direction of an ORDER BY clause if neither ASC nor DESC is specified?',
+      explanation: 'SQL defaults to ascending order (ASC) if no direction keyword is specified.',
+      difficulty: 'beginner',
+      topicTag: 'Concept Check',
+      type: 'multiple-choice',
+      options: [
+        { id: 'opt_1', text: 'Ascending (ASC)', isCorrect: true },
+        { id: 'opt_2', text: 'Descending (DESC)', isCorrect: false },
+        { id: 'opt_3', text: 'Random', isCorrect: false },
+        { id: 'opt_4', text: 'Insertion order', isCorrect: false }
+      ],
+    },
+        {
+      id: 'q_4_3',
+      question: 'If you want to view page 3 of a query result with 10 items per page, what LIMIT and OFFSET values should you use?',
+      explanation: 'Page 1 is rows 0-9 (OFFSET 0), Page 2 is rows 10-19 (OFFSET 10), Page 3 is rows 20-29 (OFFSET 20).',
+      difficulty: 'beginner',
+      topicTag: 'Concept Check',
+      type: 'multiple-choice',
+      options: [
+        { id: 'opt_1', text: 'LIMIT 10 OFFSET 20', isCorrect: true },
+        { id: 'opt_2', text: 'LIMIT 3 OFFSET 10', isCorrect: false },
+        { id: 'opt_3', text: 'LIMIT 10 OFFSET 30', isCorrect: false },
+        { id: 'opt_4', text: 'LIMIT 20 OFFSET 10', isCorrect: false }
+      ],
+    },
+  ],
+};

@@ -354,3 +354,60 @@ export function MachineLearningLogo({ className = 'w-10 h-10', size }: LogoProps
     </svg>
   );
 }
+
+/**
+ * Official Git Distributed Version Control vector logo
+ */
+export function GitLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Git logo"
+    >
+      <rect width="128" height="128" rx="20" fill="#24292E" />
+      {/* Rotated 45-deg diamond badge */}
+      <g transform="translate(64, 64) rotate(45) translate(-42, -42)">
+        <rect width="84" height="84" rx="16" fill="#F05032" />
+        {/* Branch lines */}
+        <line x1="28" y1="20" x2="28" y2="64" stroke="#FFFFFF" strokeWidth="8" strokeLinecap="round" />
+        <path d="M28 38 C40 38, 54 44, 54 56 L54 64" stroke="#FFFFFF" strokeWidth="8" strokeLinecap="round" fill="none" />
+        {/* Nodes */}
+        <circle cx="28" cy="20" r="8" fill="#FFFFFF" />
+        <circle cx="28" cy="64" r="8" fill="#FFFFFF" />
+        <circle cx="54" cy="64" r="8" fill="#FFFFFF" />
+      </g>
+    </svg>
+  );
+}
+
+/**
+ * Official GitHub vector silhouette logo
+ */
+export function GitHubLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="GitHub logo"
+    >
+      <rect width="128" height="128" rx="20" fill="#181717" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M64 20C39.696 20 20 39.696 20 64c0 19.444 12.61 35.94 30.096 41.748 2.2.404 3.004-.956 3.004-2.12 0-1.048-.04-3.824-.06-7.508-12.24 2.66-13.612-5.9-13.612-5.9-2.002-5.084-4.886-6.438-4.886-6.438-3.994-2.73.302-2.674.302-2.674 4.416.31 6.74 4.534 6.74 4.534 3.924 6.724 10.296 4.78 12.806 3.656.398-2.842 1.536-4.782 2.794-5.88-9.772-1.112-20.046-4.886-20.046-21.75 0-4.804 1.716-8.732 4.534-11.81-.454-1.112-1.966-5.588.43-11.644 0 0 3.696-1.182 12.106 4.512 3.51-0.976 7.276-1.464 11.018-1.482 3.742.018 7.508.506 11.018 1.482 8.41-5.694 12.106-4.512 12.106-4.512 2.396 6.056.884 10.532.43 11.644 2.818 3.078 4.534 7.006 4.534 11.81 0 16.908-10.294 20.626-20.09 21.714 1.578 1.36 2.986 4.044 2.986 8.15 0 5.882-.054 10.626-.054 12.07 0 1.176.794 2.544 3.024 2.112C95.408 99.924 108 83.434 108 64c0-24.304-19.696-44-44-44z"
+        fill="#FFFFFF"
+      />
+    </svg>
+  );
+}

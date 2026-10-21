@@ -26,6 +26,7 @@ import {
   CssLogo,
   NumpyLogo,
   PandasLogo,
+  GitLogo,
   DataScienceLogo,
   JavaScriptLogo,
   ScikitLearnLogo,
@@ -109,6 +110,17 @@ const COURSES: CourseItem[] = [
     modulesCount: 12,
     duration: '6-8 hours',
     logo: PandasLogo,
+  },
+  {
+    id: 'git-github',
+    title: 'Git & GitHub Distributed Version Control',
+    category: 'DevOps & Software Engineering',
+    badge: 'Enrolled & Active',
+    badgeVariant: 'accent',
+    status: 'active',
+    modulesCount: 12,
+    duration: '6-8 hours',
+    logo: GitLogo,
   },
   {
     id: 'data-science',
@@ -221,6 +233,15 @@ export function DashboardView() {
     }
   })();
 
+  const hasStartedGit = (() => {
+    try {
+      const g = localStorage.getItem('ceeras_git_solved');
+      return g ? Object.keys(JSON.parse(g)).length > 0 : false;
+    } catch {
+      return false;
+    }
+  })();
+
   const hasStartedAny =
     stats.solvedExercises > 0 ||
     stats.quizzesTaken > 0 ||
@@ -233,6 +254,7 @@ export function DashboardView() {
     hasStartedMl ||
     hasStartedNumpy ||
     hasStartedPandas ||
+    hasStartedGit ||
     Object.values(lessonsProgress).some((l) => l.isStarted || l.isCompleted);
 
   return (
@@ -304,7 +326,8 @@ export function DashboardView() {
             const isML = course.id === 'machine-learning';
             const isNumpy = course.id === 'numpy-computing';
             const isPandas = course.id === 'pandas-data';
-            const isActive = isSQL || isPython || isHtml || isCss || isJs || isDs || isML || isNumpy || isPandas;
+            const isGit = course.id === 'git-github';
+            const isActive = isSQL || isPython || isHtml || isCss || isJs || isDs || isML || isNumpy || isPandas || isGit;
 
             return (
               <Card
@@ -485,6 +508,21 @@ export function DashboardView() {
                       <div className="flex items-center justify-between">
                         <span>Engine:</span>
                         <span className="font-semibold text-[#130754] dark:text-[#00D2FF]">In-Browser Tabular Data Engine</span>
+                      </div>
+                    </div>
+                  ) : isGit ? (
+                    <div className="pt-2 space-y-1.5 text-xs text-text-muted border-t border-border/50">
+                      <div className="flex items-center justify-between">
+                        <span>Syllabus:</span>
+                        <span className="font-semibold text-text-main">12 Lessons (Zero to Git Mastery)</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Interactive Tasks:</span>
+                        <span className="font-semibold text-text-main">In-Browser Terminal &amp; Graph DAG</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>Engine:</span>
+                        <span className="font-semibold text-[#F05032]">In-Browser Git Object Sandbox</span>
                       </div>
                     </div>
                   ) : (
@@ -702,6 +740,28 @@ export function DashboardView() {
                         className="text-xs bg-[#130754] hover:bg-[#1f0c82] text-white font-bold"
                       >
                         <span>Start Pandas</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Button>
+                    </>
+                  ) : isGit ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate('/learn/git')}
+                        className="text-xs"
+                      >
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Syllabus</span>
+                      </Button>
+
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        onClick={() => navigate('/learn/git/version-control-fundamentals-and-git-architecture')}
+                        className="text-xs bg-[#F05032] hover:bg-[#d44327] text-white font-bold"
+                      >
+                        <span>Start Git</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Button>
                     </>

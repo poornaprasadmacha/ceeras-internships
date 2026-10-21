@@ -19,6 +19,7 @@ import {
   CssLogo,
   NumpyLogo,
   PandasLogo,
+  GitLogo,
   DataScienceLogo,
   JavaScriptLogo,
   ScikitLearnLogo,
@@ -235,6 +236,22 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
                     </span>
                     <span className="text-[11px] text-text-muted block">
                       12 Lessons • Tabular Engine &amp; Joins
+                    </span>
+                  </div>
+                </Link>
+
+                <Link
+                  to="/learn/git"
+                  onClick={() => setCoursesOpen(false)}
+                  className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-subtle transition-colors border border-transparent hover:border-border"
+                >
+                  <GitLogo className="w-5 h-5 shrink-0 mt-0.5 rounded" />
+                  <div>
+                    <span className="font-semibold text-xs text-text-main block">
+                      Git &amp; GitHub (Version Control)
+                    </span>
+                    <span className="text-[11px] text-text-muted block">
+                      12 Lessons • Branches &amp; PR Workflow
                     </span>
                   </div>
                 </Link>
@@ -475,6 +492,14 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
             >
               <PandasLogo className="w-4 h-4 rounded-xs" />
               <span>Pandas DataFrames</span>
+            </Link>
+            <Link
+              to="/learn/git"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-1.5 text-sm text-text-main hover:text-primary font-medium"
+            >
+              <GitLogo className="w-4 h-4 rounded-xs" />
+              <span>Git &amp; GitHub</span>
             </Link>
             <Link
               to="/learn/datascience"

@@ -19,6 +19,8 @@ import { NumpyCourseView } from '../features/numpy/NumpyCourseView';
 import { NumpyLessonView } from '../features/numpy/NumpyLessonView';
 import { PandasCourseView } from '../features/pandas/PandasCourseView';
 import { PandasLessonView } from '../features/pandas/PandasLessonView';
+import { GitCourseView } from '../features/git/GitCourseView';
+import { GitLessonView } from '../features/git/GitLessonView';
 import { PlaygroundView } from '../features/playground/PlaygroundView';
 import { QuizzesIndexView } from '../features/quizzes/QuizzesIndexView';
 import { ProgressView } from '../features/progress/ProgressView';
@@ -50,6 +52,8 @@ export function AppRoutes() {
       <Route path="/learn/numpy/:slug" element={<NumpyLessonView />} />
       <Route path="/learn/pandas" element={<PandasCourseView />} />
       <Route path="/learn/pandas/:slug" element={<PandasLessonView />} />
+      <Route path="/learn/git" element={<GitCourseView />} />
+      <Route path="/learn/git/:slug" element={<GitLessonView />} />
       <Route path="/learn/:slug" element={<LessonView />} />
       <Route path="/practice" element={<PlaygroundView />} />
       <Route path="/quizzes" element={<QuizzesIndexView />} />

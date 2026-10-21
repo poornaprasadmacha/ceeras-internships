@@ -32,34 +32,20 @@ export function HtmlCourseView() {
   return (
     <div className="space-y-6 pb-12">
       {/* Course Banner Header */}
-      <div className="border-b border-border pb-6 space-y-3">
+      <div className="border-b border-border pb-5 space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-subtle/80 border border-border/80 flex items-center justify-center p-2 shadow-xs">
             <HtmlLogo className="w-full h-full object-contain" />
           </div>
-          <div>
-            <Badge variant="accent" size="sm" className="bg-[#E44D26]/15 text-[#E44D26] border-[#E44D26]/30 mb-1">
-              Active Track • Interactive &amp; Hands-on
-            </Badge>
-            <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
-              HTML5 &amp; Modern Web Architecture
-            </h1>
-          </div>
+          <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
+            HTML5 &amp; Modern Web Architecture
+          </h1>
         </div>
 
-        <p className="text-sm text-text-muted max-w-2xl leading-relaxed">
-          Build genuine web pages with live real-time sandboxed previews. Learn HTML tags, document structure, typography, links, multimedia, tabular data, accessible forms, and semantic HTML5 landmarks.
-        </p>
-
-        <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted pt-1">
-          <span>{HTML_LESSONS.length} Structured Lessons (Zero to HTML5 Master)</span>
+        <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted">
+          <span>{HTML_LESSONS.length} Lessons</span>
           <span>•</span>
-          <span>~{totalMinutes} mins total interactive practice</span>
-          <span>•</span>
-          <span className="text-[#E44D26] font-medium flex items-center gap-1">
-            <Globe className="w-3.5 h-3.5" />
-            <span>Live Sandboxed Web Preview</span>
-          </span>
+          <span>~{totalMinutes} mins</span>
           {completedCount > 0 && (
             <>
               <span>•</span>

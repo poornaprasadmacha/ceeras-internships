@@ -7,16 +7,10 @@ import { Eye, Keyboard, Monitor } from 'lucide-react';
 export function AccessibilityView() {
   return (
     <div className="space-y-6 pb-12 max-w-3xl">
-      <div className="border-b border-border pb-6 space-y-2">
-        <Badge variant="accent" size="sm">
-          Accessibility Commitment
-        </Badge>
+      <div className="border-b border-border pb-5">
         <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
           Accessibility Statement
         </h1>
-        <p className="text-sm text-text-muted leading-relaxed">
-          {APP_NAME} is committed to ensuring digital accessibility for students of all abilities worldwide.
-        </p>
       </div>
 
       <div className="space-y-6 text-sm text-text-main leading-relaxed">

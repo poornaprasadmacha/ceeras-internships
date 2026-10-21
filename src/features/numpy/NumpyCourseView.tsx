@@ -37,34 +37,20 @@ export function NumpyCourseView() {
   return (
     <div className="space-y-6 pb-12">
       {/* Course Banner Header */}
-      <div className="border-b border-border pb-6 space-y-3">
+      <div className="border-b border-border pb-5 space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-subtle/80 border border-border/80 flex items-center justify-center p-2 shadow-xs">
             <NumpyLogo className="w-full h-full object-contain rounded-xl" />
           </div>
-          <div>
-            <Badge variant="accent" size="sm" className="bg-[#4DABCF]/15 text-[#013243] dark:text-[#4DABCF] border-[#4DABCF]/30 mb-1">
-              Active Track • Beginner to Advanced
-            </Badge>
-            <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
-              NumPy for Numerical Computing &amp; Linear Algebra
-            </h1>
-          </div>
+          <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
+            NumPy for Numerical Computing &amp; Linear Algebra
+          </h1>
         </div>
 
-        <p className="text-sm text-text-muted max-w-2xl leading-relaxed">
-          Master the foundational engine of scientific Python, data science, and deep learning. Learn contiguous C-memory ndarrays, array creation routines, multidimensional slicing, broadcasting rules, vectorization, axis reductions, and matrix linear algebra.
-        </p>
-
-        <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted pt-1">
-          <span>{NUMPY_LESSONS.length} Structured Lessons (Zero to Hero)</span>
+        <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted">
+          <span>{NUMPY_LESSONS.length} Lessons</span>
           <span>•</span>
-          <span>~{totalMinutes} mins total interactive practice</span>
-          <span>•</span>
-          <span className="text-[#4DABCF] font-medium flex items-center gap-1">
-            <Cpu className="w-3.5 h-3.5" />
-            <span>In-Browser NumPy ndarray Engine &amp; Matrix Visualizer</span>
-          </span>
+          <span>~{totalMinutes} mins</span>
           {completedCount > 0 && (
             <>
               <span>•</span>

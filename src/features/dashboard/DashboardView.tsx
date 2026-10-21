@@ -291,10 +291,6 @@ export function DashboardView() {
               Spreading knowledge to ignite global change.
             </h1>
 
-            <p className="text-base sm:text-lg md:text-xl text-text-muted font-normal leading-relaxed max-w-xl">
-              Join Our Ceeras Team Today and Shape a Brighter Future Together
-            </p>
-
             <div className="pt-2">
               <button
                 type="button"
@@ -321,18 +317,10 @@ export function DashboardView() {
 
       {/* FEATURED COURSES SECTION */}
       <section className="space-y-6 pt-4 border-t border-border/70">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div>
-            <h2 className="font-raleway text-2xl sm:text-3xl font-bold text-text-main tracking-tight">
-              Featured Courses
-            </h2>
-            <p className="text-xs sm:text-sm text-text-muted mt-0.5">
-              Hands-on interactive learning powered by authentic in-browser WebAssembly engines.
-            </p>
-          </div>
-          <Badge variant="accent" size="sm" className="self-start sm:self-auto">
-            Available Online &amp; Offline
-          </Badge>
+        <div>
+          <h2 className="font-raleway text-2xl sm:text-3xl font-bold text-text-main tracking-tight">
+            Featured Courses
+          </h2>
         </div>
 
         {/* Courses Grid */}
@@ -361,18 +349,7 @@ export function DashboardView() {
                     : 'border-border/80 opacity-90'
                 }`}
               >
-                {/* Course Header Tag */}
-                <div
-                  className={`absolute top-0 right-0 text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider ${
-                    isActive
-                      ? 'bg-secondary text-white'
-                      : 'bg-subtle text-text-muted border-l border-b border-border'
-                  }`}
-                >
-                  {course.badge}
-                </div>
-
-                <div className="space-y-4 pt-2">
+                <div className="space-y-4 pt-1">
                   {/* Official Language Logo */}
                   <div className="w-14 h-14 rounded-2xl bg-subtle/80 border border-border/80 flex items-center justify-center p-2.5 shadow-xs">
                     <Logo className="w-full h-full object-contain" />

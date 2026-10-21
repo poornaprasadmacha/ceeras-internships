@@ -37,34 +37,20 @@ export function MachineLearningCourseView() {
   return (
     <div className="space-y-6 pb-12">
       {/* Course Banner Header */}
-      <div className="border-b border-border pb-6 space-y-3">
+      <div className="border-b border-border pb-5 space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-subtle/80 border border-border/80 flex items-center justify-center p-2 shadow-xs">
             <ScikitLearnLogo className="w-full h-full object-contain rounded-xl" />
           </div>
-          <div>
-            <Badge variant="accent" size="sm" className="bg-[#3499CD]/15 text-[#3499CD] dark:text-[#F89939] border-[#3499CD]/30 mb-1">
-              Active Track • Zero to Hero
-            </Badge>
-            <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
-              Machine Learning (Algorithms, Ensembles &amp; Neural Networks)
-            </h1>
-          </div>
+          <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
+            Machine Learning (Algorithms, Ensembles &amp; Neural Networks)
+          </h1>
         </div>
 
-        <p className="text-sm text-text-muted max-w-2xl leading-relaxed">
-          Master the complete machine learning engineering curriculum from foundational statistical theory to modern deep networks. Learn linear/logistic regression, regularization, decision trees, random forests, gradient boosting, SVMs, k-means clustering, PCA, and neural perceptrons.
-        </p>
-
-        <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted pt-1">
-          <span>{MACHINE_LEARNING_LESSONS.length} Structured Lessons (Zero to Hero)</span>
+        <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted">
+          <span>{MACHINE_LEARNING_LESSONS.length} Lessons</span>
           <span>•</span>
-          <span>~{totalMinutes} mins total interactive practice</span>
-          <span>•</span>
-          <span className="text-[#F89939] font-medium flex items-center gap-1">
-            <Cpu className="w-3.5 h-3.5" />
-            <span>In-Browser ML Sandbox &amp; Diagnostics</span>
-          </span>
+          <span>~{totalMinutes} mins</span>
           {completedCount > 0 && (
             <>
               <span>•</span>

@@ -32,34 +32,20 @@ export function JsCourseView() {
   return (
     <div className="space-y-6 pb-12">
       {/* Course Banner Header */}
-      <div className="border-b border-border pb-6 space-y-3">
+      <div className="border-b border-border pb-5 space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-subtle/80 border border-border/80 flex items-center justify-center p-2 shadow-xs">
             <JavaScriptLogo className="w-full h-full object-contain rounded-xl" />
           </div>
-          <div>
-            <Badge variant="accent" size="sm" className="bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30 mb-1">
-              Active Track • Beginner to Advanced
-            </Badge>
-            <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
-              Modern JavaScript (ES6+ &amp; Web Engine)
-            </h1>
-          </div>
+          <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
+            Modern JavaScript (ES6+ &amp; Web Engine)
+          </h1>
         </div>
 
-        <p className="text-sm text-text-muted max-w-2xl leading-relaxed">
-          Master the programming language of the web from zero to advanced. Learn variables, functions, array methods (map/filter/reduce), DOM manipulation, async/await, closures, and ES6 classes.
-        </p>
-
-        <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted pt-1">
-          <span>{JS_LESSONS.length} Structured Lessons (Zero to Advanced)</span>
+        <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted">
+          <span>{JS_LESSONS.length} Lessons</span>
           <span>•</span>
-          <span>~{totalMinutes} mins total interactive practice</span>
-          <span>•</span>
-          <span className="text-amber-600 dark:text-amber-400 font-medium flex items-center gap-1">
-            <Terminal className="w-3.5 h-3.5" />
-            <span>In-Browser Live V8 Console</span>
-          </span>
+          <span>~{totalMinutes} mins</span>
           {completedCount > 0 && (
             <>
               <span>•</span>

@@ -17,17 +17,11 @@ export function NotesView() {
   return (
     <div className="space-y-6 pb-12">
       {/* Header */}
-      <div className="border-b border-border pb-6 space-y-2">
-        <Badge variant="accent" size="sm">
-          Personal Study Notebook
-        </Badge>
+      <div className="border-b border-border pb-5">
         <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main flex items-center gap-3">
           <FileText className="w-7 h-7 text-primary" />
           <span>My Notes</span>
         </h1>
-        <p className="text-sm text-text-muted max-w-2xl leading-relaxed">
-          Review your personal study notes, reminders, and key takeaways recorded across lessons.
-        </p>
       </div>
 
       {noteList.length === 0 ? (

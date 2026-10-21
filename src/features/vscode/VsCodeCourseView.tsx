@@ -37,26 +37,18 @@ export function VsCodeCourseView() {
   return (
     <div className="space-y-6 pb-12">
       {/* Course Banner Header */}
-      <div className="border-b border-border pb-6 space-y-3">
+      <div className="border-b border-border pb-5 space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-[#007ACC]/10 border border-[#007ACC]/20 flex items-center justify-center p-2 shadow-xs">
             <VsCodeLogo className="w-full h-full object-contain" />
           </div>
-          <div>
-            <Badge variant="accent" size="sm" className="bg-[#007ACC]/10 text-[#007ACC] border-[#007ACC]/20 mb-1">
-              Active Track • Zero to Hero
-            </Badge>
-            <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
-              Visual Studio Code Mastery
-            </h1>
-          </div>
+          <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
+            Visual Studio Code Mastery
+          </h1>
         </div>
-        <p className="text-sm text-text-muted max-w-3xl leading-relaxed">
-          Master the world's leading code editor from fundamental interface anatomy to advanced engineering workflows. Master the Command Palette, multi-cursor editing, settings.json, custom keybindings, IntelliSense, integrated terminal, task automation, Git source control, debugging with launch.json, snippets, and Dev Containers.
-        </p>
 
         {/* Course Metrics */}
-        <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-text-muted">
+        <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted">
           <div className="flex items-center gap-1.5">
             <Code2 className="w-4 h-4 text-[#007ACC]" />
             <span>12 Core Lessons</span>

@@ -12,17 +12,11 @@ export function SettingsView() {
   return (
     <div className="space-y-8 pb-12 max-w-4xl">
       {/* Header */}
-      <div className="border-b border-border pb-6 space-y-2">
-        <Badge variant="accent" size="sm">
-          Preferences
-        </Badge>
+      <div className="border-b border-border pb-5">
         <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main flex items-center gap-3">
           <Settings className="w-7 h-7 text-primary" />
           <span>Platform Settings</span>
         </h1>
-        <p className="text-sm text-text-muted max-w-2xl leading-relaxed">
-          Customize your study experience. All preferences and themes are saved locally on this browser.
-        </p>
       </div>
 
       {/* Visual Themes */}
@@ -31,9 +25,6 @@ export function SettingsView() {
           <Palette className="w-5 h-5 text-primary" />
           <h2 className="text-base font-bold text-text-main">Visual Reading Themes</h2>
         </div>
-        <p className="text-xs text-text-muted">
-          Choose an eye-soothing theme optimized for long study sessions. The interface updates instantly without refreshing.
-        </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
           {THEMES.map((t) => {
@@ -104,33 +95,27 @@ export function SettingsView() {
       </div>
 
       {/* Local Storage & Privacy Guarantee */}
-      <div className="space-y-4 pt-4 border-t border-border">
+      <div className="space-y-3 pt-4 border-t border-border">
         <div className="flex items-center gap-2">
           <Shield className="w-5 h-5 text-primary" />
           <h2 className="text-base font-bold text-text-main">Zero-Tracking Privacy Guarantee</h2>
         </div>
-        <Card variant="subtle" className="p-5 space-y-2 text-xs leading-relaxed text-text-main">
+        <Card variant="subtle" className="p-4 text-xs leading-relaxed text-text-main">
           <p>
-            QueryPath was designed according to strict privacy-first principles. Your SQL statements, exercise attempts, quiz answers, notes, and study bookmarks are executed and persisted exclusively in your browser using WebAssembly SQLite and IndexedDB.
-          </p>
-          <p className="text-text-muted pt-1">
-            No telemetry, tracking pixels, or remote database synchronizations are active. To back up your data across computers or profiles, use the JSON Export feature on the Progress page.
+            All exercise attempts, notes, query results, and progress persist exclusively inside your local browser using SQLite WASM and IndexedDB. No external telemetry or tracking is collected.
           </p>
         </Card>
       </div>
 
       {/* Offline Operation Info */}
-      <div className="space-y-4 pt-4 border-t border-border">
+      <div className="space-y-3 pt-4 border-t border-border">
         <div className="flex items-center gap-2">
           <HardDrive className="w-5 h-5 text-primary" />
           <h2 className="text-base font-bold text-text-main">Offline Caching & Service Worker</h2>
         </div>
-        <Card className="p-5 space-y-2 text-xs text-text-muted leading-relaxed">
-          <p className="font-semibold text-text-main">
-            Status: Offline-ready via Service Worker
-          </p>
+        <Card className="p-4 text-xs text-text-muted leading-relaxed">
           <p>
-            After your initial visit, all core application assets, fonts, lesson definitions, and the WebAssembly SQLite binary are cached in your browser. You can disconnect your network and continue reading lessons, writing queries, and taking quizzes without interruption.
+            Core application assets, fonts, lesson definitions, and the WebAssembly SQLite binary are cached locally for uninterrupted offline learning.
           </p>
         </Card>
       </div>

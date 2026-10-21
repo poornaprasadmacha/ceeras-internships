@@ -109,23 +109,6 @@ export function HtmlLessonView() {
         <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
           {lesson.title}
         </h1>
-
-        <p className="text-sm text-text-muted max-w-3xl leading-relaxed">
-          {lesson.shortDescription}
-        </p>
-
-        {/* Objectives */}
-        <div className="pt-2 flex flex-wrap gap-2">
-          {lesson.learningObjectives.map((obj, i) => (
-            <span
-              key={i}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-subtle text-text-muted border border-border"
-            >
-              <Target className="w-3 h-3 text-[#E44D26]" />
-              <span>{obj}</span>
-            </span>
-          ))}
-        </div>
       </div>
 
       {/* 3-Tab Learning View */}

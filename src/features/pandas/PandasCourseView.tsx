@@ -37,26 +37,18 @@ export function PandasCourseView() {
   return (
     <div className="space-y-6 pb-12">
       {/* Course Banner Header */}
-      <div className="border-b border-border pb-6 space-y-3">
+      <div className="border-b border-border pb-5 space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-subtle/80 border border-border/80 flex items-center justify-center p-2 shadow-xs">
             <PandasLogo className="w-full h-full object-contain rounded-xl" />
           </div>
-          <div>
-            <Badge variant="accent" size="sm" className="bg-[#130754]/10 text-[#130754] dark:text-[#00D2FF] border-[#130754]/20 mb-1">
-              Active Track • Zero to Hero
-            </Badge>
-            <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
-              Pandas for Data Analysis &amp; Manipulation
-            </h1>
-          </div>
+          <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
+            Pandas for Data Analysis &amp; Manipulation
+          </h1>
         </div>
-        <p className="text-sm text-text-muted max-w-3xl leading-relaxed">
-          Master Python's core data analysis library. From 1D Series and 2D DataFrames to CSV ingestion, boolean filtering, group-by aggregations, joins, pivot tables, and real-world EDA pipelines.
-        </p>
 
         {/* Course Metrics */}
-        <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-text-muted">
+        <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted">
           <div className="flex items-center gap-1.5">
             <Database className="w-4 h-4 text-[#130754] dark:text-[#00D2FF]" />
             <span>12 Core Lessons</span>

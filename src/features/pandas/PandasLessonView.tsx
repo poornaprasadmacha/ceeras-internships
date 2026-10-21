@@ -150,12 +150,8 @@ export function PandasLessonView() {
           </div>
         </div>
 
-        <p className="text-sm text-text-muted leading-relaxed">
-          {lesson.shortDescription}
-        </p>
-
         {/* Tab Controls */}
-        <div className="pt-2">
+        <div className="pt-1">
           <Tabs
             tabs={[
               {

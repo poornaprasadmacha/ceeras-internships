@@ -14,31 +14,20 @@ export function PythonCourseView() {
   return (
     <div className="space-y-6 pb-12">
       {/* Header */}
-      <div className="border-b border-border pb-6 space-y-3">
+      <div className="border-b border-border pb-5 space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-subtle/80 border border-border/80 flex items-center justify-center p-2 shadow-xs">
             <PythonLogo className="w-full h-full object-contain" />
           </div>
-          <div>
-            <Badge variant="accent" size="sm" className="bg-[#3776AB]/15 text-[#3776AB] border-[#3776AB]/30 mb-1">
-              Active Course • Beginner &amp; Student Friendly
-            </Badge>
-            <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
-              Python Programming Fundamentals
-            </h1>
-          </div>
+          <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
+            Python Programming Fundamentals
+          </h1>
         </div>
 
-        <p className="text-sm text-text-muted max-w-2xl leading-relaxed">
-          Learn Python 3 from scratch. Write real code, execute it in the browser terminal, and master variables, loops, data structures, functions, and object-oriented programming.
-        </p>
-
-        <div className="flex items-center gap-4 text-xs text-text-muted pt-1">
-          <span>{PYTHON_LESSONS.length} Structured Lessons (Zero to OOP)</span>
+        <div className="flex items-center gap-4 text-xs text-text-muted">
+          <span>{PYTHON_LESSONS.length} Lessons</span>
           <span>•</span>
-          <span>~{totalMinutes} mins total interactive practice</span>
-          <span>•</span>
-          <span className="text-primary font-medium">In-Browser Terminal Engine</span>
+          <span>~{totalMinutes} mins</span>
         </div>
       </div>
 

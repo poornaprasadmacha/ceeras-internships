@@ -7,17 +7,11 @@ import { ShieldCheck } from 'lucide-react';
 export function PrivacyView() {
   return (
     <div className="space-y-6 pb-12 max-w-3xl">
-      <div className="border-b border-border pb-6 space-y-2">
-        <Badge variant="accent" size="sm">
-          Privacy Policy
-        </Badge>
+      <div className="border-b border-border pb-5">
         <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main flex items-center gap-3">
           <ShieldCheck className="w-7 h-7 text-primary" />
           <span>Local-First Privacy Policy</span>
         </h1>
-        <p className="text-sm text-text-muted leading-relaxed">
-          Effective Date: October 2026 • QueryPath Foundation Release
-        </p>
       </div>
 
       <div className="space-y-6 text-sm text-text-main leading-relaxed">

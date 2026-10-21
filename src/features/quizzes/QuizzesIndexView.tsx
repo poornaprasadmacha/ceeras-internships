@@ -52,17 +52,11 @@ export function QuizzesIndexView() {
   return (
     <div className="space-y-6 pb-12">
       {/* Header */}
-      <div className="border-b border-border pb-6 space-y-2">
-        <Badge variant="accent" size="sm">
-          Assessments & Testing
-        </Badge>
+      <div className="border-b border-border pb-5">
         <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main flex items-center gap-3">
           <CheckSquare className="w-7 h-7 text-primary" />
           <span>Quizzes & Tests</span>
         </h1>
-        <p className="text-sm text-text-muted max-w-2xl leading-relaxed">
-          Verify your conceptual comprehension and query prediction abilities. All quizzes require an {PASSING_PERCENTAGE}% score to pass.
-        </p>
       </div>
 
       {/* Comprehensive Multi-Lesson Review Test Card */}
@@ -70,9 +64,6 @@ export function QuizzesIndexView() {
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
           <div className="space-y-2 max-w-2xl">
             <div className="flex items-center gap-2">
-              <Badge variant="accent" size="sm">
-                Comprehensive Assessment
-              </Badge>
               {reviewAttempt && (
                 <Badge variant={reviewAttempt.passed ? 'success' : 'warning'} size="sm">
                   {reviewAttempt.passed ? 'Passed' : 'Needs Review'}
@@ -83,9 +74,6 @@ export function QuizzesIndexView() {
             <h2 className="text-lg font-bold text-text-main">
               Foundation Review Test (Lessons 1 & 2)
             </h2>
-            <p className="text-xs sm:text-sm text-text-muted leading-relaxed">
-              Consolidate your knowledge across relational models, table/column/row architecture, the SELECT clause, wildcards, and common syntax pitfalls with 10 original test questions.
-            </p>
 
             <div className="flex items-center gap-4 text-xs text-text-muted pt-1">
               <span>10 Questions</span>

@@ -159,9 +159,6 @@ export function LessonView() {
         <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
           {lesson.title}
         </h1>
-        <p className="text-sm sm:text-base text-text-muted max-w-3xl leading-relaxed">
-          {lesson.shortDescription}
-        </p>
       </div>
 
       {/* Tabs */}

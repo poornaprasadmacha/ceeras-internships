@@ -7,14 +7,10 @@ import { Database, ShieldCheck, Zap, Globe } from 'lucide-react';
 export function AboutView() {
   return (
     <div className="space-y-6 pb-12 max-w-3xl">
-      <div className="border-b border-border pb-6 space-y-2">
-        <Badge variant="accent" size="sm">
-          Philosophy & Architecture
-        </Badge>
+      <div className="border-b border-border pb-5">
         <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
           About {APP_NAME}
         </h1>
-        <p className="text-sm text-text-muted leading-relaxed">{APP_TAGLINE}</p>
       </div>
 
       <div className="space-y-6 text-sm text-text-main leading-relaxed">

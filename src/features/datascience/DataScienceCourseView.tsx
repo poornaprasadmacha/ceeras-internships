@@ -37,34 +37,20 @@ export function DataScienceCourseView() {
   return (
     <div className="space-y-6 pb-12">
       {/* Course Banner Header */}
-      <div className="border-b border-border pb-6 space-y-3">
+      <div className="border-b border-border pb-5 space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-subtle/80 border border-border/80 flex items-center justify-center p-2 shadow-xs">
             <DataScienceLogo className="w-full h-full object-contain rounded-xl" />
           </div>
-          <div>
-            <Badge variant="accent" size="sm" className="bg-[#130754]/15 text-[#130754] dark:text-[#E70488] border-[#130754]/30 mb-1">
-              Active Track • Zero to Hero
-            </Badge>
-            <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
-              Data Science (Statistics, EDA &amp; Machine Learning)
-            </h1>
-          </div>
+          <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main">
+            Data Science (Statistics, EDA &amp; Machine Learning)
+          </h1>
         </div>
 
-        <p className="text-sm text-text-muted max-w-2xl leading-relaxed">
-          Master the complete data science pipeline from zero to hero. Learn tabular structures, summary statistics, variance, data cleaning, boolean querying, aggregations, feature normalization, correlation, and supervised machine learning models.
-        </p>
-
-        <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted pt-1">
-          <span>{DATA_SCIENCE_LESSONS.length} Structured Lessons (Zero to Hero)</span>
+        <div className="flex flex-wrap items-center gap-4 text-xs text-text-muted">
+          <span>{DATA_SCIENCE_LESSONS.length} Lessons</span>
           <span>•</span>
-          <span>~{totalMinutes} mins total interactive practice</span>
-          <span>•</span>
-          <span className="text-[#E70488] font-medium flex items-center gap-1">
-            <BarChart3 className="w-3.5 h-3.5" />
-            <span>In-Browser Tabular Engine &amp; Plotter</span>
-          </span>
+          <span>~{totalMinutes} mins</span>
           {completedCount > 0 && (
             <>
               <span>•</span>

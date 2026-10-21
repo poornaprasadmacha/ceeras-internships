@@ -90,17 +90,11 @@ export function PlaygroundView() {
   return (
     <div className="space-y-6 pb-12">
       {/* Header */}
-      <div className="border-b border-border pb-6 space-y-2">
-        <Badge variant="accent" size="sm">
-          Interactive Sandbox
-        </Badge>
+      <div className="border-b border-border pb-5">
         <h1 className="font-raleway text-2xl sm:text-3xl font-bold tracking-tight text-text-main flex items-center gap-3">
           <Terminal className="w-7 h-7 text-primary" />
           <span>Practice Playground</span>
         </h1>
-        <p className="text-sm text-text-muted max-w-2xl leading-relaxed">
-          Experiment freely with SQL queries in an isolated browser-based SQLite database. Test query syntax, inspect schemas, and hone your skills without restrictions.
-        </p>
       </div>
 
       {/* Dataset Selection Bar */}

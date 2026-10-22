@@ -33,10 +33,7 @@ export function HtmlQuickChips({ onInsert, customChips = [] }: HtmlQuickChipsPro
       <div className="flex items-center justify-between text-[11px] font-semibold text-text-muted px-0.5">
         <span className="flex items-center gap-1.5 text-[#E44D26]">
           <Code2 className="w-3.5 h-3.5" />
-          <span>Quick HTML Tags (Tap to Insert)</span>
-        </span>
-        <span className="text-[10px] hidden sm:inline text-text-muted">
-          Click any tag to insert into editor
+          <span>Quick HTML Tags</span>
         </span>
       </div>
 

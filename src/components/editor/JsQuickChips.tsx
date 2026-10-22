@@ -34,10 +34,7 @@ export function JsQuickChips({ onInsert, customChips = [] }: JsQuickChipsProps) 
       <div className="flex items-center justify-between text-[11px] font-semibold text-text-muted px-0.5">
         <span className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400">
           <Terminal className="w-3.5 h-3.5" />
-          <span>Quick JavaScript Syntax (Tap to Insert)</span>
-        </span>
-        <span className="text-[10px] hidden sm:inline text-text-muted">
-          Click keyword to insert into editor
+          <span>Quick JavaScript Syntax</span>
         </span>
       </div>
 

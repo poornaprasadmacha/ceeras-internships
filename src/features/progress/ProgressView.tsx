@@ -1,6 +1,18 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useProgress } from '../../hooks/useProgress';
+import { useActiveCourse, CourseId } from '../../hooks/useActiveCourse';
 import { LESSON_MANIFEST } from '../../data/lessons';
+import { PYTHON_LESSONS } from '../../data/pythonLessons';
+import { HTML_LESSONS } from '../../data/htmlLessons';
+import { CSS_LESSONS } from '../../data/cssLessons';
+import { JS_LESSONS } from '../../data/jsLessons';
+import { DATA_SCIENCE_LESSONS } from '../../data/dataScienceLessons';
+import { MACHINE_LEARNING_LESSONS } from '../../data/machineLearningLessons';
+import { NUMPY_LESSONS } from '../../data/numpyLessons';
+import { PANDAS_LESSONS } from '../../data/pandasLessons';
+import { GIT_LESSONS } from '../../data/gitLessons';
+import { VSCODE_LESSONS } from '../../data/vscodeLessons';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -17,10 +29,19 @@ import {
   ShieldCheck,
   Check,
 } from 'lucide-react';
-import { formatDate } from '../../lib/utils';
+import { formatDate, cn } from '../../lib/utils';
 import { ExportData } from '../../types/progress';
 
+interface GenericProgressLesson {
+  id: string;
+  number: number;
+  title: string;
+  tasksCount: number;
+  quizId: string;
+}
+
 export function ProgressView() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const {
     stats,
     lessonsProgress,
@@ -31,9 +52,141 @@ export function ProgressView() {
     resetProgress,
   } = useProgress();
 
+  const { activeCourse, allCourses, setActiveCourseId, getCourseProgress } = useActiveCourse();
+
+  // Selected course tab
+  const paramCourse = searchParams.get('course')?.toLowerCase() as CourseId | undefined;
+  const initialCourseId: CourseId = useMemo(() => {
+    if (paramCourse && allCourses.some((c) => c.id === paramCourse)) {
+      return paramCourse;
+    }
+    return activeCourse.id;
+  }, [paramCourse, activeCourse.id]);
+
+  const [selectedCourseId, setSelectedCourseId] = useState<CourseId>(initialCourseId);
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const [importFeedback, setImportFeedback] = useState<{ success: boolean; message: string } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const selectedCourse = useMemo(() => {
+    return allCourses.find((c) => c.id === selectedCourseId) || allCourses[0];
+  }, [selectedCourseId, allCourses]);
+
+  const currentCourseProgress = useMemo(() => {
+    return getCourseProgress(selectedCourse, stats);
+  }, [selectedCourse, stats, getCourseProgress]);
+
+  const handleSelectCourse = (id: CourseId) => {
+    setSelectedCourseId(id);
+    setActiveCourseId(id);
+    setSearchParams({ course: id });
+  };
+
+  const courseLessons: GenericProgressLesson[] = useMemo(() => {
+    switch (selectedCourseId) {
+      case 'sql':
+        return LESSON_MANIFEST.map((l) => ({
+          id: l.id,
+          number: l.number,
+          title: l.title,
+          tasksCount: l.exercises.length,
+          quizId: `quiz_${l.id}`,
+        }));
+      case 'python':
+        return PYTHON_LESSONS.map((l) => ({
+          id: l.id,
+          number: l.number,
+          title: l.title,
+          tasksCount: l.exercises.length,
+          quizId: `quiz_python_${l.id}`,
+        }));
+      case 'html':
+        return HTML_LESSONS.map((l) => ({
+          id: l.id,
+          number: l.number,
+          title: l.title,
+          tasksCount: l.exercises.length,
+          quizId: `quiz_html_${l.id}`,
+        }));
+      case 'css':
+        return CSS_LESSONS.map((l) => ({
+          id: l.id,
+          number: l.number,
+          title: l.title,
+          tasksCount: l.exercises.length,
+          quizId: `quiz_css_${l.id}`,
+        }));
+      case 'javascript':
+        return JS_LESSONS.map((l) => ({
+          id: l.id,
+          number: l.number,
+          title: l.title,
+          tasksCount: l.exercises.length,
+          quizId: `quiz_js_${l.id}`,
+        }));
+      case 'datascience':
+        return DATA_SCIENCE_LESSONS.map((l) => ({
+          id: l.id,
+          number: l.number,
+          title: l.title,
+          tasksCount: l.exercises.length,
+          quizId: `quiz_ds_${l.id}`,
+        }));
+      case 'machinelearning':
+        return MACHINE_LEARNING_LESSONS.map((l) => ({
+          id: l.id,
+          number: l.number,
+          title: l.title,
+          tasksCount: l.exercises.length,
+          quizId: `quiz_ml_${l.id}`,
+        }));
+      case 'numpy':
+        return NUMPY_LESSONS.map((l) => ({
+          id: l.id,
+          number: l.number,
+          title: l.title,
+          tasksCount: l.exercises.length,
+          quizId: `quiz_numpy_${l.id}`,
+        }));
+      case 'pandas':
+        return PANDAS_LESSONS.map((l) => ({
+          id: l.id,
+          number: l.number,
+          title: l.title,
+          tasksCount: l.exercises.length,
+          quizId: `quiz_pandas_${l.id}`,
+        }));
+      case 'git':
+        return GIT_LESSONS.map((l) => ({
+          id: l.id,
+          number: l.number,
+          title: l.title,
+          tasksCount: l.exercises.length,
+          quizId: `quiz_git_${l.id}`,
+        }));
+      case 'vscode':
+        return VSCODE_LESSONS.map((l) => ({
+          id: l.id,
+          number: l.number,
+          title: l.title,
+          tasksCount: l.exercises.length,
+          quizId: `quiz_vscode_${l.id}`,
+        }));
+      default:
+        return [];
+    }
+  }, [selectedCourseId]);
+
+  // Read saved completion map for current course
+  const courseSolvedMap = useMemo(() => {
+    if (selectedCourseId === 'sql') return {};
+    try {
+      const raw = localStorage.getItem(selectedCourse.storageKey);
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  }, [selectedCourseId, selectedCourse.storageKey]);
 
   const handleExport = async () => {
     try {
@@ -87,35 +240,70 @@ export function ProgressView() {
         </h1>
       </div>
 
+      {/* Course Switcher Tabs */}
+      <div className="flex flex-wrap items-center gap-1.5 p-1.5 bg-subtle border border-border rounded-xl overflow-x-auto scrollbar-thin">
+        {allCourses.map((c) => {
+          const Logo = c.logo;
+          const isSelected = c.id === selectedCourseId;
+          return (
+            <button
+              key={c.id}
+              type="button"
+              onClick={() => handleSelectCourse(c.id)}
+              className={cn(
+                'flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap',
+                isSelected
+                  ? 'bg-surface text-primary shadow-2xs border border-border font-bold'
+                  : 'text-text-muted hover:text-text-main hover:bg-surface/50'
+              )}
+            >
+              <div className="w-4 h-4 rounded bg-subtle border border-border/60 flex items-center justify-center p-0.5 shrink-0">
+                <Logo className="w-full h-full object-contain" />
+              </div>
+              <span>{c.shortTitle}</span>
+              <span className="text-[10px] opacity-75 font-mono">({c.totalLessons})</span>
+            </button>
+          );
+        })}
+      </div>
+
       {/* Progress Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="p-5 space-y-3">
+        <Card className="p-5 space-y-3 bg-surface">
           <span className="text-xs font-semibold text-text-muted uppercase tracking-wider block">
-            Course Completion
+            {selectedCourse.shortTitle} Completion
           </span>
           <div className="text-3xl font-bold font-mono text-text-main">
-            {stats.coursePercentage}%
+            {currentCourseProgress.percentage}%
           </div>
-          <ProgressBar value={stats.coursePercentage} showPercentage={false} size="sm" />
+          <ProgressBar value={currentCourseProgress.percentage} showPercentage={false} size="sm" />
           <p className="text-xs text-text-muted">
-            {stats.completedLessons} of {stats.totalLessons} lessons completed
+            {currentCourseProgress.completedLessons} of {currentCourseProgress.totalLessons} lessons completed
           </p>
         </Card>
 
-        <Card className="p-5 space-y-3">
+        <Card className="p-5 space-y-3 bg-surface">
           <span className="text-xs font-semibold text-text-muted uppercase tracking-wider block">
-            Exercises Solved
+            {selectedCourseId === 'sql' ? 'SQL Tasks Solved' : 'Course Curriculum Units'}
           </span>
           <div className="text-3xl font-bold font-mono text-text-main">
-            {stats.solvedExercises} / {stats.totalExercises}
+            {selectedCourseId === 'sql'
+              ? `${stats.solvedExercises} / ${stats.totalExercises}`
+              : `${courseLessons.length} Lessons`}
           </div>
-          <ProgressBar value={stats.exercisePercentage} showPercentage={false} size="sm" />
+          <ProgressBar
+            value={selectedCourseId === 'sql' ? stats.exercisePercentage : currentCourseProgress.percentage}
+            showPercentage={false}
+            size="sm"
+          />
           <p className="text-xs text-text-muted">
-            {stats.exercisePercentage}% of hands-on queries solved
+            {selectedCourseId === 'sql'
+              ? `${stats.exercisePercentage}% of hands-on queries solved`
+              : `${currentCourseProgress.completedLessons} completed on this device`}
           </p>
         </Card>
 
-        <Card className="p-5 space-y-3">
+        <Card className="p-5 space-y-3 bg-surface">
           <span className="text-xs font-semibold text-text-muted uppercase tracking-wider block">
             Study Streak
           </span>
@@ -130,23 +318,34 @@ export function ProgressView() {
 
       {/* Detailed Lesson Breakdown Table */}
       <div className="space-y-4">
-        <h2 className="text-base font-bold text-text-main">Curriculum Breakdown</h2>
+        <h2 className="text-base font-bold text-text-main">
+          {selectedCourse.title} Curriculum Breakdown
+        </h2>
         <div className="border border-border rounded-lg overflow-x-auto bg-surface shadow-subtle">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="bg-subtle border-b border-border text-text-main font-semibold">
                 <th className="py-3 px-4">Lesson</th>
                 <th className="py-3 px-4">Status</th>
-                <th className="py-3 px-4">Tasks Solved</th>
+                <th className="py-3 px-4">Tasks</th>
                 <th className="py-3 px-4">Quiz Status</th>
-                <th className="py-3 px-4">Last Activity</th>
+                <th className="py-3 px-4">Environment</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/60">
-              {LESSON_MANIFEST.map((lesson) => {
-                const prog = lessonsProgress[lesson.id];
-                const quiz = quizAttempts[`quiz_${lesson.id}`];
-                const solvedTasks = lesson.exercises.filter((e) => exerciseAttempts[e.id]?.isSolved).length;
+              {courseLessons.map((lesson) => {
+                const quiz = quizAttempts[lesson.quizId];
+                let isCompleted = false;
+                let isStarted = false;
+
+                if (selectedCourseId === 'sql') {
+                  const prog = lessonsProgress[lesson.id];
+                  isCompleted = !!prog?.isCompleted;
+                  isStarted = !!prog?.isStarted;
+                } else {
+                  isCompleted = !!courseSolvedMap[lesson.id];
+                  isStarted = isCompleted;
+                }
 
                 return (
                   <tr key={lesson.id} className="hover:bg-subtle/40 transition-colors">
@@ -154,11 +353,11 @@ export function ProgressView() {
                       Lesson {lesson.number}: {lesson.title}
                     </td>
                     <td className="py-3 px-4">
-                      {prog?.isCompleted ? (
+                      {isCompleted ? (
                         <Badge variant="success" size="sm">
                           Completed
                         </Badge>
-                      ) : prog?.isStarted ? (
+                      ) : isStarted ? (
                         <Badge variant="accent" size="sm">
                           In Progress
                         </Badge>
@@ -169,7 +368,7 @@ export function ProgressView() {
                       )}
                     </td>
                     <td className="py-3 px-4 font-mono">
-                      {solvedTasks} / {lesson.exercises.length}
+                      {lesson.tasksCount} Interactive Tasks
                     </td>
                     <td className="py-3 px-4">
                       {quiz ? (
@@ -180,8 +379,8 @@ export function ProgressView() {
                         <span className="text-text-muted">Not taken</span>
                       )}
                     </td>
-                    <td className="py-3 px-4 text-text-muted">
-                      {formatDate(prog?.lastAccessedAt)}
+                    <td className="py-3 px-4 text-text-muted font-mono">
+                      {selectedCourse.playgroundTab.toUpperCase()}
                     </td>
                   </tr>
                 );
@@ -213,63 +412,72 @@ export function ProgressView() {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card className="p-5 space-y-3">
+          <Card className="p-5 space-y-3 bg-surface">
             <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
               <Download className="w-4 h-4 text-primary" />
               <span>Export Learning Progress</span>
             </h3>
             <p className="text-xs text-text-muted leading-relaxed">
-              Download your complete exercise solutions, quiz scores, bookmarks, and notes as a verified JSON file for offline backup or transfer to another device.
+              Download an encrypted JSON file containing your lesson completion history, quiz scores, and solution snapshots.
             </p>
-            <Button variant="outline" size="sm" onClick={handleExport}>
-              <Download className="w-3.5 h-3.5" />
-              <span>Download Backup (JSON)</span>
-            </Button>
+            <div className="pt-2">
+              <Button variant="outline" size="sm" onClick={handleExport} className="text-xs">
+                <Download className="w-3.5 h-3.5" />
+                <span>Export Progress JSON</span>
+              </Button>
+            </div>
           </Card>
 
-          <Card className="p-5 space-y-3">
+          <Card className="p-5 space-y-3 bg-surface">
             <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
-              <Upload className="w-4 h-4 text-secondary" />
+              <Upload className="w-4 h-4 text-primary" />
               <span>Restore from Backup</span>
             </h3>
             <p className="text-xs text-text-muted leading-relaxed">
-              Restore your learning progress from an existing QueryPath JSON file. This will replace current progress on this browser.
+              Upload a previously exported progress file to restore your learning state across devices without an account.
             </p>
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              accept=".json"
-              className="hidden"
-            />
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <Upload className="w-3.5 h-3.5" />
-              <span>Import Progress File</span>
-            </Button>
+            <div className="pt-2">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                accept=".json"
+                className="hidden"
+                id="progress-file-import"
+              />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => fileInputRef.current?.click()}
+                className="text-xs"
+              >
+                <Upload className="w-3.5 h-3.5" />
+                <span>Import Progress JSON</span>
+              </Button>
+            </div>
           </Card>
         </div>
 
-        {/* Factory Reset */}
-        <div className="p-4 rounded-lg border border-border bg-subtle/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="space-y-0.5">
-            <span className="text-xs font-semibold text-text-main">Clear Progress</span>
-            <p className="text-xs text-text-muted">
-              Erase all local exercise attempts, quiz scores, notes, and bookmarks on this device.
-            </p>
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setIsResetModalOpen(true)}
-            className="text-error hover:bg-error-subtle border-border shrink-0 text-xs"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset All Progress</span>
-          </Button>
+        {/* Reset Progress Section */}
+        <div className="pt-2">
+          <Card variant="subtle" className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-error/20 bg-error/5">
+            <div className="space-y-1">
+              <span className="text-xs font-bold text-error block">Reset Learning Data</span>
+              <p className="text-xs text-text-muted">
+                Permanently erase all local progress, quiz attempts, and bookmarks on this device.
+              </p>
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsResetModalOpen(true)}
+              className="text-xs text-error border-error/40 hover:bg-error hover:text-white shrink-0"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Reset All Progress</span>
+            </Button>
+          </Card>
         </div>
       </div>
 
@@ -277,26 +485,32 @@ export function ProgressView() {
       <Modal
         isOpen={isResetModalOpen}
         onClose={() => setIsResetModalOpen(false)}
-        title="Reset All Learning Progress?"
-        description="This action cannot be undone."
-        footer={
-          <>
-            <Button variant="outline" size="sm" onClick={() => setIsResetModalOpen(false)}>
+        title="Confirm Reset of Learning Progress"
+      >
+        <div className="space-y-4">
+          <div className="p-3 bg-error/10 border border-error/30 rounded-lg text-xs text-text-main flex items-start gap-2.5">
+            <AlertTriangle className="w-4 h-4 text-error shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <span className="font-bold text-error block">This action cannot be undone.</span>
+              <p className="text-text-muted">
+                All solved tasks, quiz records, and learning streak timestamps will be completely wiped from your browser.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-end gap-3 pt-3">
+            <Button variant="ghost" size="sm" onClick={() => setIsResetModalOpen(false)}>
               Cancel
             </Button>
-            <Button variant="danger" size="sm" onClick={handleConfirmReset}>
-              Yes, Reset Everything
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={handleConfirmReset}
+              className="bg-error hover:bg-error/90 text-white"
+            >
+              Confirm Full Reset
             </Button>
-          </>
-        }
-      >
-        <div className="space-y-3 text-xs text-text-muted leading-relaxed">
-          <p>
-            Are you sure you want to permanently clear your progress? All recorded exercise attempts, completed lessons, quiz scores, bookmarks, and study notes stored in your browser will be deleted.
-          </p>
-          <p className="font-semibold text-text-main">
-            Tip: You can export a JSON backup beforehand if you wish to preserve your answers.
-          </p>
+          </div>
         </div>
       </Modal>
     </div>

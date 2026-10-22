@@ -13,6 +13,54 @@ import {
   JavaScriptLogo,
   ScikitLearnLogo,
 } from '../components/ui/LanguageLogos';
+import { LESSON_MANIFEST } from '../data/lessons';
+import { PYTHON_LESSONS } from '../data/pythonLessons';
+import { HTML_LESSONS } from '../data/htmlLessons';
+import { CSS_LESSONS } from '../data/cssLessons';
+import { JS_LESSONS } from '../data/jsLessons';
+import { DATA_SCIENCE_LESSONS } from '../data/dataScienceLessons';
+import { MACHINE_LEARNING_LESSONS } from '../data/machineLearningLessons';
+import { NUMPY_LESSONS } from '../data/numpyLessons';
+import { PANDAS_LESSONS } from '../data/pandasLessons';
+import { GIT_LESSONS } from '../data/gitLessons';
+import { VSCODE_LESSONS } from '../data/vscodeLessons';
+
+export function findAnyLessonById(lessonId: string) {
+  const sql = LESSON_MANIFEST.find((l) => l.id === lessonId);
+  if (sql) return { id: sql.id, number: sql.number, title: sql.title, shortDescription: sql.shortDescription, slug: sql.slug, fullPath: `/learn/${sql.slug}` };
+
+  const py = PYTHON_LESSONS.find((l) => l.id === lessonId);
+  if (py) return { id: py.id, number: py.number, title: py.title, shortDescription: py.shortDescription, slug: py.slug, fullPath: `/learn/python/${py.slug}` };
+
+  const h = HTML_LESSONS.find((l) => l.id === lessonId);
+  if (h) return { id: h.id, number: h.number, title: h.title, shortDescription: h.shortDescription, slug: h.slug, fullPath: `/learn/html/${h.slug}` };
+
+  const c = CSS_LESSONS.find((l) => l.id === lessonId);
+  if (c) return { id: c.id, number: c.number, title: c.title, shortDescription: c.shortDescription, slug: c.slug, fullPath: `/learn/css/${c.slug}` };
+
+  const j = JS_LESSONS.find((l) => l.id === lessonId);
+  if (j) return { id: j.id, number: j.number, title: j.title, shortDescription: j.shortDescription, slug: j.slug, fullPath: `/learn/javascript/${j.slug}` };
+
+  const ds = DATA_SCIENCE_LESSONS.find((l) => l.id === lessonId);
+  if (ds) return { id: ds.id, number: ds.number, title: ds.title, shortDescription: ds.shortDescription, slug: ds.slug, fullPath: `/learn/datascience/${ds.slug}` };
+
+  const ml = MACHINE_LEARNING_LESSONS.find((l) => l.id === lessonId);
+  if (ml) return { id: ml.id, number: ml.number, title: ml.title, shortDescription: ml.shortDescription, slug: ml.slug, fullPath: `/learn/machinelearning/${ml.slug}` };
+
+  const np = NUMPY_LESSONS.find((l) => l.id === lessonId);
+  if (np) return { id: np.id, number: np.number, title: np.title, shortDescription: np.shortDescription, slug: np.slug, fullPath: `/learn/numpy/${np.slug}` };
+
+  const pd = PANDAS_LESSONS.find((l) => l.id === lessonId);
+  if (pd) return { id: pd.id, number: pd.number, title: pd.title, shortDescription: pd.shortDescription, slug: pd.slug, fullPath: `/learn/pandas/${pd.slug}` };
+
+  const g = GIT_LESSONS.find((l) => l.id === lessonId);
+  if (g) return { id: g.id, number: g.number, title: g.title, shortDescription: g.shortDescription, slug: g.slug, fullPath: `/learn/git/${g.slug}` };
+
+  const v = VSCODE_LESSONS.find((l) => l.id === lessonId);
+  if (v) return { id: v.id, number: v.number, title: v.title, shortDescription: v.shortDescription, slug: v.slug, fullPath: `/learn/vscode/${v.slug}` };
+
+  return undefined;
+}
 
 export type CourseId =
   | 'sql'

@@ -96,7 +96,7 @@ export function InteractiveQuerySimulator({ dataset }: InteractiveQuerySimulator
                   isChecked ? 'bg-primary text-white border-primary' : 'border-border'
                 )}
               >
-                {isChecked && '✓'}
+                {isChecked && <Check className="w-2.5 h-2.5 stroke-[3]" />}
               </span>
               <span>{col}</span>
             </button>

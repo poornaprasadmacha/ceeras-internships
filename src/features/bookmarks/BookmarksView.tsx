@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../hooks/useProgress';
-import { getLessonById } from '../../data/lessons';
+import { findAnyLessonById } from '../../hooks/useActiveCourse';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -36,7 +36,7 @@ export function BookmarksView() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {bookmarks.map((b) => {
-            const lesson = getLessonById(b.lessonId);
+            const lesson = findAnyLessonById(b.lessonId);
             return (
               <Card
                 key={b.id}
@@ -78,7 +78,7 @@ export function BookmarksView() {
                     variant="primary"
                     size="sm"
                     onClick={() => {
-                      if (lesson) navigate(`/learn/${lesson.slug}`);
+                      if (lesson) navigate(lesson.fullPath);
                     }}
                   >
                     <span>Open Lesson</span>

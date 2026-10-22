@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../../hooks/useProgress';
-import { getLessonById } from '../../data/lessons';
+import { findAnyLessonById } from '../../hooks/useActiveCourse';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -38,7 +38,7 @@ export function NotesView() {
       ) : (
         <div className="space-y-4">
           {noteList.map((note) => {
-            const lesson = getLessonById(note.lessonId);
+            const lesson = findAnyLessonById(note.lessonId);
             return (
               <Card key={note.lessonId} className="p-5 space-y-3">
                 <div className="flex items-center justify-between border-b border-border pb-2.5">
@@ -75,7 +75,7 @@ export function NotesView() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => navigate(`/learn/${lesson.slug}#notes`)}
+                      onClick={() => navigate(`${lesson.fullPath}#notes`)}
                     >
                       <span>Open in Lesson</span>
                       <ArrowRight className="w-3.5 h-3.5" />

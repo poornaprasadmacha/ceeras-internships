@@ -4,7 +4,6 @@ import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { CeerasHeader } from './CeerasHeader';
 import { RightPanel } from './RightPanel';
-import { BottomNav } from './BottomNav';
 import { LessonDefinition } from '../../types/lesson';
 
 export interface AppShellProps {
@@ -34,7 +33,7 @@ export function AppShell({
       {isHome ? (
         <>
           <CeerasHeader />
-          <main className="flex-1 p-4 sm:p-6 md:p-8 max-w-7xl mx-auto w-full pb-20 md:pb-8">
+          <main className="flex-1 p-4 sm:p-6 md:p-8 max-w-7xl mx-auto w-full pb-8 sm:pb-12">
             {children}
           </main>
         </>
@@ -55,7 +54,7 @@ export function AppShell({
 
             <div className="flex-1 flex min-w-0">
               {/* Main Content View */}
-              <main className="flex-1 p-3 sm:p-5 md:p-6 lg:p-8 max-w-6xl mx-auto w-full overflow-y-auto pb-20 md:pb-8">
+              <main className="flex-1 p-3 sm:p-5 md:p-6 lg:p-8 max-w-6xl mx-auto w-full overflow-y-auto pb-8 sm:pb-12">
                 {children}
               </main>
 
@@ -73,9 +72,6 @@ export function AppShell({
           </div>
         </div>
       )}
-
-      {/* Mobile Bottom Navigation Bar */}
-      <BottomNav onOpenMenu={() => setSidebarOpen(true)} />
     </div>
   );
 }

@@ -39,6 +39,7 @@ html[data-theme='soft-light'] {
   --status-error-subtle: #FEF2F2;
   --editor-bg: #1E293B;
   --editor-text: #F8FAFC;
+  --footer-grid-color: rgba(2, 62, 138, 0.045);
 }
 
 html[data-theme='dark'],
@@ -60,6 +61,7 @@ html[data-theme='soft-dark'] {
   --status-error-subtle: #331A1A;
   --editor-bg: #0F172A;
   --editor-text: #F8FAFC;
+  --footer-grid-color: rgba(255, 255, 255, 0.035);
 }
 
 /* Global Text Selection & High-Contrast Highlight */
@@ -150,4 +152,12 @@ html[data-theme='soft-dark'] .logo,
     font-size: 32px;
     letter-spacing: 2px;
   }
+}
+
+/* Engineering Blueprint Grid Pattern for Footer */
+.ceeras-footer-grid {
+  background-image: 
+    linear-gradient(to right, var(--footer-grid-color, rgba(2, 62, 138, 0.045)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--footer-grid-color, rgba(2, 62, 138, 0.045)) 1px, transparent 1px);
+  background-size: 32px 32px;
 }

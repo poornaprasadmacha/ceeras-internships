@@ -814,7 +814,7 @@ export function DashboardView() {
                       handleCourseClick(course);
                     }
                   }}
-                  className="group relative p-6 sm:p-7 rounded-2xl bg-surface border border-border hover:border-primary/60 hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col items-center text-center justify-center shadow-card hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary overflow-hidden min-h-[180px] sm:min-h-[200px]"
+                  className="group relative p-6 sm:p-7 rounded-2xl bg-surface border border-border hover:border-primary/60 hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col items-center text-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary overflow-hidden min-h-[180px] sm:min-h-[200px]"
                 >
                   {/* Technology Brand Logo */}
                   <div className="w-12 h-12 sm:w-14 sm:h-14 mb-3 sm:mb-4 flex items-center justify-center transition-transform duration-200 group-hover:scale-110 shrink-0">

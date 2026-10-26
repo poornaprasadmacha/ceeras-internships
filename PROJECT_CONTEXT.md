@@ -264,6 +264,16 @@ Each lesson in `src/data/lessons/` follows a typed `Lesson` schema:
     - Accessible coming-soon modal for preview tracks with direct links to active Python, SQL, and Web tracks.
     - Preserved instant category filtering (All, Web, Programming, Databases, Data Science, Tools) and instant real-time search.
   - Verified with `npx tsc --noEmit` (exit code 0), `npm run build` (exit code 0), and zero-emoji verification (0 emojis found).
+- **Phase 12: Reference Footer Realignment & Course Card Hover Shadow Removal**:
+  - Rebuilt [`CeerasFooter.tsx`](file:///c:/Users/poorn/OneDrive/Desktop/SQL/src/components/layout/CeerasFooter.tsx) to match the official corporate reference design:
+    - Added mathematical/engineering blueprint grid background pattern (`.ceeras-footer-grid`) rendered with CSS linear gradients.
+    - Left brand column: CEERAS tracked logo with tagline *"Precision Engineering for Scalable Software."*
+    - Column 1 (**QUICK LINKS**): Home (`/`), Capabilities (`/learn`), About (`/about`).
+    - Column 2 (**SUPPORT**): Privacy Policy (`/privacy`), Start a Project (`mailto:support@ceeras.in?subject=Start%20a%20Project`), Jobs (`mailto:support@ceeras.in?subject=Careers%20at%20Ceeras`).
+    - Column 3 (**CONTACT**): Clickable telephone (`+91 75699 33433`), clickable email (`support@ceeras.in`), physical location (*Cuddapah, Andhra Pradesh, India*), and social action buttons for LinkedIn and WhatsApp.
+    - Minimalist, unobtrusive copyright bar at bottom.
+  - Removed all box-shadows on hover (`shadow-card hover:shadow-lg`) for course catalog cards on the Home Page (`DashboardView.tsx`), keeping a clean, flat aesthetic with smooth elevation and subtle border accenting.
+  - Verified with `npx tsc --noEmit` (exit code 0), `npm run build` (exit code 0), and zero-emoji verification (0 emojis found).
 
 ---
 

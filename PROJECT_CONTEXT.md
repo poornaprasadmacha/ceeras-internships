@@ -268,6 +268,10 @@ Each lesson in `src/data/lessons/` follows a typed `Lesson` schema:
   - Removed decorative rounded pill tags (`Welcome Back to CEERAS` with Sparkles and `Open-Access Interactive Curriculum` with Compass) from the homepage hero banners in [`DashboardView.tsx`](file:///c:/Users/poorn/OneDrive/Desktop/SQL/src/features/dashboard/DashboardView.tsx).
   - Cleaned up unused icon imports (`Sparkles`, `Compass`).
   - Verified with `npx tsc --noEmit` (exit code 0), `npm run build` (exit code 0), and zero-emoji verification.
+- **Phase 14: Restricting Footer Exclusively to Landing / Home Page**:
+  - Removed `<CeerasFooter />` from the inner learning shell in [`AppShell.tsx`](file:///c:/Users/poorn/OneDrive/Desktop/SQL/src/components/layout/AppShell.tsx).
+  - Ensured the corporate blueprint footer is rendered exclusively on the public Landing/Home page (`isHome`), freeing up vertical space for focused coding, lessons, quizzes, and workspaces across all other routes.
+  - Verified with `npx tsc --noEmit` (exit code 0), `npm run build` (exit code 0), and zero-emoji verification.
 - **Phase 12: Reference Footer Realignment & Course Card Hover Shadow Removal**:
   - Rebuilt [`CeerasFooter.tsx`](file:///c:/Users/poorn/OneDrive/Desktop/SQL/src/components/layout/CeerasFooter.tsx) to match the official corporate reference design:
     - Added mathematical/engineering blueprint grid background pattern (`.ceeras-footer-grid`) rendered with CSS linear gradients.
@@ -281,6 +285,10 @@ Each lesson in `src/data/lessons/` follows a typed `Lesson` schema:
 - **Phase 13: Hero Tag Pill Removal**:
   - Removed decorative rounded pill tags (`Welcome Back to CEERAS` with Sparkles and `Open-Access Interactive Curriculum` with Compass) from the homepage hero banners in [`DashboardView.tsx`](file:///c:/Users/poorn/OneDrive/Desktop/SQL/src/features/dashboard/DashboardView.tsx).
   - Cleaned up unused icon imports (`Sparkles`, `Compass`).
+  - Verified with `npx tsc --noEmit` (exit code 0), `npm run build` (exit code 0), and zero-emoji verification.
+- **Phase 14: Restricting Footer Exclusively to Landing / Home Page**:
+  - Removed `<CeerasFooter />` from the inner learning shell in [`AppShell.tsx`](file:///c:/Users/poorn/OneDrive/Desktop/SQL/src/components/layout/AppShell.tsx).
+  - Ensured the corporate blueprint footer is rendered exclusively on the public Landing/Home page (`isHome`), freeing up vertical space for focused coding, lessons, quizzes, and workspaces across all other routes.
   - Verified with `npx tsc --noEmit` (exit code 0), `npm run build` (exit code 0), and zero-emoji verification.
 
 ---

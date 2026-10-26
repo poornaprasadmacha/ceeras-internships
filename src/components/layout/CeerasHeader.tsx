@@ -26,16 +26,23 @@ import {
   ScikitLearnLogo,
 } from '../ui/LanguageLogos';
 import { useTheme } from '../../hooks/useTheme';
+import { useScrollDirection } from '../../hooks/useScrollDirection';
+import { cn } from '../../lib/utils';
 import { THEMES } from '../../lib/constants';
 
 export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void }) {
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
+  const isScrollVisible = useScrollDirection();
   const [coursesOpen, setCoursesOpen] = useState(false);
   const [quizzesOpen, setQuizzesOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Keep header visible whenever a menu, dropdown, or search form is open
+  const isHeaderVisible =
+    isScrollVisible || mobileMenuOpen || coursesOpen || quizzesOpen || searchOpen;
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +63,14 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-surface/95 backdrop-blur-md border-b border-border transition-colors">
+    <header
+      className={cn(
+        'sticky top-0 z-40 bg-surface/95 backdrop-blur-md border-b border-border transition-all duration-300 ease-in-out',
+        isHeaderVisible
+          ? 'translate-y-0 opacity-100'
+          : '-translate-y-full opacity-0 pointer-events-none'
+      )}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo: CEERAS with Aboreto font & gradient */}
         <Link to="/" className="logo shrink-0" aria-label="Ceeras Home">

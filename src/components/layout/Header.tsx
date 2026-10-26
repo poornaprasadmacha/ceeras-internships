@@ -5,6 +5,8 @@ import { useOnlineStatus } from '../../hooks/useOnlineStatus';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
+import { useScrollDirection } from '../../hooks/useScrollDirection';
+import { cn } from '../../lib/utils';
 
 export interface HeaderProps {
   onToggleSidebar: () => void;
@@ -20,9 +22,17 @@ export function Header({
   rightPanelOpen,
 }: HeaderProps) {
   const isOnline = useOnlineStatus();
+  const isVisible = useScrollDirection();
 
   return (
-    <header className="h-14 border-b border-border bg-surface px-4 flex items-center justify-between sticky top-0 z-30">
+    <header
+      className={cn(
+        'h-14 border-b border-border bg-surface px-4 flex items-center justify-between sticky top-0 z-30 transition-all duration-300 ease-in-out',
+        isVisible
+          ? 'translate-y-0 opacity-100'
+          : '-translate-y-full opacity-0 pointer-events-none'
+      )}
+    >
       <div className="flex items-center gap-3">
         <Button
           variant="ghost"

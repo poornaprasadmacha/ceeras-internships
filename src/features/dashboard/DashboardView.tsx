@@ -6,6 +6,7 @@ import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { ProgressBar } from '../../components/ui/ProgressBar';
+import { RotatingGlobe } from '../../components/ui/RotatingGlobe';
 import {
   BookOpen,
   CheckCircle2,
@@ -292,15 +293,9 @@ export function DashboardView() {
             </h1>
           </div>
 
-          {/* Right Illustration Column */}
+          {/* Right Column: Interactive Rotating 3D Knowledge Globe with Network Lines */}
           <div className="lg:col-span-5 flex justify-center lg:justify-end">
-            <div className="w-full max-w-md lg:max-w-none">
-              <img
-                src="/images/ceeras-hero.png"
-                alt="Ceeras Student Learning Illustration"
-                className="w-full h-auto object-contain max-h-[380px] lg:max-h-[440px]"
-              />
-            </div>
+            <RotatingGlobe />
           </div>
         </div>
       </section>

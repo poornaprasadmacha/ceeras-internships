@@ -20,8 +20,6 @@ import {
   Bookmark,
   CheckSquare,
   Search,
-  Sparkles,
-  Compass,
   Clock,
   Play,
   Trash2,
@@ -395,11 +393,6 @@ export function DashboardView() {
             {hasStartedAny ? (
               /* RETURNING STUDENT HERO BANNER */
               <div className="space-y-5 animate-fadeIn">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold">
-                  <Sparkles className="w-3.5 h-3.5 shrink-0" />
-                  <span>Welcome Back to CEERAS</span>
-                </div>
-
                 <div className="space-y-2">
                   <h1 className="font-raleway text-3xl sm:text-4xl md:text-5xl font-bold text-text-main tracking-tight leading-[1.18]">
                     Continue your learning journey.
@@ -463,11 +456,6 @@ export function DashboardView() {
             ) : (
               /* NEW VISITOR HERO BANNER */
               <div className="space-y-5 animate-fadeIn">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold">
-                  <Compass className="w-3.5 h-3.5 shrink-0" />
-                  <span>Open-Access Interactive Curriculum</span>
-                </div>
-
                 <div className="space-y-3">
                   <h1 className="font-raleway text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-bold text-text-main tracking-tight leading-[1.18]">
                     Our mission: <br />

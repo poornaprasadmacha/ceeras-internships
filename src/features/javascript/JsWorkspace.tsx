@@ -292,7 +292,7 @@ export function JsWorkspace({
         <div className="space-y-2 flex flex-col">
           <div className="border border-border rounded-lg overflow-hidden bg-editor-bg flex flex-col flex-1 shadow-2xs">
             {/* Terminal Topbar */}
-            <div className="bg-subtle border-b border-border px-3 py-2 flex items-center justify-between select-none">
+            <div className="bg-subtle border-b border-border px-3 py-2 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Terminal className="w-3.5 h-3.5 text-amber-500" />
                 <span className="text-xs font-semibold text-text-main font-mono">

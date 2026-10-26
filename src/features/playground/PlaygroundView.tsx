@@ -501,7 +501,7 @@ export function PlaygroundView() {
                   {pythonResult.output}
                 </pre>
               ) : (
-                <span className="text-text-muted italic select-none">
+                <span className="text-text-muted italic">
                   Write or edit code above and click &quot;Run Python&quot; (or press Ctrl+Enter) to see terminal output.
                 </span>
               )}

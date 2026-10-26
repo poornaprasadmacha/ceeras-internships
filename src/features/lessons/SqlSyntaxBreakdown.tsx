@@ -69,7 +69,7 @@ export function SqlSyntaxBreakdown({
       </div>
 
       {/* Visual Block Builder with touch-friendly targets */}
-      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 font-mono text-xs sm:text-sm p-2.5 sm:p-3 bg-editor-bg rounded-lg border border-border select-none">
+      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 font-mono text-xs sm:text-sm p-2.5 sm:p-3 bg-editor-bg rounded-lg border border-border">
         <button
           type="button"
           onClick={() => setSelectedPart('select')}

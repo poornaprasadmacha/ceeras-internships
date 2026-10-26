@@ -340,7 +340,7 @@ export function PythonWorkspace({
           ) : result?.output ? (
             <span className="whitespace-pre-wrap">{result.output}</span>
           ) : (
-            <span className="text-text-muted italic select-none">
+            <span className="text-text-muted italic">
               Click &quot;Run Python&quot; to execute code and view terminal output.
             </span>
           )}

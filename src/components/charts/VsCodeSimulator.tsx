@@ -62,7 +62,7 @@ export function VsCodeSimulator({
 
   return (
     <div
-      className={`flex flex-col bg-[#1E1E1E] text-neutral-300 rounded-xl border border-[#333333] overflow-hidden shadow-md select-none font-sans text-xs ${className}`}
+      className={`flex flex-col bg-[#1E1E1E] text-neutral-300 rounded-xl border border-[#333333] overflow-hidden shadow-md font-sans text-xs ${className}`}
     >
       {/* Top Titlebar */}
       <div className="flex items-center justify-between px-3 py-1.5 bg-[#323233] border-b border-[#252526] text-[11px] text-neutral-400">

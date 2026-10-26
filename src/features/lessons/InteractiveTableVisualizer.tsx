@@ -118,7 +118,7 @@ export function InteractiveTableVisualizer({
         <table className="w-full text-left border-collapse text-xs font-mono">
           <thead>
             <tr className="bg-subtle border-b border-border text-text-main sticky top-0 z-10">
-              <th className="py-2.5 px-3 border-r border-border text-center w-12 text-text-muted font-mono select-none">
+              <th className="py-2.5 px-3 border-r border-border text-center w-12 text-text-muted font-mono">
                 Row
               </th>
               {columns.map((col, idx) => {
@@ -131,7 +131,7 @@ export function InteractiveTableVisualizer({
                     key={col}
                     onClick={() => handleSelectCol(idx)}
                     className={cn(
-                      'py-2.5 px-4 font-semibold border-r border-border last:border-r-0 cursor-pointer select-none transition-colors tracking-wide',
+                      'py-2.5 px-4 font-semibold border-r border-border last:border-r-0 cursor-pointer transition-colors tracking-wide',
                       isColActive
                         ? 'bg-primary/15 text-primary border-b-2 border-b-primary font-bold'
                         : 'hover:bg-subtle/80 hover:text-primary'
@@ -164,7 +164,7 @@ export function InteractiveTableVisualizer({
                   <td
                     onClick={() => handleSelectRow(rIdx)}
                     className={cn(
-                      'py-2.5 px-3 text-center border-r border-border cursor-pointer select-none',
+                      'py-2.5 px-3 text-center border-r border-border cursor-pointer',
                       isRowActive
                         ? 'bg-secondary/30 text-text-main font-bold'
                         : 'bg-subtle/40 text-text-muted hover:bg-border/60'

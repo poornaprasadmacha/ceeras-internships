@@ -27,7 +27,7 @@ export function CssQuickChips({ onInsert, customChips = [] }: CssQuickChipsProps
   const allChips = Array.from(new Set([...customChips, ...defaultChips]));
 
   return (
-    <div className="bg-subtle/70 border border-border rounded-t-md p-2 space-y-1.5 select-none">
+    <div className="bg-subtle/70 border border-border rounded-t-md p-2 space-y-1.5">
       <div className="flex items-center justify-between text-[11px] font-semibold text-text-muted px-0.5">
         <span className="flex items-center gap-1.5 text-[#1572B6]">
           <Palette className="w-3.5 h-3.5" />

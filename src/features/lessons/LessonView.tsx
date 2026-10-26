@@ -370,7 +370,7 @@ export function LessonView() {
         {/* Optional Collapsible Section: Database Engines */}
         <div className="my-6">
           <details className="group border border-border rounded-lg bg-surface overflow-hidden">
-            <summary className="p-3.5 sm:p-4 text-xs sm:text-sm font-bold text-text-main cursor-pointer select-none flex items-center justify-between hover:bg-subtle transition-colors list-none">
+            <summary className="p-3.5 sm:p-4 text-xs sm:text-sm font-bold text-text-main cursor-pointer flex items-center justify-between hover:bg-subtle transition-colors list-none">
               <div className="flex items-center gap-2">
                 <Badge variant="outline" size="sm">Optional Reading</Badge>
                 <span>Popular Relational Database Engines (SQLite, PostgreSQL, MySQL, SQL Server)</span>

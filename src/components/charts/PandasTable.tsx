@@ -131,7 +131,7 @@ export function PandasTable({ data, className = '' }: PandasTableProps) {
                   <th
                     key={col}
                     onClick={() => handleSort(col)}
-                    className="py-2 px-3 text-[11px] font-mono font-semibold text-text-main hover:bg-subtle/80 cursor-pointer select-none transition-colors border-r border-border/60 last:border-r-0"
+                    className="py-2 px-3 text-[11px] font-mono font-semibold text-text-main hover:bg-subtle/80 cursor-pointer transition-colors border-r border-border/60 last:border-r-0"
                   >
                     <div className="flex items-center justify-between gap-1.5">
                       <span>{col}</span>
@@ -162,7 +162,7 @@ export function PandasTable({ data, className = '' }: PandasTableProps) {
                   key={rIdx}
                   className="hover:bg-primary/5 transition-colors group"
                 >
-                  <td className="py-1.5 px-3 bg-subtle/30 text-text-muted font-medium text-center border-r border-border select-none">
+                  <td className="py-1.5 px-3 bg-subtle/30 text-text-muted font-medium text-center border-r border-border">
                     {String(idx)}
                   </td>
                   {row.map((cell, cIdx) => {

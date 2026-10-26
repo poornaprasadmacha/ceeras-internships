@@ -62,6 +62,25 @@ html[data-theme='soft-dark'] {
   --editor-text: #F8FAFC;
 }
 
+/* Global Text Selection & High-Contrast Highlight */
+html,
+body {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+::selection {
+  background-color: #bce8f4;
+  color: #023e8a;
+}
+
+html[data-theme='dark'] ::selection,
+html[data-theme='soft-dark'] ::selection,
+.dark ::selection {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
 /* Accessibility: Focus Visible outline */
 :focus-visible {
   outline: 2px solid var(--accent-primary);

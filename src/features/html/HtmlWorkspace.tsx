@@ -339,7 +339,7 @@ ${code}
           {/* Simulated Browser Chrome */}
           <div className="border border-border rounded-lg overflow-hidden bg-surface flex flex-col flex-1 shadow-2xs">
             {/* Browser Top Bar */}
-            <div className="bg-subtle border-b border-border px-3 py-2 flex items-center justify-between gap-2 select-none">
+            <div className="bg-subtle border-b border-border px-3 py-2 flex items-center justify-between gap-2">
               <div className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-400 inline-block" />
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block" />

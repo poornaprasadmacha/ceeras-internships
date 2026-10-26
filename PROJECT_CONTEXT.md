@@ -230,6 +230,13 @@ Each lesson in `src/data/lessons/` follows a typed `Lesson` schema:
   - Course Discovery & Filtering: Added instant category filter pills (All Tracks, Databases & SQL, Programming & Python, Web Development, Data Science & AI, Developer Tools) and real-time title/technology search.
   - Assessments & Bookmarks: Integrated Foundation Review Test card with score status and pass criteria, plus direct bookmark management.
   - Theme & Accessibility: Full WCAG 2.2 AA compliance across pure Daylight `#FFFFFF` and W3Schools Dark `#15202B` palettes, responsive layout without clipping or horizontal overflow, strictly zero emojis.
+- **Phase 9: Comprehensive Text Selection & High-Contrast Highlight Support**:
+  - Removed restrictive `select-none` classes across interactive simulators, tables, visualizers, syntax tokens, quick code chips, and lesson summaries (`VsCodeSimulator`, `PandasTable`, `InteractiveTableVisualizer`, `SqlSyntaxBreakdown`, `InteractiveQuerySimulator`, `QuickSqlChips`, workspaces).
+  - Configured global `-webkit-user-select: text` and `user-select: text` in `src/styles/index.css` across `html` and `body`.
+  - Replaced the low-opacity selection tint in `index.html` with explicit, high-contrast, accessible `::selection` rules:
+    - Daylight Mode: Soft cyan `#BCE8F4` background with deep Ceeras blue `#023E8A` text.
+    - Dark Mode: Solid blue `#007BFF` background with pure white `#FFFFFF` text.
+  - Verified with `npx tsc --noEmit` (exit code 0), `npm run build` (exit code 0), and zero-emoji verification.
 
 ---
 

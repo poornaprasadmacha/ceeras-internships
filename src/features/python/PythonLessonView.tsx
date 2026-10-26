@@ -230,7 +230,7 @@ export function PythonLessonView() {
       {activeTab === 'exercises' && (
         <div className="space-y-6">
           {lesson.exercises.length > 1 && (
-            <div className="flex flex-wrap items-center gap-2 border-b border-border pb-3 select-none">
+            <div className="flex flex-wrap items-center gap-2 border-b border-border pb-3">
               <span className="text-xs font-semibold text-text-muted mr-1">Tasks:</span>
               {lesson.exercises.map((ex, idx) => {
                 const isSolved = !!solvedExercises[ex.id];

@@ -140,7 +140,7 @@ export function RotatingGlobe() {
   }, []);
 
   return (
-    <div className="relative w-full max-w-[480px] flex items-center justify-center select-none">
+    <div className="relative w-full max-w-[480px] flex items-center justify-center">
       {/* Container for amCharts 4 Orthographic rotating globe */}
       <div
         id="chartdiv"

@@ -59,7 +59,7 @@ export function InteractiveQuerySimulator({ dataset }: InteractiveQuerySimulator
       </p>
 
       {/* Column Checkbox Chips */}
-      <div className="flex flex-wrap items-center gap-2 select-none">
+      <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={handleSelectAll}

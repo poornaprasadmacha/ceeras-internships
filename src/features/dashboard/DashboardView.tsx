@@ -23,12 +23,10 @@ import {
   Sparkles,
   Compass,
   Clock,
-  Layers,
-  Code2,
   Play,
-  RotateCcw,
   Trash2,
-  ExternalLink,
+  X,
+  Code,
 } from 'lucide-react';
 import {
   SqlLogo,
@@ -42,241 +40,242 @@ import {
   DataScienceLogo,
   JavaScriptLogo,
   ScikitLearnLogo,
+  JavaLogo,
+  CLogo,
+  CppLogo,
+  CSharpLogo,
+  PhpLogo,
+  ReactLogo,
+  MySqlLogo,
 } from '../../components/ui/LanguageLogos';
 
-type CategoryFilter = 'all' | 'databases' | 'programming' | 'web' | 'datascience' | 'tools';
+type CategoryFilter = 'all' | 'web' | 'programming' | 'databases' | 'datascience' | 'tools';
 
 interface CourseCardData {
   id: string;
   configId: string;
   title: string;
   shortTitle: string;
+  tagline: string;
   category: string;
   filterCategory: CategoryFilter;
-  description: string;
-  level: string;
-  modulesCount: number;
-  duration: string;
-  engineName: string;
   route: string;
+  isComingSoon?: boolean;
   logo: React.ComponentType<{ className?: string; size?: number }>;
 }
 
 const COURSES_DATA: CourseCardData[] = [
-  {
-    id: 'sql-relational',
-    configId: 'sql',
-    title: 'SQL & Relational Databases',
-    shortTitle: 'SQL',
-    category: 'Databases & SQL',
-    filterCategory: 'databases',
-    description:
-      'Master relational schemas, multi-table joins, subqueries, aggregations, and window functions with in-browser query execution.',
-    level: 'Zero to Advanced',
-    modulesCount: 24,
-    duration: '14-16 hours',
-    engineName: 'In-Browser SQLite WASM',
-    route: '/learn',
-    logo: SqlLogo,
-  },
-  {
-    id: 'python-core',
-    configId: 'python',
-    title: 'Python Programming Fundamentals',
-    shortTitle: 'Python',
-    category: 'Programming & Python',
-    filterCategory: 'programming',
-    description:
-      'Build core programming fundamentals: control structures, data collections, functions, object-oriented design, and algorithms.',
-    level: 'Beginner',
-    modulesCount: 12,
-    duration: '6-8 hours',
-    engineName: 'In-Browser Python 3 Console',
-    route: '/learn/python',
-    logo: PythonLogo,
-  },
+  // Row 1 (Matches user reference screenshot)
   {
     id: 'html-core',
     configId: 'html',
-    title: 'HTML5 & Modern Web Architecture',
-    shortTitle: 'HTML5',
+    title: 'HTML',
+    shortTitle: 'HTML',
+    tagline: 'The building blocks of every webpage',
     category: 'Web Development',
     filterCategory: 'web',
-    description:
-      'Construct semantic, accessible, and high-performance documents with modern HTML5 APIs, forms, audio/video, and SEO best practices.',
-    level: 'Beginner',
-    modulesCount: 12,
-    duration: '6-8 hours',
-    engineName: 'Live Sandboxed Web Preview',
     route: '/learn/html',
     logo: HtmlLogo,
   },
   {
     id: 'css-core',
     configId: 'css',
-    title: 'CSS3 & Modern Responsive Design',
-    shortTitle: 'CSS3',
+    title: 'CSS',
+    shortTitle: 'CSS',
+    tagline: 'Style and layout for web pages',
     category: 'Web Development',
     filterCategory: 'web',
-    description:
-      'Master Flexbox, CSS Grid, media queries, CSS variables, transitions, and accessible UI component styling across all screen sizes.',
-    level: 'Beginner to Intermediate',
-    modulesCount: 12,
-    duration: '6-8 hours',
-    engineName: 'Component Visualizer',
     route: '/learn/css',
     logo: CssLogo,
   },
   {
     id: 'javascript-modern',
     configId: 'javascript',
-    title: 'Modern JavaScript (ES6+ & Web APIs)',
+    title: 'JavaScript',
     shortTitle: 'JavaScript',
+    tagline: 'Interactive and dynamic web pages',
     category: 'Web Development',
     filterCategory: 'web',
-    description:
-      'Deep dive into ES6+ syntax, asynchronous programming with Promises & async/await, DOM manipulation, and browser APIs.',
-    level: 'Beginner to Intermediate',
-    modulesCount: 14,
-    duration: '8-10 hours',
-    engineName: 'In-Browser Live JS Runtime',
     route: '/learn/javascript',
     logo: JavaScriptLogo,
   },
   {
+    id: 'sql-relational',
+    configId: 'sql',
+    title: 'SQL',
+    shortTitle: 'SQL',
+    tagline: 'Query and manage databases',
+    category: 'Databases & SQL',
+    filterCategory: 'databases',
+    route: '/learn',
+    logo: SqlLogo,
+  },
+
+  // Row 2 (Matches user reference screenshot)
+  {
+    id: 'python-core',
+    configId: 'python',
+    title: 'Python',
+    shortTitle: 'Python',
+    tagline: 'Popular language for web, data & AI',
+    category: 'Programming & Systems',
+    filterCategory: 'programming',
+    route: '/learn/python',
+    logo: PythonLogo,
+  },
+  {
+    id: 'java-core',
+    configId: 'java',
+    title: 'Java',
+    shortTitle: 'Java',
+    tagline: 'Object-oriented programming language',
+    category: 'Programming & Systems',
+    filterCategory: 'programming',
+    route: '/learn/python',
+    isComingSoon: true,
+    logo: JavaLogo,
+  },
+  {
+    id: 'c-core',
+    configId: 'c',
+    title: 'C',
+    shortTitle: 'C',
+    tagline: 'A powerful general-purpose language',
+    category: 'Programming & Systems',
+    filterCategory: 'programming',
+    route: '/learn/python',
+    isComingSoon: true,
+    logo: CLogo,
+  },
+  {
+    id: 'cpp-core',
+    configId: 'cpp',
+    title: 'C++',
+    shortTitle: 'C++',
+    tagline: 'The language behind games & engines',
+    category: 'Programming & Systems',
+    filterCategory: 'programming',
+    route: '/learn/python',
+    isComingSoon: true,
+    logo: CppLogo,
+  },
+
+  // Row 3 (Matches user reference screenshot)
+  {
+    id: 'csharp-core',
+    configId: 'csharp',
+    title: 'C#',
+    shortTitle: 'C#',
+    tagline: 'Build apps, games and web services',
+    category: 'Programming & Systems',
+    filterCategory: 'programming',
+    route: '/learn/python',
+    isComingSoon: true,
+    logo: CSharpLogo,
+  },
+  {
+    id: 'php-core',
+    configId: 'php',
+    title: 'PHP',
+    shortTitle: 'PHP',
+    tagline: 'Server-side scripting language',
+    category: 'Web Development',
+    filterCategory: 'web',
+    route: '/learn/javascript',
+    isComingSoon: true,
+    logo: PhpLogo,
+  },
+  {
+    id: 'react-core',
+    configId: 'react',
+    title: 'React',
+    shortTitle: 'React',
+    tagline: 'Build interactive user interfaces',
+    category: 'Web Development',
+    filterCategory: 'web',
+    route: '/playground?tab=web',
+    logo: ReactLogo,
+  },
+  {
+    id: 'mysql-core',
+    configId: 'mysql',
+    title: 'MySQL',
+    shortTitle: 'MySQL',
+    tagline: 'Store and manage relational data',
+    category: 'Databases & SQL',
+    filterCategory: 'databases',
+    route: '/learn',
+    logo: MySqlLogo,
+  },
+
+  // Row 4 (Data Science & Scientific Stack)
+  {
     id: 'numpy-computing',
     configId: 'numpy',
-    title: 'NumPy for Numerical Computing',
+    title: 'NumPy',
     shortTitle: 'NumPy',
+    tagline: 'High-performance numerical computing',
     category: 'Data Science & AI',
     filterCategory: 'datascience',
-    description:
-      'Explore n-dimensional arrays, vectorized broadcasting, linear algebra, slicing, indexing, and high-performance numerical routines.',
-    level: 'Intermediate',
-    modulesCount: 12,
-    duration: '6-8 hours',
-    engineName: 'Numerical Memory Engine',
     route: '/learn/numpy',
     logo: NumpyLogo,
   },
   {
     id: 'pandas-data',
     configId: 'pandas',
-    title: 'Pandas for Data Analysis & Manipulation',
+    title: 'Pandas',
     shortTitle: 'Pandas',
+    tagline: 'Data analysis, manipulation & cleaning',
     category: 'Data Science & AI',
     filterCategory: 'datascience',
-    description:
-      'Transform, filter, clean, reshape, and aggregate tabular datasets using Series and DataFrames with immediate table outputs.',
-    level: 'Intermediate',
-    modulesCount: 12,
-    duration: '6-8 hours',
-    engineName: 'Tabular Data Engine',
     route: '/learn/pandas',
     logo: PandasLogo,
   },
   {
     id: 'data-science',
     configId: 'datascience',
-    title: 'Data Science (Statistics, EDA & ML)',
+    title: 'Data Science',
     shortTitle: 'Data Science',
+    tagline: 'Statistics, EDA and visual charts',
     category: 'Data Science & AI',
     filterCategory: 'datascience',
-    description:
-      'Learn exploratory data analysis, descriptive statistics, feature distribution, hypothesis testing, and SVG visualization charts.',
-    level: 'Intermediate to Advanced',
-    modulesCount: 14,
-    duration: '8-10 hours',
-    engineName: 'Statistical Engine & Plotter',
     route: '/learn/datascience',
     logo: DataScienceLogo,
   },
   {
     id: 'machine-learning',
     configId: 'machinelearning',
-    title: 'Machine Learning (Algorithms & Ensembles)',
+    title: 'Machine Learning',
     shortTitle: 'Machine Learning',
+    tagline: 'Predictive algorithms and models',
     category: 'Data Science & AI',
     filterCategory: 'datascience',
-    description:
-      'Train classification, regression, clustering models, and evaluate performance with confusion matrices and precision-recall curves.',
-    level: 'Advanced',
-    modulesCount: 15,
-    duration: '10-12 hours',
-    engineName: 'In-Browser ML Sandbox',
     route: '/learn/machinelearning',
     logo: ScikitLearnLogo,
   },
+
+  // Row 5 (Developer Tooling & Workflows)
   {
     id: 'git-github',
     configId: 'git',
-    title: 'Git & GitHub Distributed Version Control',
+    title: 'Git & GitHub',
     shortTitle: 'Git & GitHub',
+    tagline: 'Distributed version control workflows',
     category: 'Developer Tools',
     filterCategory: 'tools',
-    description:
-      'Master commit histories, branching strategies, merge conflicts, stashing, rebasing, remote remotes, and pull request workflows.',
-    level: 'Beginner to Intermediate',
-    modulesCount: 12,
-    duration: '6-8 hours',
-    engineName: 'In-Browser Git Sandbox & DAG',
     route: '/learn/git',
     logo: GitLogo,
   },
   {
     id: 'vscode-mastery',
     configId: 'vscode',
-    title: 'Visual Studio Code Mastery & Productivity',
+    title: 'VS Code',
     shortTitle: 'VS Code',
+    tagline: 'Developer velocity and editor setup',
     category: 'Developer Tools',
     filterCategory: 'tools',
-    description:
-      'Boost developer velocity with multi-cursor workflows, keyboard shortcuts, debugger setup, extensions, and workspace configurations.',
-    level: 'Beginner',
-    modulesCount: 12,
-    duration: '6-8 hours',
-    engineName: 'In-Browser IDE Simulator',
     route: '/learn/vscode',
     logo: VsCodeLogo,
-  },
-];
-
-const LEARNING_PATHS = [
-  {
-    id: 'data-analyst',
-    title: 'Data Analyst & BI Specialist',
-    description:
-      'Extract, clean, aggregate, and visualize enterprise data to produce actionable business intelligence.',
-    steps: [
-      { name: 'SQL & Relational Databases', path: '/learn' },
-      { name: 'NumPy Computing', path: '/learn/numpy' },
-      { name: 'Pandas DataFrames', path: '/learn/pandas' },
-      { name: 'Data Science & EDA', path: '/learn/datascience' },
-    ],
-  },
-  {
-    id: 'web-developer',
-    title: 'Modern Web Developer',
-    description:
-      'Build responsive, accessible, high-performance web applications with semantic markup and client logic.',
-    steps: [
-      { name: 'HTML5 Architecture', path: '/learn/html' },
-      { name: 'CSS3 Responsive Design', path: '/learn/css' },
-      { name: 'Modern JavaScript (ES6+)', path: '/learn/javascript' },
-      { name: 'Git & GitHub', path: '/learn/git' },
-    ],
-  },
-  {
-    id: 'ai-ml-engineer',
-    title: 'AI & Machine Learning Engineer',
-    description:
-      'From fundamental Python algorithms to matrix linear algebra, statistical learning, and predictive modeling.',
-    steps: [
-      { name: 'Python Fundamentals', path: '/learn/python' },
-      { name: 'NumPy Vectorization', path: '/learn/numpy' },
-      { name: 'Data Science & EDA', path: '/learn/datascience' },
-      { name: 'Machine Learning Models', path: '/learn/machinelearning' },
-    ],
   },
 ];
 
@@ -286,6 +285,7 @@ export function DashboardView() {
 
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [comingSoonModalCourse, setComingSoonModalCourse] = useState<CourseCardData | null>(null);
 
   // Determine if student has started any learning activity
   const hasStartedAny = useMemo(() => {
@@ -318,7 +318,7 @@ export function DashboardView() {
           return true;
         }
       } catch {
-        // ignore JSON parse error
+        // ignore parse error
       }
     }
     return false;
@@ -331,7 +331,7 @@ export function DashboardView() {
     );
   }, [lessonsProgress]);
 
-  // Calculate course progress mapping for all 11 courses
+  // Calculate course progress mapping for courses that have configs
   const courseProgressMap = useMemo(() => {
     const map: Record<string, { completedLessons: number; totalLessons: number; percentage: number }> =
       {};
@@ -344,7 +344,7 @@ export function DashboardView() {
           coursePercentage: stats.coursePercentage,
         });
       } else {
-        map[course.id] = { completedLessons: 0, totalLessons: course.modulesCount, percentage: 0 };
+        map[course.id] = { completedLessons: 0, totalLessons: 12, percentage: 0 };
       }
     }
     return map;
@@ -356,19 +356,27 @@ export function DashboardView() {
       const matchesCategory =
         selectedCategory === 'all' ||
         course.filterCategory === selectedCategory ||
-        (selectedCategory === 'programming' && course.id === 'javascript-modern');
+        (selectedCategory === 'programming' && (course.id === 'javascript-modern' || course.id === 'python-core')) ||
+        (selectedCategory === 'web' && (course.id === 'react-core' || course.id === 'php-core'));
 
       const matchesSearch =
         searchQuery.trim() === '' ||
         course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         course.shortTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
         course.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        course.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        course.engineName.toLowerCase().includes(searchQuery.toLowerCase());
+        course.tagline.toLowerCase().includes(searchQuery.toLowerCase());
 
       return matchesCategory && matchesSearch;
     });
   }, [selectedCategory, searchQuery]);
+
+  const handleCourseClick = (course: CourseCardData) => {
+    if (course.isComingSoon) {
+      setComingSoonModalCourse(course);
+    } else {
+      navigate(course.route);
+    }
+  };
 
   const scrollToCourses = () => {
     const el = document.getElementById('courses-catalog');
@@ -502,7 +510,7 @@ export function DashboardView() {
                   </div>
                   <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-subtle border border-border">
                     <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
-                    <span>11 Comprehensive Tech Tracks</span>
+                    <span>Comprehensive Interactive Tracks</span>
                   </div>
                   <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-subtle border border-border">
                     <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
@@ -717,126 +725,15 @@ export function DashboardView() {
         </section>
       )}
 
-      {/* 4. WHY LEARN WITH CEERAS (Interactive Learning Explanation) */}
-      <section className="space-y-6 pt-4 border-t border-border">
-        <div>
-          <span className="text-xs font-semibold text-primary uppercase tracking-wider block mb-1">
-            Engineered for Deep Retention
-          </span>
-          <h2 className="font-raleway text-2xl sm:text-3xl font-bold text-text-main tracking-tight">
-            How CEERAS Empowers Independent Problem-Solving
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="p-6 space-y-3 bg-surface border border-border">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
-              <Code2 className="w-5 h-5" />
-            </div>
-            <h3 className="font-raleway text-base font-bold text-text-main">
-              In-Browser Sandbox Engines
-            </h3>
-            <p className="text-xs text-text-muted leading-relaxed">
-              Run real SQLite WASM queries, Python scripts, and live web previews in an isolated
-              sandbox. No server connection, installation, or environment setup required.
-            </p>
-          </Card>
-
-          <Card className="p-6 space-y-3 bg-surface border border-border">
-            <div className="w-10 h-10 rounded-xl bg-secondary/10 border border-secondary/20 flex items-center justify-center text-secondary">
-              <Layers className="w-5 h-5" />
-            </div>
-            <h3 className="font-raleway text-base font-bold text-text-main">
-              Hands-On First Pedagogy
-            </h3>
-            <p className="text-xs text-text-muted leading-relaxed">
-              Every lesson emphasizes practical code writing. Structured explanations are
-              immediately paired with embedded editors, interactive anatomy breakdowns, and instant
-              verification.
-            </p>
-          </Card>
-
-          <Card className="p-6 space-y-3 bg-surface border border-border">
-            <div className="w-10 h-10 rounded-xl bg-success/10 border border-success/20 flex items-center justify-center text-success">
-              <CheckCircle2 className="w-5 h-5" />
-            </div>
-            <h3 className="font-raleway text-base font-bold text-text-main">
-              Private, Offline &amp; Persistent
-            </h3>
-            <p className="text-xs text-text-muted leading-relaxed">
-              Your exercises, notes, quiz scores, and daily streaks persist securely in your
-              browser's IndexedDB. Learn at your own pace without cookies, accounts, or tracking.
-            </p>
-          </Card>
-        </div>
-      </section>
-
-      {/* 5. CURATED CAREER LEARNING PATHS */}
-      <section className="space-y-6 pt-4 border-t border-border">
-        <div>
-          <span className="text-xs font-semibold text-primary uppercase tracking-wider block mb-1">
-            Structured Roadmaps
-          </span>
-          <h2 className="font-raleway text-2xl sm:text-3xl font-bold text-text-main tracking-tight">
-            Curated Learning Paths
-          </h2>
-          <p className="text-xs sm:text-sm text-text-muted mt-1 max-w-2xl">
-            Follow a proven sequence of courses designed to take you from foundational syntax to
-            practical job-ready proficiency.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {LEARNING_PATHS.map((path) => (
-            <Card
-              key={path.id}
-              className="p-6 bg-surface border border-border flex flex-col justify-between space-y-5"
-            >
-              <div className="space-y-3">
-                <Badge variant="default" size="sm">
-                  Career Track
-                </Badge>
-                <h3 className="font-raleway text-lg font-bold text-text-main">{path.title}</h3>
-                <p className="text-xs text-text-muted leading-relaxed">{path.description}</p>
-              </div>
-
-              {/* Steps Sequence */}
-              <div className="space-y-2 pt-2 border-t border-border/60">
-                <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider block">
-                  Course Sequence:
-                </span>
-                <div className="space-y-1.5">
-                  {path.steps.map((step, idx) => (
-                    <Link
-                      key={step.name}
-                      to={step.path}
-                      className="p-2 rounded-md bg-subtle hover:bg-border/60 transition-colors flex items-center justify-between text-xs text-text-main hover:text-primary"
-                    >
-                      <span className="flex items-center gap-2">
-                        <span className="w-5 h-5 rounded-full bg-border/80 text-[10px] font-mono font-bold flex items-center justify-center shrink-0">
-                          {idx + 1}
-                        </span>
-                        <span className="font-medium truncate">{step.name}</span>
-                      </span>
-                      <ArrowRight className="w-3.5 h-3.5 text-text-muted shrink-0" />
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* 6. COURSE CATALOGUE & DISCOVERY */}
+      {/* 4. COURSE CATALOGUE & DISCOVERY (Clean 4-column cards matching reference design) */}
       <section id="courses-catalog" className="space-y-6 pt-4 border-t border-border scroll-mt-24">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <span className="text-xs font-semibold text-primary uppercase tracking-wider block mb-1">
-              Complete Catalogue
+              Curriculum Tracks
             </span>
             <h2 className="font-raleway text-2xl sm:text-3xl font-bold text-text-main tracking-tight">
-              Featured Courses ({filteredCourses.length})
+              Explore Courses ({filteredCourses.length})
             </h2>
           </div>
 
@@ -857,10 +754,10 @@ export function DashboardView() {
         <div className="flex flex-wrap items-center gap-2 border-b border-border pb-3">
           {(
             [
-              { id: 'all', label: 'All Tracks (11)' },
-              { id: 'databases', label: 'Databases & SQL' },
-              { id: 'programming', label: 'Programming & Python' },
+              { id: 'all', label: 'All Courses (18)' },
               { id: 'web', label: 'Web Development' },
+              { id: 'programming', label: 'Programming & Systems' },
+              { id: 'databases', label: 'Databases & SQL' },
               { id: 'datascience', label: 'Data Science & AI' },
               { id: 'tools', label: 'Developer Tools' },
             ] as const
@@ -883,7 +780,7 @@ export function DashboardView() {
           })}
         </div>
 
-        {/* Courses Grid */}
+        {/* Courses Grid - 4 Columns on Desktop matching reference design */}
         {filteredCourses.length === 0 ? (
           <div className="py-12 text-center text-sm text-text-muted bg-surface rounded-xl border border-border">
             <p>No courses match your selected filter or search query.</p>
@@ -899,121 +796,136 @@ export function DashboardView() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
             {filteredCourses.map((course) => {
               const Logo = course.logo;
-              const progress = courseProgressMap[course.id] || {
-                completedLessons: 0,
-                totalLessons: course.modulesCount,
-                percentage: 0,
-              };
-              const isStarted = progress.percentage > 0 || progress.completedLessons > 0;
-              const isComplete = progress.percentage === 100;
+              const progress = courseProgressMap[course.id] || { percentage: 0 };
+              const hasProgress = progress.percentage > 0;
 
               return (
-                <Card
+                <div
                   key={course.id}
-                  className="p-6 flex flex-col justify-between transition-all space-y-5 relative overflow-hidden bg-surface border border-border shadow-card hover:border-primary/60"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => handleCourseClick(course)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleCourseClick(course);
+                    }
+                  }}
+                  className="group relative p-6 sm:p-7 rounded-2xl bg-surface border border-border hover:border-primary/60 hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col items-center text-center justify-center shadow-card hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary overflow-hidden min-h-[180px] sm:min-h-[200px]"
                 >
-                  <div className="space-y-4 pt-1">
-                    {/* Header Row: Logo & Category Badge */}
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="w-13 h-13 rounded-2xl bg-subtle border border-border flex items-center justify-center p-2.5 shadow-xs shrink-0">
-                        <Logo className="w-full h-full object-contain" />
-                      </div>
-
-                      <div className="text-right">
-                        <span className="text-[11px] font-semibold text-secondary uppercase tracking-wider block">
-                          {course.category}
-                        </span>
-                        <span className="text-[11px] text-text-muted block mt-0.5">
-                          {course.level}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Title & Description */}
-                    <div>
-                      <h3 className="font-raleway text-lg font-bold text-text-main leading-snug">
-                        {course.title}
-                      </h3>
-                      <p className="text-xs text-text-muted mt-2 leading-relaxed line-clamp-3">
-                        {course.description}
-                      </p>
-                    </div>
-
-                    {/* Course Metrics & Progress */}
-                    <div className="pt-2 space-y-2 border-t border-border/60">
-                      {isStarted ? (
-                        <div className="space-y-1.5">
-                          <div className="flex items-center justify-between text-xs font-semibold">
-                            <span className="text-text-muted">Course Completion:</span>
-                            <span className="font-mono text-primary">{progress.percentage}%</span>
-                          </div>
-                          <ProgressBar value={progress.percentage} showPercentage={false} size="sm" />
-                          <div className="flex items-center justify-between text-[11px] text-text-muted pt-0.5">
-                            <span>
-                              {progress.completedLessons} of {progress.totalLessons} modules finished
-                            </span>
-                            {isComplete && (
-                              <span className="font-semibold text-success">Finished</span>
-                            )}
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="space-y-1 text-xs text-text-muted">
-                          <div className="flex items-center justify-between">
-                            <span>Syllabus:</span>
-                            <span className="font-semibold text-text-main">
-                              {course.modulesCount} Lessons
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span>Duration:</span>
-                            <span className="font-semibold text-text-main">{course.duration}</span>
-                          </div>
-                        </div>
-                      )}
-
-                      <div className="flex items-center justify-between text-xs text-text-muted pt-1">
-                        <span>Runtime:</span>
-                        <span className="font-semibold text-primary">{course.engineName}</span>
-                      </div>
-                    </div>
+                  {/* Technology Brand Logo */}
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 mb-3 sm:mb-4 flex items-center justify-center transition-transform duration-200 group-hover:scale-110 shrink-0">
+                    <Logo className="w-full h-full object-contain" />
                   </div>
 
-                  {/* Card Action Button */}
-                  <div className="pt-4 border-t border-border">
-                    <Button
-                      variant={isComplete ? 'outline' : 'primary'}
-                      size="sm"
-                      onClick={() => navigate(course.route)}
-                      className="w-full text-xs font-semibold"
-                    >
-                      {isComplete ? (
-                        <>
-                          <RotateCcw className="w-3.5 h-3.5 mr-1.5" />
-                          <span>Review Course</span>
-                        </>
-                      ) : isStarted ? (
-                        <>
-                          <span>Continue Learning ({progress.percentage}%)</span>
-                          <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-                        </>
-                      ) : (
-                        <>
-                          <span>Start Course</span>
-                          <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </Card>
+                  {/* Technology Name */}
+                  <h3 className="font-raleway text-base sm:text-lg font-bold text-text-main group-hover:text-primary transition-colors tracking-tight">
+                    {course.shortTitle || course.title}
+                  </h3>
+
+                  {/* Short Tagline / Description */}
+                  <p className="text-xs sm:text-sm text-text-muted mt-1.5 leading-relaxed line-clamp-2 max-w-[210px]">
+                    {course.tagline}
+                  </p>
+
+                  {/* Subtle Bottom Accent Indicator for Progress */}
+                  {hasProgress && (
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-border/40">
+                      <div
+                        className="h-full bg-primary transition-all duration-300"
+                        style={{ width: `${progress.percentage}%` }}
+                      />
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
         )}
       </section>
+
+      {/* COMING SOON MODAL */}
+      {comingSoonModalCourse && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fadeIn"
+          onClick={() => setComingSoonModalCourse(null)}
+        >
+          <div
+            className="w-full max-w-md bg-surface border border-border rounded-2xl shadow-xl p-6 space-y-5 animate-scaleUp"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-xl bg-subtle border border-border flex items-center justify-center p-2 shrink-0">
+                  <comingSoonModalCourse.logo className="w-full h-full object-contain" />
+                </div>
+                <div>
+                  <h3 id="modal-title" className="font-raleway text-lg font-bold text-text-main">
+                    {comingSoonModalCourse.title} Curriculum
+                  </h3>
+                  <span className="text-xs text-primary font-semibold">Under Active Development</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setComingSoonModalCourse(null)}
+                className="p-1 rounded-md text-text-muted hover:text-text-main hover:bg-subtle transition-colors"
+                aria-label="Close dialog"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <p className="text-xs sm:text-sm text-text-muted leading-relaxed">
+              The <strong className="text-text-main">{comingSoonModalCourse.title}</strong> curriculum is currently being authored for CEERAS. In the meantime, you can dive straight into our fully interactive in-browser tracks:
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => {
+                  setComingSoonModalCourse(null);
+                  navigate('/learn/python');
+                }}
+                className="text-xs font-semibold"
+              >
+                <span>Try Python 3 Track</span>
+                <ArrowRight className="w-3.5 h-3.5 ml-1" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setComingSoonModalCourse(null);
+                  navigate('/learn');
+                }}
+                className="text-xs font-semibold"
+              >
+                <span>Try SQL Track</span>
+                <ArrowRight className="w-3.5 h-3.5 ml-1" />
+              </Button>
+            </div>
+
+            <div className="pt-2 border-t border-border flex justify-end">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setComingSoonModalCourse(null)}
+                className="text-xs text-text-muted"
+              >
+                Close
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

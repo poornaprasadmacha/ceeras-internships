@@ -248,6 +248,22 @@ Each lesson in `src/data/lessons/` follows a typed `Lesson` schema:
   - Fixed card balance in `SettingsView.tsx` (`sm:grid-cols-2 max-w-2xl`).
   - Strengthened `findAnyLessonById` in `useActiveCourse.ts` with case-insensitive and slug fallbacks.
   - Confirmed 0 TypeScript errors (`npx tsc --noEmit`) and successful production build (`npm run build`).
+- **Phase 11: Homepage Section Pruning & Reference Course Card Grid Redesign**:
+  - Pruned redundant informational sections from the homepage (`DashboardView.tsx`) per user specification:
+    - Removed "How CEERAS Empowers Independent Problem-Solving" (and its 3 sub-cards: In-Browser Sandbox Engines, Hands-On First Pedagogy, Private, Offline & Persistent).
+    - Removed "Curated Learning Paths / Structured Roadmaps" (and its 3 career tracks: Data Analyst & BI Specialist, Modern Web Developer, AI & Machine Learning Engineer).
+  - Redesigned the Course Cards on the Homepage to faithfully match the user's uploaded reference screenshot:
+    - 4-column responsive grid on desktop (`grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5`).
+    - Clean, rounded card container (`rounded-2xl`, dark slate `#1B2A38` / `#15202B` in dark mode, pure white `#FFFFFF` in daylight mode, border `border-border`, smooth hover lift and primary border glow).
+    - Centered official technology brand logos at the top (`w-12 h-12 sm:w-14 sm:h-14 mb-3 sm:mb-4`).
+    - Centered bold technology titles and concise 1-2 line descriptions directly underneath.
+    - Whole card is a clickable, accessible interactive tile (`tabIndex={0}`, keyboard navigation, hover states, zero visual clutter).
+    - Added 7 new official vector logos in `LanguageLogos.tsx`: `JavaLogo`, `CLogo`, `CppLogo`, `CSharpLogo`, `PhpLogo`, `ReactLogo`, `MySqlLogo`.
+    - Refined `HtmlLogo`, `CssLogo`, and `SqlLogo` to match the exact badge-free and 3-disk cylinder aesthetic from the reference screenshot.
+    - Subtle bottom accent line indicators for returning students with course completion progress.
+    - Accessible coming-soon modal for preview tracks with direct links to active Python, SQL, and Web tracks.
+    - Preserved instant category filtering (All, Web, Programming, Databases, Data Science, Tools) and instant real-time search.
+  - Verified with `npx tsc --noEmit` (exit code 0), `npm run build` (exit code 0), and zero-emoji verification (0 emojis found).
 
 ---
 

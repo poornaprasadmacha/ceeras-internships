@@ -19,7 +19,6 @@ export function CssLogo({ className = 'w-10 h-10', size }: LogoProps) {
       role="img"
       aria-label="CSS3 logo"
     >
-      <rect width="128" height="128" rx="20" fill="#1572B6" />
       <path d="M22 18L30 108L64 118L98 108L106 18H22Z" fill="#33A9DC" />
       <path d="M64 26V110L91 102L98 26H64Z" fill="#1572B6" opacity="0.3" />
       <path
@@ -44,7 +43,6 @@ export function HtmlLogo({ className = 'w-10 h-10', size }: LogoProps) {
       role="img"
       aria-label="HTML5 logo"
     >
-      <rect width="128" height="128" rx="20" fill="#E44D26" />
       <path d="M22 18L30 108L64 118L98 108L106 18H22Z" fill="#F16529" />
       <path d="M64 26V110L91 102L98 26H64Z" fill="#E44D26" opacity="0.4" />
       <path
@@ -190,37 +188,27 @@ export function SqlLogo({ className = 'w-10 h-10', size }: LogoProps) {
       role="img"
       aria-label="SQL Database logo"
     >
-      <rect width="128" height="128" rx="20" fill="#0E5E77" />
-      {/* Tier 1 cylinder */}
-      <ellipse cx="64" cy="36" rx="38" ry="14" fill="#00A2B3" />
+      {/* Tier 1 (top disk) */}
       <path
-        d="M26 36V54C26 62 43 68 64 68C85 68 102 62 102 54V36"
-        fill="#008D9B"
+        d="M28 26V44C28 52 44.1 58 64 58C83.9 58 100 52 100 44V26"
+        fill="#2563EB"
       />
-      {/* Tier 2 cylinder */}
+      <ellipse cx="64" cy="26" rx="36" ry="14" fill="#3B82F6" />
+      <ellipse cx="64" cy="26" rx="33" ry="11" fill="#60A5FA" opacity="0.4" />
+
+      {/* Tier 2 (middle disk) */}
       <path
-        d="M26 58V76C26 84 43 90 64 90C85 90 102 84 102 76V58"
-        fill="#0A6C84"
+        d="M28 52V70C28 78 44.1 84 64 84C83.9 84 100 78 100 70V52"
+        fill="#1D4ED8"
       />
-      {/* Tier 3 cylinder base */}
+      <ellipse cx="64" cy="52" rx="36" ry="14" fill="#3B82F6" />
+
+      {/* Tier 3 (bottom disk) */}
       <path
-        d="M26 80V94C26 102 43 108 64 108C85 108 102 102 102 94V80"
-        fill="#074B5C"
+        d="M28 78V96C28 104 44.1 110 64 110C83.9 110 100 104 100 96V78"
+        fill="#1E40AF"
       />
-      {/* SQL Bold Badge */}
-      <rect x="36" y="56" width="56" height="26" rx="6" fill="#FFFFFF" />
-      <text
-        x="64"
-        y="75"
-        textAnchor="middle"
-        fontFamily="Raleway, Inter, sans-serif"
-        fontWeight="900"
-        fontSize="16"
-        fill="#0E5E77"
-        letterSpacing="1"
-      >
-        SQL
-      </text>
+      <ellipse cx="64" cy="78" rx="36" ry="14" fill="#2563EB" />
     </svg>
   );
 }
@@ -454,6 +442,204 @@ export function VsCodeLogo({ className = 'w-10 h-10', size }: LogoProps) {
         d="M48 26L36 32L24 44V84L36 96L48 102V26Z"
         fill="#005A9E"
         opacity="0.8"
+      />
+    </svg>
+  );
+}
+
+/**
+ * Official Java vector coffee cup logo
+ */
+export function JavaLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Java logo"
+    >
+      {/* Steam curves */}
+      <path d="M46 16C46 16 38 30 50 42C56 48 54 54 54 54C54 54 62 44 56 34C50 24 50 20 46 16Z" fill="#F89820" />
+      <path d="M64 12C64 12 54 26 66 38C72 44 70 52 70 52C70 52 78 40 72 30C66 20 68 16 64 12Z" fill="#EA2D2E" />
+      <path d="M80 20C80 20 74 30 82 40C86 45 84 50 84 50C84 50 90 42 86 34C82 26 84 22 80 20Z" fill="#F89820" />
+      {/* Cup body & handle */}
+      <path d="M34 62H88C88 62 89 86 64 88C39 86 34 62 34 62Z" fill="#5382A1" />
+      <path d="M84 66H94C99 66 102 70 102 74C102 78 99 82 94 82H82" stroke="#5382A1" strokeWidth="5" strokeLinecap="round" fill="none" />
+      {/* Saucer / base */}
+      <path d="M26 96C42 102 86 102 102 96C92 106 36 106 26 96Z" fill="#5382A1" />
+      <path d="M38 92C50 95 78 95 90 92" stroke="#5382A1" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/**
+ * Official C Language vector emblem logo
+ */
+export function CLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="C logo"
+    >
+      <circle cx="64" cy="64" r="52" fill="#283B4D" />
+      <path
+        d="M84 46C79 39 72 36 64 36C48.5 36 36 48.5 36 64C36 79.5 48.5 92 64 92C72 92 79 89 84 82L74 72C71 76 68 78 64 78C56.3 78 50 71.7 50 64C50 56.3 56.3 50 64 50C68 50 71 52 74 56L84 46Z"
+        fill="#FFFFFF"
+      />
+    </svg>
+  );
+}
+
+/**
+ * Official C++ vector hexagon logo
+ */
+export function CppLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="C++ logo"
+    >
+      <polygon points="64,14 108,39 108,89 64,114 20,89 20,39" fill="#00599C" />
+      <polygon points="64,20 102,42 102,86 64,108 26,86 26,42" fill="#004482" />
+      <path
+        d="M62 48C58 45 54 44 48 44C38 44 32 52 32 64C32 76 38 84 48 84C54 84 58 83 62 80L59 72C56 74 53 75 48 75C43 75 39 70 39 64C39 58 43 53 48 53C53 53 56 54 59 56L62 48Z"
+        fill="#FFFFFF"
+      />
+      <path d="M68 64H78M73 59V69" stroke="#00A0DF" strokeWidth="3" strokeLinecap="round" />
+      <path d="M84 64H94M89 59V69" stroke="#00A0DF" strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/**
+ * Official C# vector hexagon logo
+ */
+export function CSharpLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="C# logo"
+    >
+      <polygon points="64,14 108,39 108,89 64,114 20,89 20,39" fill="#9B4993" />
+      <polygon points="64,20 102,42 102,86 64,108 26,86 26,42" fill="#68217A" />
+      <path
+        d="M62 48C58 45 54 44 48 44C38 44 32 52 32 64C32 76 38 84 48 84C54 84 58 83 62 80L59 72C56 74 53 75 48 75C43 75 39 70 39 64C39 58 43 53 48 53C53 53 56 54 59 56L62 48Z"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M76 56L72 74M84 56L80 74M70 61H86M68 69H84"
+        stroke="#FFFFFF"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+/**
+ * Official PHP vector badge logo
+ */
+export function PhpLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="PHP logo"
+    >
+      <ellipse cx="64" cy="64" rx="54" ry="32" fill="#777BB4" />
+      <ellipse cx="64" cy="64" rx="50" ry="28" fill="#4F5D95" />
+      <text
+        x="64"
+        y="72"
+        textAnchor="middle"
+        fontFamily="system-ui, -apple-system, sans-serif"
+        fontWeight="900"
+        fontStyle="italic"
+        fontSize="28"
+        fill="#FFFFFF"
+        letterSpacing="1"
+      >
+        php
+      </text>
+    </svg>
+  );
+}
+
+/**
+ * Official React atom vector logo
+ */
+export function ReactLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="React logo"
+    >
+      <circle cx="64" cy="64" r="9" fill="#61DAFB" />
+      <g stroke="#61DAFB" strokeWidth="4.5" fill="none">
+        <ellipse cx="64" cy="64" rx="48" ry="18" />
+        <ellipse cx="64" cy="64" rx="48" ry="18" transform="rotate(60 64 64)" />
+        <ellipse cx="64" cy="64" rx="48" ry="18" transform="rotate(120 64 64)" />
+      </g>
+    </svg>
+  );
+}
+
+/**
+ * Official MySQL leaping dolphin vector logo
+ */
+export function MySqlLogo({ className = 'w-10 h-10', size }: LogoProps) {
+  return (
+    <svg
+      viewBox="0 0 128 128"
+      width={size}
+      height={size}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="MySQL logo"
+    >
+      <path
+        d="M86 28C80 32 74 38 72 46C70 42 66 38 60 38C52 38 46 44 48 54C42 56 36 60 34 66C32 72 34 78 38 82C34 84 30 88 28 94C26 100 28 104 32 106C34 104 36 100 38 98C40 102 44 104 48 102C54 100 56 94 54 88C56 86 60 84 64 80C72 72 78 62 82 52C88 56 94 58 98 56C100 52 98 48 94 46C96 42 98 36 96 32C92 30 88 30 86 28Z"
+        fill="#00758F"
+      />
+      <path
+        d="M82 32C76 36 70 44 68 52C64 48 58 46 54 48C48 50 44 56 46 64C40 68 36 74 36 82C36 88 40 92 44 94C42 96 40 100 42 102C46 100 48 96 50 92C54 94 58 92 62 88C70 80 76 70 80 58C86 62 92 62 94 58C96 54 92 50 88 48C90 44 90 38 88 34C86 32 84 32 82 32Z"
+        fill="#00A3C4"
+        opacity="0.85"
       />
     </svg>
   );

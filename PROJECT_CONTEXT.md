@@ -219,6 +219,7 @@ Each lesson in `src/data/lessons/` follows a typed `Lesson` schema:
     - `KnowledgeCheck`: `dark:bg-[#1f261e]/90 dark:border-[#4d401a] dark:text-[#e6edf3]`
     - `OutputBox`: `dark:bg-[#0f172a] dark:border-[#283b4d] dark:text-[#cbd5e1]`
     - `EmbeddedSqlEditor`: `dark:bg-[#1b2a38] dark:border-[#283b4d]`
+  - Configured the dark mode logo styling so that in Dark Mode the CEERAS brand logo renders in crisp solid pure white (`#FFFFFF`), with gradient styling cleanly active during Daylight Mode.
   - Verified with `npx tsc --noEmit` (exit code 0), `npm run build` (exit code 0), and zero-emoji scan (exit code 0).
 
 ---

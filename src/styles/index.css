@@ -112,6 +112,18 @@ html[data-theme='soft-dark'] {
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+  transition: color 0.2s ease, -webkit-text-fill-color 0.2s ease;
+}
+
+/* In Dark Mode, change logo to solid pure white */
+html[data-theme='dark'] .logo,
+html[data-theme='soft-dark'] .logo,
+.dark .logo {
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
 }
 
 @media (max-width: 768px) {

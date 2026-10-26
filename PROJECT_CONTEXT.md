@@ -190,10 +190,20 @@ Each lesson in `src/data/lessons/` follows a typed `Lesson` schema:
   - Added debounced auto-save directly to IndexedDB with a subtle status badge (`Saving...` / `Saved locally`), eliminating the redundant manual save button.
   - Enforced touch targets $\ge 44$px on all navigation buttons, session pills, and option cards.
   - Added clear End-of-Lesson Summary card with primary "Continue to Next Lesson" and secondary "Course Lessons".
-- **Phase 6: Verification**:
-  - Verified TypeScript compilation (`npx tsc --noEmit` exited code 0).
-  - Verified Vite production build (`npm run build` exited code 0).
-  - Verified zero emojis across all project code and markdown documentation.
+- **Phase 6: Reference-Aligned Interactive Tutorial UX (User Request)**:
+  - Removed "Course Outcomes" / "What you will master" box completely to eliminate unnecessary reading clutter.
+  - Eliminated bloated session titles and sticky tab navigator in favor of a clean, linear tutorial flow (`Step 1: ...`, `Step 2: ...`, `Step 3: ...`, `Step 4: ...`) with crisp blue underlines (`border-b-2 border-[#0066cc]`).
+  - Created [`src/features/lessons/TutorialCallouts.tsx`](file:///c:/Users/poorn/OneDrive/Desktop/SQL/src/features/lessons/TutorialCallouts.tsx):
+    - Light blue `ConceptBox` (`bg-[#eef6ff] border-l-4 border-[#0284c7]`).
+    - Light green `ProTipBox` (`bg-[#f0fdf4] border-l-4 border-[#16a34a]`).
+    - Warm yellow `KnowledgeCheck` card (`bg-[#fffbeb] border-[#fde68a] text-[#ea580c]`) with interactive answer reveal.
+    - Light gray `OutputBox` (`bg-[#f8fafc] border-[#e2e8f0]`) for structured data samples.
+  - Created [`src/features/lessons/EmbeddedSqlEditor.tsx`](file:///c:/Users/poorn/OneDrive/Desktop/SQL/src/features/lessons/EmbeddedSqlEditor.tsx):
+    - Embedded the live interactive SQL editor directly within the tutorial narrative (under Step 2 and Step 3).
+    - Upgraded CodeMirror styling in [`src/components/editor/SqlEditor.tsx`](file:///c:/Users/poorn/OneDrive/Desktop/SQL/src/components/editor/SqlEditor.tsx) to dark charcoal `#1e293b` with SQL syntax highlighting (`SELECT`, `FROM`, numbers, strings).
+    - Integrated quick chips, run execution against in-browser SQLite WASM, and live tabular output matching the reference design.
+  - Embedded the full 10-question Knowledge Assessment Quiz directly at the bottom of the course page so learners never leave the tutorial context.
+  - Verified with `npx tsc --noEmit` (exit code 0) and `npm run build` (exit code 0).
 
 ---
 

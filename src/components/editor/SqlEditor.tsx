@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { sql } from '@codemirror/lang-sql';
 import { EditorView } from '@codemirror/view';
+import { syntaxHighlighting, HighlightStyle } from '@codemirror/language';
+import { tags } from '@lezer/highlight';
 import { cn } from '../../lib/utils';
 
 export interface SqlEditorProps {
@@ -12,7 +14,18 @@ export interface SqlEditorProps {
   disabled?: boolean;
   minHeight?: string;
   className?: string;
+  themeMode?: 'dark' | 'light';
 }
+
+const darkHighlightStyle = HighlightStyle.define([
+  { tag: tags.keyword, color: '#38bdf8', fontWeight: 'bold' },
+  { tag: tags.operator, color: '#94a3b8' },
+  { tag: tags.string, color: '#4ade80' },
+  { tag: tags.number, color: '#fb923c' },
+  { tag: tags.punctuation, color: '#94a3b8' },
+  { tag: tags.variableName, color: '#f8fafc' },
+  { tag: tags.comment, color: '#64748b', fontStyle: 'italic' },
+]);
 
 export function SqlEditor({
   value,
@@ -22,8 +35,45 @@ export function SqlEditor({
   disabled = false,
   minHeight = '140px',
   className,
+  themeMode = 'dark',
 }: SqlEditorProps) {
   const customTheme = useMemo(() => {
+    if (themeMode === 'dark') {
+      return EditorView.theme({
+        '&': {
+          backgroundColor: '#1e293b',
+          color: '#f8fafc',
+          fontSize: '14px',
+          fontFamily: '"JetBrains Mono", monospace',
+          borderRadius: '6px',
+          border: '1px solid #334155',
+        },
+        '&.cm-focused': {
+          outline: 'none',
+          borderColor: '#38bdf8',
+          boxShadow: '0 0 0 1px #38bdf8',
+        },
+        '.cm-content': {
+          padding: '12px 14px',
+          caretColor: '#38bdf8',
+        },
+        '.cm-gutters': {
+          backgroundColor: '#0f172a',
+          color: '#64748b',
+          borderRight: '1px solid #334155',
+          paddingRight: '6px',
+          fontSize: '12px',
+        },
+        '.cm-activeLine': {
+          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        },
+        '.cm-activeLineGutter': {
+          backgroundColor: 'rgba(255, 255, 255, 0.08)',
+          color: '#f8fafc',
+        },
+      });
+    }
+
     return EditorView.theme({
       '&': {
         backgroundColor: 'var(--editor-bg)',
@@ -57,7 +107,7 @@ export function SqlEditor({
         color: 'var(--text-primary)',
       },
     });
-  }, []);
+  }, [themeMode]);
 
   const runKeymapExtension = useMemo(() => {
     if (!onRun) return [];
@@ -73,13 +123,21 @@ export function SqlEditor({
     });
   }, [onRun]);
 
+  const extensions = useMemo(() => {
+    const list = [sql(), EditorView.lineWrapping, runKeymapExtension];
+    if (themeMode === 'dark') {
+      list.push(syntaxHighlighting(darkHighlightStyle));
+    }
+    return list;
+  }, [runKeymapExtension, themeMode]);
+
   return (
     <div className={cn('relative w-full rounded-md overflow-hidden', className)}>
       <CodeMirror
         value={value}
         onChange={onChange}
         theme={customTheme}
-        extensions={[sql(), EditorView.lineWrapping, runKeymapExtension]}
+        extensions={extensions}
         placeholder={placeholder}
         editable={!disabled}
         minHeight={minHeight}

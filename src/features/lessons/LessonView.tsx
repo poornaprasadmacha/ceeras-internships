@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getLessonBySlug, getNextLesson, getPrevLesson } from '../../data/lessons';
 import { useProgress } from '../../hooks/useProgress';
-import { ExerciseWorkspace } from './ExerciseWorkspace';
-import { ConceptPractice } from './ConceptPractice';
-import { InteractiveTableVisualizer } from './InteractiveTableVisualizer';
-import { SqlSyntaxBreakdown } from './SqlSyntaxBreakdown';
-import { InteractiveQuerySimulator } from './InteractiveQuerySimulator';
+import {
+  ConceptBox,
+  ProTipBox,
+  KnowledgeCheck,
+  OutputBox,
+} from './TutorialCallouts';
+import { EmbeddedSqlEditor } from './EmbeddedSqlEditor';
 import { QuizRunner } from '../quizzes/QuizRunner';
 import { Button } from '../../components/ui/Button';
-import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import {
   Bookmark,
@@ -17,126 +18,41 @@ import {
   Clock,
   ArrowLeft,
   ArrowRight,
-  FileText,
-  Sparkles,
-  Zap,
-  Target,
-  Code2,
-  CheckSquare,
-  Eye,
-  Check,
   ChevronDown,
+  BookOpen,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
-
-type SessionId = 'session-visuals' | 'session-coding' | 'session-quiz' | 'session-notes';
 
 export function LessonView() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const lesson = getLessonBySlug(slug || '');
   const {
     lessonsProgress,
     exerciseAttempts,
     quizAttempts,
-    notes,
     bookmarks,
     markLessonStarted,
     recordExerciseSolved,
     recordQuizAttempt,
-    saveLessonNote,
     toggleBookmarkItem,
   } = useProgress();
 
-  const [activeSession, setActiveSession] = useState<SessionId>('session-visuals');
-  const [activeExerciseIndex, setActiveExerciseIndex] = useState(0);
-  const [noteText, setNoteText] = useState('');
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
-  const [isNotesOpen, setIsNotesOpen] = useState(false);
-
-  // References to the 4 session containers for smooth scrolling
-  const visualsRef = useRef<HTMLDivElement>(null);
-  const codingRef = useRef<HTMLDivElement>(null);
   const quizRef = useRef<HTMLDivElement>(null);
-  const notesRef = useRef<HTMLDivElement>(null);
 
-  // Sync lesson started state
+  // Sync lesson started
   useEffect(() => {
     if (lesson) {
       markLessonStarted(lesson.id);
     }
   }, [lesson?.id]);
 
-  // Handle URL hash on initial load (e.g. #quiz, #notes, #exercises)
-  useEffect(() => {
-    const hash = window.location.hash.toLowerCase();
-    if (hash === '#quiz' && quizRef.current) {
-      quizRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActiveSession('session-quiz');
-    } else if ((hash === '#notes' || hash === '#note') && notesRef.current) {
-      setIsNotesOpen(true);
-      notesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActiveSession('session-notes');
-    } else if ((hash === '#exercises' || hash === '#coding') && codingRef.current) {
-      codingRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActiveSession('session-coding');
-    } else {
-      window.scrollTo(0, 0);
-    }
-  }, [lesson?.id, location.hash]);
-
-  // Sync existing note
-  useEffect(() => {
-    if (lesson && notes[lesson.id]) {
-      setNoteText(notes[lesson.id].content);
-    } else {
-      setNoteText('');
-    }
-  }, [lesson?.id, notes]);
-
-  // Auto-save note with debouncing
-  useEffect(() => {
-    if (!lesson) return;
-    const currentSaved = notes[lesson.id]?.content || '';
-    if (noteText === currentSaved) return;
-
-    setSaveStatus('saving');
-    const timer = setTimeout(async () => {
-      await saveLessonNote(lesson.id, noteText);
-      setSaveStatus('saved');
-      const resetTimer = setTimeout(() => setSaveStatus('idle'), 2000);
-      return () => clearTimeout(resetTimer);
-    }, 600);
-
-    return () => clearTimeout(timer);
-  }, [noteText, lesson?.id, notes, saveLessonNote]);
-
-  // Scroll to a specific session with top offset
-  const scrollToSession = useCallback((sessionId: SessionId) => {
-    setActiveSession(sessionId);
-    let targetEl: HTMLElement | null = null;
-    if (sessionId === 'session-visuals') targetEl = visualsRef.current;
-    else if (sessionId === 'session-coding') targetEl = codingRef.current;
-    else if (sessionId === 'session-quiz') targetEl = quizRef.current;
-    else if (sessionId === 'session-notes') {
-      setIsNotesOpen(true);
-      targetEl = notesRef.current;
-    }
-
-    if (targetEl) {
-      const yOffset = -70; // offset for sticky session nav bar
-      const y = targetEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  }, []);
-
   if (!lesson) {
     return (
-      <div className="text-center py-16 space-y-4">
-        <h2 className="text-xl font-bold text-text-main">Lesson Not Found</h2>
-        <p className="text-sm text-text-muted">The requested lesson does not exist in the curriculum.</p>
+      <div className="text-center py-16 space-y-4 max-w-xl mx-auto">
+        <h2 className="text-xl font-bold text-gray-900">Lesson Not Found</h2>
+        <p className="text-sm text-gray-600">The requested lesson does not exist in the curriculum.</p>
         <Button variant="primary" onClick={() => navigate('/learn')} className="min-h-[44px]">
           Browse All Lessons
         </Button>
@@ -151,13 +67,12 @@ export function LessonView() {
   const isLessonCompleted = lessonProgressRecord?.isCompleted || false;
   const isBookmarked = bookmarks.some((b) => b.lessonId === lesson.id);
 
-  const currentExercise = lesson.exercises[activeExerciseIndex];
-  const isCurrentExerciseSolved = !!exerciseAttempts[currentExercise?.id]?.isSolved;
   const currentQuizAttempt = quizAttempts[`quiz_${lesson.id}`];
 
-  // Solved exercises in this lesson
-  const solvedCountInLesson = lesson.exercises.filter((e) => exerciseAttempts[e.id]?.isSolved).length;
-  const allExercisesSolved = solvedCountInLesson === lesson.exercises.length;
+  // Exercises
+  const ex1 = lesson.exercises[0];
+  const ex2 = lesson.exercises[1];
+  const ex3 = lesson.exercises[2];
 
   const handleQuizComplete = async (
     score: number,
@@ -168,672 +83,392 @@ export function LessonView() {
   };
 
   return (
-    <div className="space-y-6 pb-20 max-w-5xl mx-auto px-2 sm:px-4">
-      {/* Breadcrumb & Topbar */}
-      <div className="flex items-center justify-between gap-2 text-xs text-text-muted pt-1">
-        <div className="flex items-center gap-1.5 sm:gap-2 truncate">
-          <Link to="/learn" className="hover:text-text-main shrink-0">
-            Lessons
-          </Link>
-          <span>/</span>
-          <span className="text-text-main font-medium truncate">
-            Lesson {lesson.number}: {lesson.title}
-          </span>
-        </div>
-
-        <div className="flex items-center gap-2 shrink-0">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => toggleBookmarkItem(lesson.id, lesson.title)}
-            className={cn(
-              'text-xs gap-1.5 min-h-[38px]',
-              isBookmarked ? 'text-primary' : 'text-text-muted hover:text-text-main'
-            )}
-            title={isBookmarked ? 'Remove Bookmark' : 'Bookmark this lesson'}
-          >
-            <Bookmark className={cn('w-3.5 h-3.5', isBookmarked && 'fill-primary')} />
-            <span className="hidden sm:inline">{isBookmarked ? 'Saved' : 'Bookmark'}</span>
-          </Button>
-        </div>
-      </div>
-
-      {/* Hero Header */}
-      <div className="space-y-2 border-b border-border pb-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="accent" size="sm">
-            Lesson {lesson.number}
-          </Badge>
-          <span className="flex items-center gap-1 text-xs text-text-muted font-medium">
-            <Clock className="w-3.5 h-3.5" />
-            <span>{lesson.estimatedMinutes} mins</span>
-          </span>
-          {isLessonCompleted && (
-            <Badge variant="success" size="sm">
-              <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>Completed</span>
-            </Badge>
-          )}
-        </div>
-
-        <h1 className="font-raleway text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-text-main leading-snug">
-          {lesson.title}
-        </h1>
-        <p className="text-xs sm:text-sm text-text-muted leading-relaxed">
-          {lesson.shortDescription}
-        </p>
-      </div>
-
-      {/* ========================================================= */}
-      {/* STICKY MOBILE-FIRST SESSION NAVIGATOR (TOP BAR)          */}
-      {/* ========================================================= */}
-      <div className="sticky top-0 z-30 bg-surface/95 backdrop-blur-md border-y sm:border sm:rounded-xl border-border py-2 px-2 shadow-2xs">
-        <div className="flex items-center justify-between gap-1 overflow-x-auto scrollbar-none py-0.5">
-          {/* Session 1 Pill: Visual Concepts */}
-          <button
-            type="button"
-            onClick={() => scrollToSession('session-visuals')}
-            className={cn(
-              'min-h-[40px] flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 cursor-pointer',
-              activeSession === 'session-visuals'
-                ? 'bg-primary text-white shadow-2xs font-bold'
-                : 'text-text-muted hover:text-text-main hover:bg-subtle'
-            )}
-          >
-            <Eye className="w-3.5 h-3.5 shrink-0" />
-            <span>1. Visuals</span>
-          </button>
-
-          {/* Session 2 Pill: Hands-On Coding */}
-          <button
-            type="button"
-            onClick={() => scrollToSession('session-coding')}
-            className={cn(
-              'min-h-[40px] flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 cursor-pointer',
-              activeSession === 'session-coding'
-                ? 'bg-primary text-white shadow-2xs font-bold'
-                : 'text-text-muted hover:text-text-main hover:bg-subtle'
-            )}
-          >
-            <Code2 className="w-3.5 h-3.5 shrink-0" />
-            <span>2. Coding</span>
-            <span
-              className={cn(
-                'text-[10px] px-1 py-0.2 rounded font-mono font-bold',
-                allExercisesSolved
-                  ? 'bg-success/20 text-success'
-                  : activeSession === 'session-coding'
-                  ? 'bg-white/20 text-white'
-                  : 'bg-subtle text-text-muted'
-              )}
-            >
-              {solvedCountInLesson}/{lesson.exercises.length}
-            </span>
-          </button>
-
-          {/* Session 3 Pill: Knowledge Quiz */}
-          <button
-            type="button"
-            onClick={() => scrollToSession('session-quiz')}
-            className={cn(
-              'min-h-[40px] flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 cursor-pointer',
-              activeSession === 'session-quiz'
-                ? 'bg-primary text-white shadow-2xs font-bold'
-                : 'text-text-muted hover:text-text-main hover:bg-subtle'
-            )}
-          >
-            <CheckSquare className="w-3.5 h-3.5 shrink-0" />
-            <span>3. Quiz</span>
-            <span
-              className={cn(
-                'text-[10px] px-1 py-0.2 rounded font-mono',
-                currentQuizAttempt?.passed
-                  ? 'bg-success/20 text-success font-bold'
-                  : activeSession === 'session-quiz'
-                  ? 'bg-white/20 text-white'
-                  : 'bg-subtle text-text-muted'
-              )}
-            >
-              {currentQuizAttempt ? (currentQuizAttempt.passed ? 'Passed' : 'Retake') : '10Q'}
-            </span>
-          </button>
-
-          {/* Session 4 Pill: Notes */}
-          <button
-            type="button"
-            onClick={() => scrollToSession('session-notes')}
-            className={cn(
-              'min-h-[40px] flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 cursor-pointer',
-              activeSession === 'session-notes'
-                ? 'bg-primary text-white shadow-2xs font-bold'
-                : 'text-text-muted hover:text-text-main hover:bg-subtle'
-            )}
-          >
-            <FileText className="w-3.5 h-3.5 shrink-0" />
-            <span>4. Notes</span>
-          </button>
-        </div>
-      </div>
-
-      {/* ========================================================= */}
-      {/* SESSION 1: VISUAL CONCEPTS & SCHEMA                      */}
-      {/* ========================================================= */}
-      <section
-        id="session-visuals"
-        ref={visualsRef}
-        className="space-y-4 pt-2"
-      >
-        {/* Session Section Header */}
-        <div className="flex items-center justify-between border-b border-border pb-2.5">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-primary/10 text-primary flex items-center justify-center font-bold text-xs">
-              1
-            </div>
-            <h2 className="text-base sm:text-lg font-bold text-text-main flex items-center gap-2">
-              <Eye className="w-4 h-4 text-primary" />
-              <span>Visual Concepts & Schema</span>
-            </h2>
-          </div>
-          <span className="text-[11px] text-text-muted font-medium hidden sm:inline">
-            Interactive Visual Session
-          </span>
-        </div>
-
-        {/* Core Objectives Points */}
-        <Card className="p-3.5 sm:p-5 space-y-3 bg-surface">
-          <div className="flex items-center gap-2">
-            <Target className="w-4 h-4 text-primary" />
-            <h3 className="text-xs sm:text-sm font-bold text-text-main">
-              What You Will Master:
-            </h3>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-text-main">
-            {lesson.learningObjectives.map((obj, i) => (
-              <div
-                key={i}
-                className="flex items-start gap-2 p-2 rounded-lg bg-subtle/60 border border-border/50"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                <span className="leading-snug">{obj}</span>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        {/* Interactive Visual Table Inspector */}
-        <InteractiveTableVisualizer
-          tableName={lesson.dataset.tableName}
-          columns={lesson.dataset.sampleColumns}
-          rows={lesson.dataset.sampleRows}
-          description={`Dataset Table: ${lesson.dataset.description}`}
-        />
-
-        {/* Lesson 2 Special: Interactive Query Simulator */}
-        {lesson.number === 2 && (
-          <InteractiveQuerySimulator dataset={lesson.dataset} />
-        )}
-
-        {/* Interactive SQL Statement Anatomy */}
-        <SqlSyntaxBreakdown tableName={lesson.dataset.tableName} />
-
-        {/* Bite-sized Concept Cards */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
-            <Zap className="w-4 h-4 text-primary" />
-            <span>Lesson Concepts</span>
-          </h3>
-
-          <div className="grid grid-cols-1 gap-3">
-            {lesson.sections.map((section, idx) => {
-              if (section.isCollapsible) {
-                return (
-                  <details
-                    key={section.id}
-                    className="group border border-border rounded-xl bg-surface overflow-hidden"
-                  >
-                    <summary className="p-3.5 sm:p-4 font-bold text-xs sm:text-sm text-text-main cursor-pointer select-none flex items-center justify-between hover:bg-subtle/50 transition-colors list-none">
-                      <div className="flex items-center gap-2">
-                        <Badge variant="outline" size="sm">
-                          Optional
-                        </Badge>
-                        <span>{section.title}</span>
-                      </div>
-                      <ChevronDown className="w-4 h-4 text-text-muted transition-transform group-open:rotate-180" />
-                    </summary>
-                    <div className="px-3.5 sm:px-4 pb-4 pt-1 border-t border-border/60 text-xs sm:text-sm text-text-main/90 leading-relaxed whitespace-pre-line space-y-2">
-                      {section.collapsedSummary && (
-                        <p className="text-xs text-text-muted italic">
-                          {section.collapsedSummary}
-                        </p>
-                      )}
-                      <p>{section.content}</p>
-                    </div>
-                  </details>
-                );
-              }
-
-              return (
-                <Card key={section.id} className="p-3.5 sm:p-5 space-y-2 bg-surface">
-                  <div className="flex items-center gap-2">
-                    <Badge variant="outline" size="sm">
-                      Part {idx + 1}
-                    </Badge>
-                    <h4 className="text-xs sm:text-sm font-bold text-text-main">
-                      {section.title}
-                    </h4>
-                  </div>
-
-                  <div className="text-xs sm:text-sm text-text-main/90 leading-relaxed whitespace-pre-line">
-                    {section.content}
-                  </div>
-
-                  {section.sampleTable && (
-                    <div className="mt-3 p-3 bg-subtle/50 border border-border rounded-lg space-y-2">
-                      <span className="text-[11px] font-semibold text-text-main block">
-                        {section.sampleTable.title}
-                      </span>
-                      <div className="overflow-x-auto border border-border rounded bg-surface">
-                        <table className="w-full text-left text-xs border-collapse">
-                          <thead className="bg-subtle border-b border-border">
-                            <tr>
-                              {section.sampleTable.columns.map((c) => (
-                                <th key={c} className="p-2 font-mono font-bold text-text-main">
-                                  {c}
-                                </th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-border/60">
-                            {section.sampleTable.rows.map((r, rIdx) => (
-                              <tr key={rIdx} className="hover:bg-subtle/40">
-                                {r.map((cell, cIdx) => (
-                                  <td key={cIdx} className="p-2 font-mono text-text-main/90">
-                                    {String(cell)}
-                                  </td>
-                                ))}
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  )}
-
-                  {section.codeExample && (
-                    <div className="p-3 bg-editor-bg border border-border rounded-lg space-y-1 mt-2">
-                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-text-muted block">
-                        SQL Code Example
-                      </span>
-                      <pre className="font-mono text-xs text-editor-text font-semibold whitespace-pre-wrap overflow-x-auto">
-                        {section.codeExample.sql}
-                      </pre>
-                      <p className="text-[11px] text-text-muted leading-relaxed pt-1 border-t border-border/40">
-                        {section.codeExample.explanation}
-                      </p>
-                    </div>
-                  )}
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Unified Foundational Concept Practice */}
-        {(lesson.terminologyMatching || lesson.interactiveCheck) && (
-          <div className="pt-1">
-            <ConceptPractice
-              terminologyItems={lesson.terminologyMatching}
-              interactiveCheck={lesson.interactiveCheck}
-            />
-          </div>
-        )}
-
-        {/* Glide CTA to Session 2 */}
-        <div className="p-3.5 sm:p-4 bg-primary/5 border border-primary/20 rounded-xl flex items-center justify-between gap-3">
-          <div className="min-w-0">
-            <span className="text-xs font-bold text-text-main block truncate">
-              Concepts Clear?
-            </span>
-            <span className="text-[11px] text-text-muted block truncate">
-              Execute your first live SQL query in the interactive editor below.
+    <div className="bg-white min-h-screen">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 font-sans text-gray-900">
+        {/* Breadcrumb & Top Controls */}
+        <div className="flex items-center justify-between text-xs text-gray-500 mb-4 pb-2 border-b border-gray-100">
+          <div className="flex items-center gap-1.5 truncate">
+            <Link to="/learn" className="hover:text-[#0066cc] font-medium">
+              Course Lessons
+            </Link>
+            <span>/</span>
+            <span className="text-gray-900 font-semibold truncate">
+              Lesson {lesson.number}: {lesson.title}
             </span>
           </div>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => scrollToSession('session-coding')}
-            className="shrink-0 text-xs gap-1.5 min-h-[40px]"
-          >
-            <span>Start Coding</span>
-            <ChevronDown className="w-3.5 h-3.5" />
-          </Button>
-        </div>
-      </section>
 
-      {/* ========================================================= */}
-      {/* SESSION 2: HANDS-ON CODING (INTERACTIVE SQL WORKSPACE)    */}
-      {/* ========================================================= */}
-      <section
-        id="session-coding"
-        ref={codingRef}
-        className="space-y-4 pt-6 border-t border-border"
-      >
-        {/* Section Header */}
-        <div className="flex items-center justify-between border-b border-border pb-2.5">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-secondary/10 text-secondary flex items-center justify-center font-bold text-xs">
-              2
-            </div>
-            <h2 className="text-base sm:text-lg font-bold text-text-main flex items-center gap-2">
-              <Code2 className="w-4 h-4 text-secondary" />
-              <span>Hands-On Coding & Verification</span>
-            </h2>
-          </div>
-          <span className="text-xs font-mono font-semibold text-text-muted">
-            {solvedCountInLesson}/{lesson.exercises.length} Solved
-          </span>
-        </div>
-
-        {/* Exercise Stepper Pills */}
-        {lesson.exercises.length > 1 && (
-          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 select-none">
-            <span className="text-xs font-semibold text-text-muted mr-1 shrink-0">Tasks:</span>
-            {lesson.exercises.map((ex, idx) => {
-              const isSolved = !!exerciseAttempts[ex.id]?.isSolved;
-              const isSelected = activeExerciseIndex === idx;
-
-              return (
-                <button
-                  key={ex.id}
-                  type="button"
-                  onClick={() => setActiveExerciseIndex(idx)}
-                  className={cn(
-                    'min-h-[38px] px-3.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 cursor-pointer flex items-center gap-1.5',
-                    isSelected
-                      ? 'bg-primary text-white font-semibold shadow-2xs'
-                      : isSolved
-                      ? 'bg-success-subtle text-success border border-success/30'
-                      : 'bg-subtle text-text-main border border-border hover:bg-border'
-                  )}
-                >
-                  <span>Task {idx + 1}</span>
-                  {isSolved && <Check className="w-3 h-3 stroke-[3]" />}
-                </button>
-              );
-            })}
-          </div>
-        )}
-
-        {/* Active SQL Workspace */}
-        {currentExercise && (
-          <ExerciseWorkspace
-            key={currentExercise.id}
-            exercise={currentExercise}
-            dataset={lesson.dataset}
-            isSolved={isCurrentExerciseSolved}
-            onSolve={(q) => recordExerciseSolved(currentExercise.id, lesson.id, q)}
-            savedQuery={exerciseAttempts[currentExercise.id]?.userQuery}
-            onNextTask={
-              activeExerciseIndex < lesson.exercises.length - 1
-                ? () => setActiveExerciseIndex((prev) => prev + 1)
-                : undefined
-            }
-            onGoToQuiz={() => scrollToSession('session-quiz')}
-          />
-        )}
-
-        {/* Task Navigation Controls */}
-        <div className="flex items-center justify-between pt-3 border-t border-border gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={activeExerciseIndex === 0}
-            onClick={() => setActiveExerciseIndex((prev) => prev - 1)}
-            className="text-xs min-h-[40px]"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Previous Task</span>
-            <span className="sm:hidden">Prev</span>
-          </Button>
-
-          {activeExerciseIndex < lesson.exercises.length - 1 ? (
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => setActiveExerciseIndex((prev) => prev + 1)}
-              className="text-xs min-h-[40px]"
-            >
-              <span>Next Task</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Button>
-          ) : (
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => scrollToSession('session-quiz')}
-              className="text-xs bg-primary min-h-[40px]"
-            >
-              <span>Proceed to Knowledge Quiz</span>
-              <ChevronDown className="w-3.5 h-3.5" />
-            </Button>
-          )}
-        </div>
-      </section>
-
-      {/* ========================================================= */}
-      {/* SESSION 3: KNOWLEDGE QUIZ (CURRICULUM SPECIFIC)           */}
-      {/* ========================================================= */}
-      <section
-        id="session-quiz"
-        ref={quizRef}
-        className="space-y-4 pt-6 border-t border-border"
-      >
-        {/* Section Header */}
-        <div className="flex items-center justify-between border-b border-border pb-2.5">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold text-xs">
-              3
-            </div>
-            <h2 className="text-base sm:text-lg font-bold text-text-main flex items-center gap-2">
-              <CheckSquare className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-              <span>Knowledge Quiz</span>
-            </h2>
-          </div>
-          <span className="text-xs font-mono text-text-muted">
-            10 Questions • Pass threshold: 80%
-          </span>
-        </div>
-
-        {/* Quiz Runner Embedded directly */}
-        <QuizRunner
-          key={`quiz_${lesson.id}`}
-          quizId={`quiz_${lesson.id}`}
-          title={`Lesson ${lesson.number}: ${lesson.title} Assessment`}
-          description="Test your conceptual and practical understanding of this lesson's topics."
-          questions={lesson.quiz}
-          onComplete={handleQuizComplete}
-          initialAnswers={currentQuizAttempt?.userAnswers}
-          initialScore={currentQuizAttempt?.score}
-          initialPassed={currentQuizAttempt?.passed}
-        />
-      </section>
-
-      {/* ========================================================= */}
-      {/* SESSION 4: PERSONAL NOTES (COLLAPSED BY DEFAULT, AUTO-SAVE) */}
-      {/* ========================================================= */}
-      <section
-        id="session-notes"
-        ref={notesRef}
-        className="space-y-4 pt-6 border-t border-border"
-      >
-        {/* Section Header with Expand/Collapse toggle */}
-        <div className="flex items-center justify-between border-b border-border pb-2.5">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-xs">
-              4
-            </div>
-            <h2 className="text-base sm:text-lg font-bold text-text-main flex items-center gap-2">
-              <FileText className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-              <span>Personal Notes & Cheat Sheet</span>
-            </h2>
-          </div>
-
-          <div className="flex items-center gap-2">
-            {saveStatus === 'saving' && (
-              <Badge variant="outline" size="sm">
-                Saving...
-              </Badge>
-            )}
-            {saveStatus === 'saved' && (
-              <Badge variant="success" size="sm">
-                Saved locally
-              </Badge>
+          <div className="flex items-center gap-2 shrink-0">
+            {isLessonCompleted && (
+              <span className="flex items-center gap-1 text-green-700 font-medium text-xs bg-green-50 px-2 py-0.5 rounded border border-green-200">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Completed</span>
+              </span>
             )}
             <button
               type="button"
-              onClick={() => setIsNotesOpen((prev) => !prev)}
-              className="text-xs font-medium text-primary hover:underline flex items-center gap-1 cursor-pointer min-h-[38px] px-2"
+              onClick={() => toggleBookmarkItem(lesson.id, lesson.title)}
+              className={cn(
+                'flex items-center gap-1 px-2.5 py-1 rounded text-xs transition-colors cursor-pointer',
+                isBookmarked
+                  ? 'text-[#0066cc] bg-blue-50 font-semibold'
+                  : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+              )}
+              title={isBookmarked ? 'Remove Bookmark' : 'Bookmark this lesson'}
             >
-              <span>{isNotesOpen ? 'Collapse' : 'Expand Notes'}</span>
-              <ChevronDown
-                className={cn('w-3.5 h-3.5 transition-transform', isNotesOpen && 'rotate-180')}
-              />
+              <Bookmark className={cn('w-3.5 h-3.5', isBookmarked && 'fill-[#0066cc]')} />
+              <span>{isBookmarked ? 'Saved' : 'Bookmark'}</span>
             </button>
           </div>
         </div>
 
-        {isNotesOpen ? (
-          <Card className="p-4 sm:p-5 space-y-3 bg-surface animate-fadeIn">
-            <p className="text-xs text-text-muted leading-relaxed">
-              Jot down personal query patterns, syntax reminders, or takeaways. Notes save
-              automatically to local storage as you type.
+        {/* Tutorial Title matching reference design */}
+        <header className="mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight leading-snug">
+            SQL Tutorial {lesson.number}: {lesson.title}
+          </h1>
+
+          <div className="flex items-center gap-3 text-xs text-gray-500 mt-2">
+            <span className="flex items-center gap-1">
+              <Clock className="w-3.5 h-3.5" />
+              <span>{lesson.estimatedMinutes} minutes</span>
+            </span>
+            <span>•</span>
+            <span>Beginner Friendly</span>
+            <span>•</span>
+            <span>In-browser SQLite</span>
+          </div>
+        </header>
+
+        {/* Narrative Introduction */}
+        <section className="space-y-3 text-sm sm:text-base text-gray-800 leading-relaxed mb-6">
+          <p>
+            If spreadsheets are notebooks, a <strong>relational database</strong> is the engine. It
+            allows you to store, organize, and query vast amounts of structured data in rows and
+            columns, but with the speed, data integrity, and multi-user reliability required for real-world
+            applications.
+          </p>
+
+          <p className="font-semibold text-gray-900 pt-1">Why use SQL?</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-sm sm:text-base text-gray-800">
+            <li>It can filter and join millions of records in milliseconds.</li>
+            <li>It guarantees transactional integrity so records are never corrupted or lost.</li>
+            <li>It is the universal industry standard language across data analysis, engineering, and product teams.</li>
+          </ul>
+        </section>
+
+        {/* ========================================================= */}
+        {/* STEP 1: TABLES, ROWS, AND COLUMNS                        */}
+        {/* ========================================================= */}
+        <section className="mt-8 mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 pb-1.5 border-b-2 border-[#0066cc] mb-4">
+            Step 1: Tables, Rows, and Columns
+          </h2>
+
+          <div className="space-y-3 text-sm sm:text-base text-gray-800 leading-relaxed">
+            <p>
+              The most fundamental object in a relational database is the <strong>Table</strong>. Think
+              of it like a structured sheet in a spreadsheet: it has named columns, horizontal rows,
+              and individual cells.
             </p>
 
-            <textarea
-              value={noteText}
-              onChange={(e) => setNoteText(e.target.value)}
-              placeholder={`Jot down personal takeaways for Lesson ${lesson.number}...`}
-              className="w-full h-32 p-3 rounded-lg bg-surface border border-border text-xs sm:text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-primary/40 font-sans leading-relaxed resize-y"
+            <ul className="list-disc pl-5 space-y-1 text-sm text-gray-800">
+              <li>
+                <strong>Table:</strong> A named grid holding all records for one specific entity (e.g.{' '}
+                <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded text-gray-900">
+                  {lesson.dataset.tableName}
+                </code>
+                ).
+              </li>
+              <li>
+                <strong>Column (Attribute):</strong> A vertical specification representing one property
+                (such as title or year) with an enforced data type (integer, text, date).
+              </li>
+              <li>
+                <strong>Row (Record):</strong> A single horizontal entry representing one individual
+                instance (e.g. one specific book).
+              </li>
+              <li>
+                <strong>Cell:</strong> The unique intersection of one row and one column, holding a
+                single data value.
+              </li>
+            </ul>
+
+            {/* Clean Sample Output View */}
+            <OutputBox
+              columns={lesson.dataset.sampleColumns}
+              rows={lesson.dataset.sampleRows.slice(0, 5)}
             />
 
-            <div className="flex items-center justify-between pt-1 text-[11px] text-text-muted font-mono">
-              <span>{noteText.trim().length} characters</span>
-              <span>Auto-saved to IndexedDB</span>
-            </div>
-          </Card>
-        ) : (
-          <button
-            type="button"
-            onClick={() => setIsNotesOpen(true)}
-            className="w-full p-3.5 bg-subtle/50 hover:bg-subtle border border-dashed border-border rounded-xl text-left text-xs text-text-muted transition-colors flex items-center justify-between cursor-pointer min-h-[44px]"
-          >
-            <span>
-              {noteText.trim().length > 0
-                ? `Saved Note (${noteText.trim().length} chars) - Click to view or edit`
-                : 'Click to add personal notes for this lesson (auto-saved)'}
-            </span>
-            <ChevronDown className="w-3.5 h-3.5" />
-          </button>
-        )}
-      </section>
+            {/* Concept Box matching reference image */}
+            <ConceptBox>
+              Every row represents one complete item (an individual book in our catalog), and each
+              column enforces a specific attribute across all items.
+            </ConceptBox>
 
-      {/* ========================================================= */}
-      {/* END-OF-LESSON SUMMARY & NEXT LESSON ACTION               */}
-      {/* ========================================================= */}
-      <Card className="p-4 sm:p-5 bg-surface border-border shadow-subtle space-y-3 mt-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-primary block">
-              Lesson Summary
-            </span>
-            <h3 className="text-sm sm:text-base font-bold text-text-main">
-              {isLessonCompleted || (allExercisesSolved && currentQuizAttempt?.passed)
-                ? `Completed: ${lesson.title}`
-                : `Lesson Progress: ${lesson.title}`}
-            </h3>
-            <p className="text-xs text-text-muted leading-relaxed">
-              {solvedCountInLesson} of {lesson.exercises.length} coding tasks solved • Quiz:{' '}
-              {currentQuizAttempt
-                ? `${currentQuizAttempt.score}/${lesson.quiz.length} (${
-                    currentQuizAttempt.passed ? 'Passed' : 'Needs 80% to pass'
-                  })`
-                : 'Not yet taken'}
+            {/* Knowledge Check 1 */}
+            <KnowledgeCheck
+              number={1}
+              question="In the LibraryBooks table shown above, what does each individual horizontal row represent?"
+              options={[
+                { text: 'A single attribute, such as published_year or category.', isCorrect: false },
+                { text: 'An individual book record containing all of its attributes.', isCorrect: true },
+                { text: 'The entire database catalog as a whole.', isCorrect: false },
+              ]}
+              explanation="A row (also called a record or tuple) represents one complete instance of an entity in a relational table."
+            />
+          </div>
+        </section>
+
+        {/* ========================================================= */}
+        {/* STEP 2: YOUR FIRST SQL QUERY                             */}
+        {/* ========================================================= */}
+        <section className="mt-10 mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 pb-1.5 border-b-2 border-[#0066cc] mb-4">
+            Step 2: Your First SQL Query
+          </h2>
+
+          <div className="space-y-3 text-sm sm:text-base text-gray-800 leading-relaxed">
+            <p>
+              To read data from a table, we write a <strong>SELECT</strong> query. SQL is{' '}
+              <em>declarative</em>: you tell the database <strong>what</strong> data you want, and
+              the database engine plans the fastest execution path behind the scenes.
             </p>
-          </div>
 
-          <div className="flex items-center gap-2 shrink-0">
-            {nextLesson ? (
-              <Button
-                variant="primary"
-                size="md"
-                onClick={() => navigate(`/learn/${nextLesson.slug}`)}
-                className="text-xs sm:text-sm font-semibold gap-2 min-h-[44px]"
-              >
-                <span>Continue to Next Lesson</span>
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            ) : (
-              <Button
-                variant="primary"
-                size="md"
-                onClick={() => navigate('/learn')}
-                className="text-xs sm:text-sm font-semibold gap-2 min-h-[44px]"
-              >
-                <span>Course Lessons</span>
-                <CheckSquare className="w-4 h-4" />
-              </Button>
+            <p>
+              The simplest and most common query uses the wildcard asterisk (<code>*</code>) to
+              request every column from a table:
+            </p>
+
+            {/* Live Embedded SQL Editor #1 */}
+            {ex1 && (
+              <EmbeddedSqlEditor
+                id={ex1.id}
+                initialQuery={ex1.initialQuery}
+                solutionQuery={ex1.solutionQuery}
+                expectedColumns={ex1.expectedColumns}
+                dataset={lesson.dataset}
+                goalDescription={ex1.objective}
+                hint={ex1.hint}
+                explanation={ex1.explanation}
+                allowedKeywords={ex1.allowedKeywords || ['SELECT', '*', 'FROM', ';']}
+                isSolved={!!exerciseAttempts[ex1.id]?.isSolved}
+                onSolve={(q) => recordExerciseSolved(ex1.id, lesson.id, q)}
+                savedQuery={exerciseAttempts[ex1.id]?.userQuery}
+              />
             )}
+
+            {/* Pro Tip Box matching reference image */}
+            <ProTipBox>
+              In SQL, the asterisk (<code className="font-mono text-xs font-bold">*</code>) is a
+              wildcard shorthand meaning "all columns". SQL keywords like{' '}
+              <code className="font-mono text-xs font-bold">SELECT</code> and{' '}
+              <code className="font-mono text-xs font-bold">FROM</code> are case-insensitive, but
+              writing them in UPPERCASE is the community standard for readability.
+            </ProTipBox>
+
+            {/* Knowledge Check 2 */}
+            <KnowledgeCheck
+              number={2}
+              question="What does the asterisk (*) symbol represent when placed directly after SELECT?"
+              options={[
+                { text: 'A mathematical multiplication of all table rows.', isCorrect: false },
+                { text: 'A wildcard instructing the engine to return all columns defined in the table.', isCorrect: true },
+                { text: 'A command to return only the first row in the table.', isCorrect: false },
+              ]}
+              explanation="The asterisk wildcard (*) instructs the database engine to project every column in the table without listing them individually."
+            />
           </div>
+        </section>
+
+        {/* ========================================================= */}
+        {/* STEP 3: SELECTING SPECIFIC COLUMNS                       */}
+        {/* ========================================================= */}
+        <section className="mt-10 mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 pb-1.5 border-b-2 border-[#0066cc] mb-4">
+            Step 3: Selecting Specific Columns
+          </h2>
+
+          <div className="space-y-3 text-sm sm:text-base text-gray-800 leading-relaxed">
+            <p>
+              In real production applications, fetching all columns with <code>SELECT *</code> can
+              waste bandwidth and memory when tables have dozens of columns.
+            </p>
+
+            <p>
+              Instead, you specify only the attributes you need by writing comma-separated column
+              names directly after the <code>SELECT</code> keyword.
+            </p>
+
+            {/* Live Embedded SQL Editor #2 */}
+            {ex2 && (
+              <EmbeddedSqlEditor
+                id={ex2.id}
+                initialQuery={ex2.initialQuery}
+                solutionQuery={ex2.solutionQuery}
+                expectedColumns={ex2.expectedColumns}
+                dataset={lesson.dataset}
+                goalDescription={ex2.objective}
+                hint={ex2.hint}
+                explanation={ex2.explanation}
+                allowedKeywords={ex2.allowedKeywords || ['SELECT', 'FROM', ',', ';']}
+                isSolved={!!exerciseAttempts[ex2.id]?.isSolved}
+                onSolve={(q) => recordExerciseSolved(ex2.id, lesson.id, q)}
+                savedQuery={exerciseAttempts[ex2.id]?.userQuery}
+              />
+            )}
+
+            {/* Concept Box */}
+            <ConceptBox>
+              Selecting only the columns you need reduces network latency, minimizes memory
+              consumption, and keeps output grids focused and readable.
+            </ConceptBox>
+
+            {/* Live Embedded SQL Editor #3 (Independent Challenge) */}
+            {ex3 && (
+              <div className="pt-2">
+                <p className="text-sm font-semibold text-gray-900 mb-1">
+                  Independent Challenge: Write a query from scratch
+                </p>
+                <p className="text-xs text-gray-600 mb-2">
+                  Retrieve <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">book_id</code>,{' '}
+                  <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">title</code>, and{' '}
+                  <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">category</code> from{' '}
+                  <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">LibraryBooks</code>.
+                </p>
+
+                <EmbeddedSqlEditor
+                  id={ex3.id}
+                  initialQuery={ex3.initialQuery}
+                  solutionQuery={ex3.solutionQuery}
+                  expectedColumns={ex3.expectedColumns}
+                  dataset={lesson.dataset}
+                  goalDescription={ex3.objective}
+                  hint={ex3.hint}
+                  explanation={ex3.explanation}
+                  allowedKeywords={ex3.allowedKeywords || ['SELECT', 'FROM', ',', ';']}
+                  isSolved={!!exerciseAttempts[ex3.id]?.isSolved}
+                  onSolve={(q) => recordExerciseSolved(ex3.id, lesson.id, q)}
+                  savedQuery={exerciseAttempts[ex3.id]?.userQuery}
+                />
+              </div>
+            )}
+
+            {/* Knowledge Check 3 */}
+            <KnowledgeCheck
+              number={3}
+              question="Does the order of column names in the SELECT clause affect the output table?"
+              options={[
+                { text: 'No, database tables always output columns in alphabetical order.', isCorrect: false },
+                { text: 'Yes, columns appear in the exact left-to-right order specified in your SELECT statement.', isCorrect: true },
+                { text: 'No, the primary key column always appears first regardless of SELECT order.', isCorrect: false },
+              ]}
+              explanation="The database engine projects columns left-to-right in the exact order you specify in the SELECT statement."
+            />
+          </div>
+        </section>
+
+        {/* Optional Collapsible Section: Database Engines */}
+        <div className="my-6">
+          <details className="group border border-gray-200 rounded-lg bg-gray-50/70 overflow-hidden">
+            <summary className="p-3.5 sm:p-4 text-xs sm:text-sm font-bold text-gray-900 cursor-pointer select-none flex items-center justify-between hover:bg-gray-100 transition-colors list-none">
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" size="sm">Optional Reading</Badge>
+                <span>Popular Relational Database Engines (SQLite, PostgreSQL, MySQL, SQL Server)</span>
+              </div>
+              <ChevronDown className="w-4 h-4 text-gray-500 transition-transform group-open:rotate-180" />
+            </summary>
+            <div className="px-4 pb-4 pt-1 border-t border-gray-200 text-xs sm:text-sm text-gray-700 leading-relaxed space-y-2">
+              <p>
+                Major relational database systems share the same ANSI/ISO SQL standards for queries,
+                making your SQL knowledge universally transferable:
+              </p>
+              <ul className="list-disc pl-5 space-y-1 text-xs">
+                <li><strong>SQLite:</strong> Lightweight, serverless engine embedded directly in applications and web browsers. (Runs locally in your browser right now!)</li>
+                <li><strong>PostgreSQL:</strong> Highly extensible open-source object-relational database popular in analytics and modern web stacks.</li>
+                <li><strong>MySQL:</strong> World-renowned open-source relational engine widely used in web development and hosting.</li>
+                <li><strong>Microsoft SQL Server:</strong> Enterprise database system integrated deeply with Windows and Azure.</li>
+                <li><strong>Oracle Database:</strong> High-performance transactional database common in banking and enterprise infrastructures.</li>
+              </ul>
+            </div>
+          </details>
         </div>
-      </Card>
 
-      {/* Lesson Bottom Navigation Bar */}
-      <div className="flex items-center justify-between pt-4 border-t border-border gap-3">
-        {prevLesson ? (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigate(`/learn/${prevLesson.slug}`)}
-            className="text-xs min-h-[44px]"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Lesson {prevLesson.number}</span>
-          </Button>
-        ) : (
-          <div />
-        )}
+        {/* ========================================================= */}
+        {/* STEP 4: KNOWLEDGE ASSESSMENT (EMBEDDED QUIZ)             */}
+        {/* ========================================================= */}
+        <section ref={quizRef} className="mt-10 mb-8 pt-6 border-t border-gray-200">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 pb-1.5 border-b-2 border-[#0066cc] mb-3">
+            Step 4: Knowledge Assessment
+          </h2>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => navigate('/learn')}
-          className="text-xs text-text-muted hover:text-text-main min-h-[44px]"
-        >
-          Course Lessons
-        </Button>
+          <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">
+            Complete the 10 assessment questions below to test your practical and conceptual mastery
+            of this tutorial. Achieve 80% (8/10) to mark this lesson complete.
+          </p>
 
-        {nextLesson ? (
+          <QuizRunner
+            key={`quiz_${lesson.id}`}
+            quizId={`quiz_${lesson.id}`}
+            title={`Lesson ${lesson.number}: ${lesson.title}`}
+            description="Test your conceptual and practical understanding of this lesson's topics."
+            questions={lesson.quiz}
+            onComplete={handleQuizComplete}
+            initialAnswers={currentQuizAttempt?.userAnswers}
+            initialScore={currentQuizAttempt?.score}
+            initialPassed={currentQuizAttempt?.passed}
+          />
+        </section>
+
+        {/* ========================================================= */}
+        {/* BOTTOM LESSON NAVIGATION                                 */}
+        {/* ========================================================= */}
+        <footer className="pt-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+          {prevLesson ? (
+            <Button
+              variant="outline"
+              size="md"
+              onClick={() => navigate(`/learn/${prevLesson.slug}`)}
+              className="text-xs min-h-[44px] w-full sm:w-auto"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Previous: Lesson {prevLesson.number}</span>
+            </Button>
+          ) : (
+            <div className="hidden sm:block" />
+          )}
+
           <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigate(`/learn/${nextLesson.slug}`)}
-            className="text-xs min-h-[44px]"
+            variant="ghost"
+            size="md"
+            onClick={() => navigate('/learn')}
+            className="text-xs text-gray-600 hover:text-gray-900 min-h-[44px] w-full sm:w-auto"
           >
-            <span>Lesson {nextLesson.number}</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <BookOpen className="w-4 h-4 mr-1.5" />
+            <span>Course Lessons</span>
           </Button>
-        ) : (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigate('/quizzes')}
-            className="text-xs min-h-[44px]"
-          >
-            <span>All Quizzes</span>
-            <CheckSquare className="w-3.5 h-3.5" />
-          </Button>
-        )}
-      </div>
+
+          {nextLesson ? (
+            <Button
+              variant="primary"
+              size="md"
+              onClick={() => navigate(`/learn/${nextLesson.slug}`)}
+              className="text-xs font-semibold min-h-[44px] w-full sm:w-auto bg-[#0066cc] hover:bg-[#0052a3]"
+            >
+              <span>Continue: Lesson {nextLesson.number}</span>
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              size="md"
+              onClick={() => navigate('/quizzes')}
+              className="text-xs font-semibold min-h-[44px] w-full sm:w-auto bg-[#0066cc]"
+            >
+              <span>View All Quizzes</span>
+            </Button>
+          )}
+        </footer>
+      </article>
     </div>
   );
 }

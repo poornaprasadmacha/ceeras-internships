@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Sparkles, Globe, Terminal, Code2, Users } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
 
 export function RotatingGlobe() {
   const chartDivRef = useRef<HTMLDivElement>(null);
   const chartInstanceRef = useRef<any>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -114,7 +112,6 @@ export function RotatingGlobe() {
         startRotation();
       });
 
-      setIsLoaded(true);
       return true;
     };
 
@@ -143,7 +140,7 @@ export function RotatingGlobe() {
   }, []);
 
   return (
-    <div className="relative w-full max-w-[480px] flex flex-col items-center justify-center select-none">
+    <div className="relative w-full max-w-[480px] flex items-center justify-center select-none">
       {/* Container for amCharts 4 Orthographic rotating globe */}
       <div
         id="chartdiv"
@@ -153,33 +150,6 @@ export function RotatingGlobe() {
           background: 'radial-gradient(circle at center, rgba(14, 94, 119, 0.08) 0%, transparent 72%)',
         }}
       />
-
-      {/* Floating Badges Matching Ceeras Design System */}
-      <div className="absolute top-4 left-2 sm:left-4 z-20 hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface/90 backdrop-blur-md border border-primary/30 shadow-card text-xs font-semibold text-text-main pointer-events-none">
-        <Sparkles className="w-3.5 h-3.5 text-secondary" />
-        <span>Global Knowledge Hub</span>
-      </div>
-
-      <div className="absolute bottom-10 left-0 sm:left-2 z-20 hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface/90 backdrop-blur-md border border-border shadow-card text-xs text-text-main font-medium pointer-events-none">
-        <Terminal className="w-3.5 h-3.5 text-primary" />
-        <span>In-Browser SQLite WASM</span>
-      </div>
-
-      <div className="absolute bottom-16 right-2 sm:right-4 z-20 hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface/90 backdrop-blur-md border border-secondary/30 shadow-card text-xs text-text-main font-medium pointer-events-none">
-        <Code2 className="w-3.5 h-3.5 text-secondary" />
-        <span>11 Active Tech Tracks</span>
-      </div>
-
-      <div className="absolute top-8 right-2 sm:right-6 z-20 hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface/90 backdrop-blur-md border border-border shadow-card text-xs text-text-main font-medium pointer-events-none">
-        <Users className="w-3.5 h-3.5 text-primary" />
-        <span>Interactive World Map</span>
-      </div>
-
-      {/* Mobile-Friendly Drag Hint */}
-      <div className="text-[11px] text-text-muted flex items-center justify-center gap-1.5 pt-1 opacity-70 hover:opacity-100 transition-opacity">
-        <Globe className="w-3 h-3 text-secondary" />
-        <span>3D Orthographic Globe • Drag to rotate freely</span>
-      </div>
     </div>
   );
 }

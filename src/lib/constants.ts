@@ -8,23 +8,18 @@ export const PASSING_PERCENTAGE = 80;
 export const THEME_STORAGE_KEY = 'querypath_theme';
 export const FONT_SIZE_STORAGE_KEY = 'querypath_font_size';
 
-export type ThemeName = 'soft-light' | 'warm-paper' | 'soft-dark';
+export type ThemeName = 'light' | 'dark' | 'soft-light' | 'soft-dark';
 
-export const THEMES: { id: ThemeName; label: string; description: string }[] = [
+export const THEMES: { id: 'light' | 'dark'; label: string; description: string }[] = [
   {
-    id: 'soft-light',
-    label: 'Soft Light',
-    description: 'Clean soothing slate background with deep Ceeras teal accents. Ideal for daylight study.',
+    id: 'light',
+    label: 'Daylight Mode',
+    description: 'Crisp, clean pure white background with blue accents.',
   },
   {
-    id: 'warm-paper',
-    label: 'Warm Paper',
-    description: 'Warm parchment and terracotta tones with muted teal highlights. Gentle on the eyes during evening reading.',
-  },
-  {
-    id: 'soft-dark',
-    label: 'Soft Dark',
-    description: 'Deep ocean charcoal surface with luminous cyan highlights. Zero neon glare.',
+    id: 'dark',
+    label: 'Dark Mode',
+    description: 'Deep slate navy inspired by professional developer environments.',
   },
 ];
 

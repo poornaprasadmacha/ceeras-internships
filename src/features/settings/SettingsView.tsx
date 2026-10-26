@@ -57,34 +57,19 @@ export function SettingsView() {
                   <div
                     className="w-5 h-5 rounded-full border border-border"
                     style={{
-                      backgroundColor:
-                        t.id === 'soft-light'
-                          ? '#F6F8F6'
-                          : t.id === 'warm-paper'
-                          ? '#FAF7F2'
-                          : '#151B18',
+                      backgroundColor: t.id === 'light' ? '#FFFFFF' : '#15202B',
                     }}
                   />
                   <div
                     className="w-5 h-5 rounded-full border border-border"
                     style={{
-                      backgroundColor:
-                        t.id === 'soft-light'
-                          ? '#356859'
-                          : t.id === 'warm-paper'
-                          ? '#6E5034'
-                          : '#5E9882',
+                      backgroundColor: t.id === 'light' ? '#0066CC' : '#007BFF',
                     }}
                   />
                   <div
                     className="w-5 h-5 rounded-full border border-border"
                     style={{
-                      backgroundColor:
-                        t.id === 'soft-light'
-                          ? '#FFFFFF'
-                          : t.id === 'warm-paper'
-                          ? '#FFFFFF'
-                          : '#1B231F',
+                      backgroundColor: t.id === 'light' ? '#0F172A' : '#FFFFFF',
                     }}
                   />
                 </div>

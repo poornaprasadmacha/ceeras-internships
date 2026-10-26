@@ -20,64 +20,46 @@
 }
 
 :root,
+html[data-theme='light'],
 html[data-theme='soft-light'] {
-  --bg-app: #F7FAFC;
+  --bg-app: #FFFFFF;
   --bg-surface: #FFFFFF;
-  --bg-subtle: #EEF4F6;
-  --text-primary: #172B33;
-  --text-secondary: #526B76;
-  --accent-primary: #086781;
-  --accent-primary-hover: #064F63;
-  --accent-secondary: #008D9B;
-  --border-color: #D7E3E8;
-  --status-success: #237A57;
-  --status-success-subtle: #E8F5EE;
-  --status-warning: #8B6724;
-  --status-warning-subtle: #FDF6E8;
-  --status-error: #B42318;
-  --status-error-subtle: #FDE8E8;
-  --editor-bg: #F0F5F7;
-  --editor-text: #172B33;
+  --bg-subtle: #F8FAFC;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --accent-primary: #0066CC;
+  --accent-primary-hover: #0052A3;
+  --accent-secondary: #0284C7;
+  --border-color: #E2E8F0;
+  --status-success: #16A34A;
+  --status-success-subtle: #F0FDF4;
+  --status-warning: #D97706;
+  --status-warning-subtle: #FFFBEB;
+  --status-error: #DC2626;
+  --status-error-subtle: #FEF2F2;
+  --editor-bg: #1E293B;
+  --editor-text: #F8FAFC;
 }
 
-html[data-theme='warm-paper'] {
-  --bg-app: #FAF8F5;
-  --bg-surface: #FFFFFF;
-  --bg-subtle: #F2EDE6;
-  --text-primary: #2C2620;
-  --text-secondary: #6B6056;
-  --accent-primary: #1A5B6F;
-  --accent-primary-hover: #134656;
-  --accent-secondary: #008390;
-  --border-color: #E5DFD6;
-  --status-success: #3E6E52;
-  --status-success-subtle: #EBF3ED;
-  --status-warning: #916933;
-  --status-warning-subtle: #FAF2E6;
-  --status-error: #9E4545;
-  --status-error-subtle: #FAECEC;
-  --editor-bg: #F5EFE6;
-  --editor-text: #2D231A;
-}
-
+html[data-theme='dark'],
 html[data-theme='soft-dark'] {
-  --bg-app: #0D1619;
-  --bg-surface: #132025;
-  --bg-subtle: #192A30;
-  --text-primary: #E5F0F3;
-  --text-secondary: #8BA4AE;
-  --accent-primary: #2DB1D5;
-  --accent-primary-hover: #46C0E2;
-  --accent-secondary: #167E9C;
-  --border-color: #233942;
-  --status-success: #38A983;
-  --status-success-subtle: #142C23;
-  --status-warning: #CCA352;
-  --status-warning-subtle: #302616;
-  --status-error: #DB6666;
+  --bg-app: #15202B;
+  --bg-surface: #1B2A38;
+  --bg-subtle: #1D2D3D;
+  --text-primary: #FFFFFF;
+  --text-secondary: #99AAB8;
+  --accent-primary: #007BFF;
+  --accent-primary-hover: #0066D6;
+  --accent-secondary: #38BDF8;
+  --border-color: #283B4D;
+  --status-success: #22C55E;
+  --status-success-subtle: #132E22;
+  --status-warning: #F59E0B;
+  --status-warning-subtle: #332612;
+  --status-error: #EF4444;
   --status-error-subtle: #331A1A;
-  --editor-bg: #101B20;
-  --editor-text: #DFEDF2;
+  --editor-bg: #0F172A;
+  --editor-text: #F8FAFC;
 }
 
 /* Accessibility: Focus Visible outline */

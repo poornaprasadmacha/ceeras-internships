@@ -3,27 +3,43 @@ import { ThemeName, THEME_STORAGE_KEY } from '../lib/constants';
 import { getUserSetting, setUserSetting } from '../database/storage';
 
 export function useTheme() {
-  const [theme, setThemeState] = useState<ThemeName>(() => {
-    const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeName | null;
-    return saved || 'soft-light';
+  const [theme, setThemeState] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem(THEME_STORAGE_KEY) as string | null;
+    if (saved === 'dark' || saved === 'soft-dark') return 'dark';
+    return 'light';
   });
 
   useEffect(() => {
-    // Sync with IndexedDB
-    getUserSetting<ThemeName>('theme', theme).then((savedTheme) => {
-      if (savedTheme && savedTheme !== theme) {
-        setThemeState(savedTheme);
-        document.documentElement.setAttribute('data-theme', savedTheme);
+    // Initial sync
+    const current = document.documentElement.getAttribute('data-theme');
+    if (!current || (current !== 'light' && current !== 'dark')) {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+
+    getUserSetting<string>('theme', theme).then((savedTheme) => {
+      if (savedTheme) {
+        const resolved: 'light' | 'dark' =
+          savedTheme === 'dark' || savedTheme === 'soft-dark' ? 'dark' : 'light';
+        if (resolved !== theme) {
+          setThemeState(resolved);
+          document.documentElement.setAttribute('data-theme', resolved);
+        }
       }
     });
-  }, []);
+  }, [theme]);
 
-  const setTheme = (newTheme: ThemeName) => {
-    setThemeState(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem(THEME_STORAGE_KEY, newTheme);
-    setUserSetting('theme', newTheme);
+  const setTheme = (newTheme: 'light' | 'dark' | ThemeName) => {
+    const resolved: 'light' | 'dark' =
+      newTheme === 'dark' || newTheme === 'soft-dark' ? 'dark' : 'light';
+    setThemeState(resolved);
+    document.documentElement.setAttribute('data-theme', resolved);
+    localStorage.setItem(THEME_STORAGE_KEY, resolved);
+    setUserSetting('theme', resolved);
   };
 
-  return { theme, setTheme };
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  return { theme, setTheme, toggleTheme };
 }

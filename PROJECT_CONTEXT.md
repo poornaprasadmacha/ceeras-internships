@@ -203,7 +203,23 @@ Each lesson in `src/data/lessons/` follows a typed `Lesson` schema:
     - Upgraded CodeMirror styling in [`src/components/editor/SqlEditor.tsx`](file:///c:/Users/poorn/OneDrive/Desktop/SQL/src/components/editor/SqlEditor.tsx) to dark charcoal `#1e293b` with SQL syntax highlighting (`SELECT`, `FROM`, numbers, strings).
     - Integrated quick chips, run execution against in-browser SQLite WASM, and live tabular output matching the reference design.
   - Embedded the full 10-question Knowledge Assessment Quiz directly at the bottom of the course page so learners never leave the tutorial context.
-  - Verified with `npx tsc --noEmit` (exit code 0) and `npm run build` (exit code 0).
+- **Phase 7: Unified White Background, 2-Theme Mode & W3Schools Dark Theme**:
+  - Unified daylight mode background to pure white `#FFFFFF` across the application shell, container, header, and tutorial content, eliminating two-tone gray/white container borders.
+  - Reduced theme options to strictly two modes: **Daylight Mode** (pure white) and **Dark Mode** (deep slate navy), removing the warm paper mode.
+  - Implemented the dark mode palette matching the provided W3Schools reference screenshot:
+    - Background: Deep slate navy `#15202B`
+    - Cards and surfaces: `#1B2A38`
+    - Borders: `#283B4D`
+    - Main text & headings: `#FFFFFF`
+    - Secondary/muted text: `#99AAB8`
+    - Action blue button: `#007BFF`
+  - Added full dark mode support to all in-line tutorial callouts:
+    - `ConceptBox`: `dark:bg-[#1a2e40] dark:border-[#38bdf8] dark:text-[#e2e8f0]`
+    - `ProTipBox`: `dark:bg-[#162f22] dark:border-[#22c55e] dark:text-[#e2e8f0]`
+    - `KnowledgeCheck`: `dark:bg-[#1f261e]/90 dark:border-[#4d401a] dark:text-[#e6edf3]`
+    - `OutputBox`: `dark:bg-[#0f172a] dark:border-[#283b4d] dark:text-[#cbd5e1]`
+    - `EmbeddedSqlEditor`: `dark:bg-[#1b2a38] dark:border-[#283b4d]`
+  - Verified with `npx tsc --noEmit` (exit code 0), `npm run build` (exit code 0), and zero-emoji scan (exit code 0).
 
 ---
 

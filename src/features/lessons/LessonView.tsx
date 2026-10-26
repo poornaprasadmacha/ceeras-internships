@@ -83,23 +83,23 @@ export function LessonView() {
   };
 
   return (
-    <div className="bg-white min-h-screen">
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 font-sans text-gray-900">
+    <div className="bg-app min-h-screen transition-colors">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 font-sans text-text-main">
         {/* Breadcrumb & Top Controls */}
-        <div className="flex items-center justify-between text-xs text-gray-500 mb-4 pb-2 border-b border-gray-100">
+        <div className="flex items-center justify-between text-xs text-text-muted mb-4 pb-2 border-b border-border">
           <div className="flex items-center gap-1.5 truncate">
-            <Link to="/learn" className="hover:text-[#0066cc] font-medium">
+            <Link to="/learn" className="hover:text-primary font-medium">
               Course Lessons
             </Link>
             <span>/</span>
-            <span className="text-gray-900 font-semibold truncate">
+            <span className="text-text-main font-semibold truncate">
               Lesson {lesson.number}: {lesson.title}
             </span>
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
             {isLessonCompleted && (
-              <span className="flex items-center gap-1 text-green-700 font-medium text-xs bg-green-50 px-2 py-0.5 rounded border border-green-200">
+              <span className="flex items-center gap-1 text-success font-medium text-xs bg-success-subtle px-2 py-0.5 rounded border border-success/30">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Completed</span>
               </span>
@@ -110,12 +110,12 @@ export function LessonView() {
               className={cn(
                 'flex items-center gap-1 px-2.5 py-1 rounded text-xs transition-colors cursor-pointer',
                 isBookmarked
-                  ? 'text-[#0066cc] bg-blue-50 font-semibold'
-                  : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+                  ? 'text-primary bg-primary/10 font-semibold'
+                  : 'text-text-muted hover:text-text-main hover:bg-subtle'
               )}
               title={isBookmarked ? 'Remove Bookmark' : 'Bookmark this lesson'}
             >
-              <Bookmark className={cn('w-3.5 h-3.5', isBookmarked && 'fill-[#0066cc]')} />
+              <Bookmark className={cn('w-3.5 h-3.5', isBookmarked && 'fill-primary')} />
               <span>{isBookmarked ? 'Saved' : 'Bookmark'}</span>
             </button>
           </div>
@@ -123,11 +123,11 @@ export function LessonView() {
 
         {/* Tutorial Title matching reference design */}
         <header className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight leading-snug">
+          <h1 className="text-2xl sm:text-3xl font-bold text-text-main tracking-tight leading-snug">
             SQL Tutorial {lesson.number}: {lesson.title}
           </h1>
 
-          <div className="flex items-center gap-3 text-xs text-gray-500 mt-2">
+          <div className="flex items-center gap-3 text-xs text-text-muted mt-2">
             <span className="flex items-center gap-1">
               <Clock className="w-3.5 h-3.5" />
               <span>{lesson.estimatedMinutes} minutes</span>
@@ -140,16 +140,16 @@ export function LessonView() {
         </header>
 
         {/* Narrative Introduction */}
-        <section className="space-y-3 text-sm sm:text-base text-gray-800 leading-relaxed mb-6">
+        <section className="space-y-3 text-sm sm:text-base text-text-main/90 leading-relaxed mb-6">
           <p>
-            If spreadsheets are notebooks, a <strong>relational database</strong> is the engine. It
+            If spreadsheets are notebooks, a <strong className="text-text-main">relational database</strong> is the engine. It
             allows you to store, organize, and query vast amounts of structured data in rows and
             columns, but with the speed, data integrity, and multi-user reliability required for real-world
             applications.
           </p>
 
-          <p className="font-semibold text-gray-900 pt-1">Why use SQL?</p>
-          <ul className="list-disc pl-5 space-y-1.5 text-sm sm:text-base text-gray-800">
+          <p className="font-semibold text-text-main pt-1">Why use SQL?</p>
+          <ul className="list-disc pl-5 space-y-1.5 text-sm sm:text-base text-text-main/90">
             <li>It can filter and join millions of records in milliseconds.</li>
             <li>It guarantees transactional integrity so records are never corrupted or lost.</li>
             <li>It is the universal industry standard language across data analysis, engineering, and product teams.</li>
@@ -160,35 +160,35 @@ export function LessonView() {
         {/* STEP 1: TABLES, ROWS, AND COLUMNS                        */}
         {/* ========================================================= */}
         <section className="mt-8 mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 pb-1.5 border-b-2 border-[#0066cc] mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-text-main pb-1.5 border-b-2 border-primary mb-4">
             Step 1: Tables, Rows, and Columns
           </h2>
 
-          <div className="space-y-3 text-sm sm:text-base text-gray-800 leading-relaxed">
+          <div className="space-y-3 text-sm sm:text-base text-text-main/90 leading-relaxed">
             <p>
-              The most fundamental object in a relational database is the <strong>Table</strong>. Think
+              The most fundamental object in a relational database is the <strong className="text-text-main">Table</strong>. Think
               of it like a structured sheet in a spreadsheet: it has named columns, horizontal rows,
               and individual cells.
             </p>
 
-            <ul className="list-disc pl-5 space-y-1 text-sm text-gray-800">
+            <ul className="list-disc pl-5 space-y-1 text-sm text-text-main/90">
               <li>
-                <strong>Table:</strong> A named grid holding all records for one specific entity (e.g.{' '}
-                <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded text-gray-900">
+                <strong className="text-text-main">Table:</strong> A named grid holding all records for one specific entity (e.g.{' '}
+                <code className="font-mono text-xs bg-subtle px-1 py-0.5 rounded text-text-main border border-border">
                   {lesson.dataset.tableName}
                 </code>
                 ).
               </li>
               <li>
-                <strong>Column (Attribute):</strong> A vertical specification representing one property
+                <strong className="text-text-main">Column (Attribute):</strong> A vertical specification representing one property
                 (such as title or year) with an enforced data type (integer, text, date).
               </li>
               <li>
-                <strong>Row (Record):</strong> A single horizontal entry representing one individual
+                <strong className="text-text-main">Row (Record):</strong> A single horizontal entry representing one individual
                 instance (e.g. one specific book).
               </li>
               <li>
-                <strong>Cell:</strong> The unique intersection of one row and one column, holding a
+                <strong className="text-text-main">Cell:</strong> The unique intersection of one row and one column, holding a
                 single data value.
               </li>
             </ul>
@@ -223,13 +223,13 @@ export function LessonView() {
         {/* STEP 2: YOUR FIRST SQL QUERY                             */}
         {/* ========================================================= */}
         <section className="mt-10 mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 pb-1.5 border-b-2 border-[#0066cc] mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-text-main pb-1.5 border-b-2 border-primary mb-4">
             Step 2: Your First SQL Query
           </h2>
 
-          <div className="space-y-3 text-sm sm:text-base text-gray-800 leading-relaxed">
+          <div className="space-y-3 text-sm sm:text-base text-text-main/90 leading-relaxed">
             <p>
-              To read data from a table, we write a <strong>SELECT</strong> query. SQL is{' '}
+              To read data from a table, we write a <strong className="text-text-main">SELECT</strong> query. SQL is{' '}
               <em>declarative</em>: you tell the database <strong>what</strong> data you want, and
               the database engine plans the fastest execution path behind the scenes.
             </p>
@@ -284,11 +284,11 @@ export function LessonView() {
         {/* STEP 3: SELECTING SPECIFIC COLUMNS                       */}
         {/* ========================================================= */}
         <section className="mt-10 mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 pb-1.5 border-b-2 border-[#0066cc] mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-text-main pb-1.5 border-b-2 border-primary mb-4">
             Step 3: Selecting Specific Columns
           </h2>
 
-          <div className="space-y-3 text-sm sm:text-base text-gray-800 leading-relaxed">
+          <div className="space-y-3 text-sm sm:text-base text-text-main/90 leading-relaxed">
             <p>
               In real production applications, fetching all columns with <code>SELECT *</code> can
               waste bandwidth and memory when tables have dozens of columns.
@@ -326,14 +326,14 @@ export function LessonView() {
             {/* Live Embedded SQL Editor #3 (Independent Challenge) */}
             {ex3 && (
               <div className="pt-2">
-                <p className="text-sm font-semibold text-gray-900 mb-1">
+                <p className="text-sm font-semibold text-text-main mb-1">
                   Independent Challenge: Write a query from scratch
                 </p>
-                <p className="text-xs text-gray-600 mb-2">
-                  Retrieve <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">book_id</code>,{' '}
-                  <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">title</code>, and{' '}
-                  <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">category</code> from{' '}
-                  <code className="font-mono text-xs bg-gray-100 px-1 py-0.5 rounded">LibraryBooks</code>.
+                <p className="text-xs text-text-muted mb-2">
+                  Retrieve <code className="font-mono text-xs bg-subtle px-1 py-0.5 rounded border border-border">book_id</code>,{' '}
+                  <code className="font-mono text-xs bg-subtle px-1 py-0.5 rounded border border-border">title</code>, and{' '}
+                  <code className="font-mono text-xs bg-subtle px-1 py-0.5 rounded border border-border">category</code> from{' '}
+                  <code className="font-mono text-xs bg-subtle px-1 py-0.5 rounded border border-border">LibraryBooks</code>.
                 </p>
 
                 <EmbeddedSqlEditor
@@ -369,25 +369,25 @@ export function LessonView() {
 
         {/* Optional Collapsible Section: Database Engines */}
         <div className="my-6">
-          <details className="group border border-gray-200 rounded-lg bg-gray-50/70 overflow-hidden">
-            <summary className="p-3.5 sm:p-4 text-xs sm:text-sm font-bold text-gray-900 cursor-pointer select-none flex items-center justify-between hover:bg-gray-100 transition-colors list-none">
+          <details className="group border border-border rounded-lg bg-surface overflow-hidden">
+            <summary className="p-3.5 sm:p-4 text-xs sm:text-sm font-bold text-text-main cursor-pointer select-none flex items-center justify-between hover:bg-subtle transition-colors list-none">
               <div className="flex items-center gap-2">
                 <Badge variant="outline" size="sm">Optional Reading</Badge>
                 <span>Popular Relational Database Engines (SQLite, PostgreSQL, MySQL, SQL Server)</span>
               </div>
-              <ChevronDown className="w-4 h-4 text-gray-500 transition-transform group-open:rotate-180" />
+              <ChevronDown className="w-4 h-4 text-text-muted transition-transform group-open:rotate-180" />
             </summary>
-            <div className="px-4 pb-4 pt-1 border-t border-gray-200 text-xs sm:text-sm text-gray-700 leading-relaxed space-y-2">
+            <div className="px-4 pb-4 pt-1 border-t border-border text-xs sm:text-sm text-text-muted leading-relaxed space-y-2">
               <p>
                 Major relational database systems share the same ANSI/ISO SQL standards for queries,
                 making your SQL knowledge universally transferable:
               </p>
               <ul className="list-disc pl-5 space-y-1 text-xs">
-                <li><strong>SQLite:</strong> Lightweight, serverless engine embedded directly in applications and web browsers. (Runs locally in your browser right now!)</li>
-                <li><strong>PostgreSQL:</strong> Highly extensible open-source object-relational database popular in analytics and modern web stacks.</li>
-                <li><strong>MySQL:</strong> World-renowned open-source relational engine widely used in web development and hosting.</li>
-                <li><strong>Microsoft SQL Server:</strong> Enterprise database system integrated deeply with Windows and Azure.</li>
-                <li><strong>Oracle Database:</strong> High-performance transactional database common in banking and enterprise infrastructures.</li>
+                <li><strong className="text-text-main">SQLite:</strong> Lightweight, serverless engine embedded directly in applications and web browsers. (Runs locally in your browser right now!)</li>
+                <li><strong className="text-text-main">PostgreSQL:</strong> Highly extensible open-source object-relational database popular in analytics and modern web stacks.</li>
+                <li><strong className="text-text-main">MySQL:</strong> World-renowned open-source relational engine widely used in web development and hosting.</li>
+                <li><strong className="text-text-main">Microsoft SQL Server:</strong> Enterprise database system integrated deeply with Windows and Azure.</li>
+                <li><strong className="text-text-main">Oracle Database:</strong> High-performance transactional database common in banking and enterprise infrastructures.</li>
               </ul>
             </div>
           </details>
@@ -396,12 +396,12 @@ export function LessonView() {
         {/* ========================================================= */}
         {/* STEP 4: KNOWLEDGE ASSESSMENT (EMBEDDED QUIZ)             */}
         {/* ========================================================= */}
-        <section ref={quizRef} className="mt-10 mb-8 pt-6 border-t border-gray-200">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 pb-1.5 border-b-2 border-[#0066cc] mb-3">
+        <section ref={quizRef} className="mt-10 mb-8 pt-6 border-t border-border">
+          <h2 className="text-xl sm:text-2xl font-bold text-text-main pb-1.5 border-b-2 border-primary mb-3">
             Step 4: Knowledge Assessment
           </h2>
 
-          <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">
+          <p className="text-xs sm:text-sm text-text-muted leading-relaxed mb-6">
             Complete the 10 assessment questions below to test your practical and conceptual mastery
             of this tutorial. Achieve 80% (8/10) to mark this lesson complete.
           </p>
@@ -422,7 +422,7 @@ export function LessonView() {
         {/* ========================================================= */}
         {/* BOTTOM LESSON NAVIGATION                                 */}
         {/* ========================================================= */}
-        <footer className="pt-6 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <footer className="pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3">
           {prevLesson ? (
             <Button
               variant="outline"
@@ -441,7 +441,7 @@ export function LessonView() {
             variant="ghost"
             size="md"
             onClick={() => navigate('/learn')}
-            className="text-xs text-gray-600 hover:text-gray-900 min-h-[44px] w-full sm:w-auto"
+            className="text-xs text-text-muted hover:text-text-main min-h-[44px] w-full sm:w-auto"
           >
             <BookOpen className="w-4 h-4 mr-1.5" />
             <span>Course Lessons</span>
@@ -452,7 +452,7 @@ export function LessonView() {
               variant="primary"
               size="md"
               onClick={() => navigate(`/learn/${nextLesson.slug}`)}
-              className="text-xs font-semibold min-h-[44px] w-full sm:w-auto bg-[#0066cc] hover:bg-[#0052a3]"
+              className="text-xs font-semibold min-h-[44px] w-full sm:w-auto"
             >
               <span>Continue: Lesson {nextLesson.number}</span>
               <ArrowRight className="w-4 h-4" />
@@ -462,7 +462,7 @@ export function LessonView() {
               variant="primary"
               size="md"
               onClick={() => navigate('/quizzes')}
-              className="text-xs font-semibold min-h-[44px] w-full sm:w-auto bg-[#0066cc]"
+              className="text-xs font-semibold min-h-[44px] w-full sm:w-auto"
             >
               <span>View All Quizzes</span>
             </Button>

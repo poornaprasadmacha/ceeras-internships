@@ -136,13 +136,13 @@ export function EmbeddedSqlEditor({
   };
 
   return (
-    <div className="my-5 rounded-lg border border-gray-300 bg-white shadow-xs overflow-hidden">
+    <div className="my-5 rounded-lg border border-gray-300 dark:border-[#283b4d] bg-white dark:bg-[#1b2a38] shadow-xs overflow-hidden">
       {/* Optional goal bar */}
       {goalDescription && (
-        <div className="px-3.5 py-2.5 bg-gray-50 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+        <div className="px-3.5 py-2.5 bg-gray-50 dark:bg-[#15202b] border-b border-gray-200 dark:border-[#283b4d] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-gray-700">Practice Goal:</span>
-            <span className="text-gray-900 font-medium">{goalDescription}</span>
+            <span className="font-bold text-gray-700 dark:text-gray-300">Practice Goal:</span>
+            <span className="text-gray-900 dark:text-white font-medium">{goalDescription}</span>
           </div>
           {isSolved && (
             <Badge variant="success" size="sm" className="self-start sm:self-auto">
@@ -174,7 +174,7 @@ export function EmbeddedSqlEditor({
       </div>
 
       {/* Action Toolbar */}
-      <div className="p-2.5 bg-gray-50 border-t border-gray-200 flex items-center justify-between flex-wrap gap-2">
+      <div className="p-2.5 bg-gray-50 dark:bg-[#15202b] border-t border-gray-200 dark:border-[#283b4d] flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -192,10 +192,10 @@ export function EmbeddedSqlEditor({
           <button
             type="button"
             onClick={handleReset}
-            className="px-3 py-2 bg-white hover:bg-gray-100 border border-gray-300 text-gray-700 rounded text-xs flex items-center gap-1 transition-colors cursor-pointer min-h-[38px]"
+            className="px-3 py-2 bg-white dark:bg-[#1b2a38] hover:bg-gray-100 hover:dark:bg-[#223647] border border-gray-300 dark:border-[#283b4d] text-gray-700 dark:text-[#cbd5e1] rounded text-xs flex items-center gap-1 transition-colors cursor-pointer min-h-[38px]"
             title="Reset to starting query"
           >
-            <RotateCcw className="w-3 h-3 text-gray-500" />
+            <RotateCcw className="w-3 h-3 text-gray-500 dark:text-gray-400" />
             <span>Reset</span>
           </button>
         </div>
@@ -205,9 +205,9 @@ export function EmbeddedSqlEditor({
             <button
               type="button"
               onClick={() => setShowHint((prev) => !prev)}
-              className="px-2.5 py-1.5 text-xs text-amber-700 hover:text-amber-900 border border-amber-300 hover:bg-amber-50 rounded flex items-center gap-1 cursor-pointer transition-colors"
+              className="px-2.5 py-1.5 text-xs text-amber-700 dark:text-amber-400 hover:text-amber-900 border border-amber-300 dark:border-amber-700 hover:bg-amber-50 hover:dark:bg-amber-950/40 rounded flex items-center gap-1 cursor-pointer transition-colors"
             >
-              <Lightbulb className="w-3.5 h-3.5 text-amber-600" />
+              <Lightbulb className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
               <span>{showHint ? 'Hide Hint' : 'Hint'}</span>
             </button>
           )}
@@ -216,9 +216,9 @@ export function EmbeddedSqlEditor({
             <button
               type="button"
               onClick={() => setShowSolution((prev) => !prev)}
-              className="px-2.5 py-1.5 text-xs text-gray-600 hover:text-gray-900 border border-gray-300 hover:bg-gray-100 rounded flex items-center gap-1 cursor-pointer transition-colors"
+              className="px-2.5 py-1.5 text-xs text-gray-600 dark:text-[#99aab8] hover:text-gray-900 hover:dark:text-white border border-gray-300 dark:border-[#283b4d] hover:bg-gray-100 hover:dark:bg-[#223647] rounded flex items-center gap-1 cursor-pointer transition-colors"
             >
-              <Eye className="w-3.5 h-3.5 text-gray-500" />
+              <Eye className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" />
               <span>{showSolution ? 'Hide Solution' : 'Solution'}</span>
             </button>
           )}
@@ -227,8 +227,8 @@ export function EmbeddedSqlEditor({
 
       {/* Hint Drawer */}
       {showHint && hint && (
-        <div className="p-3 bg-amber-50 border-t border-amber-200 text-xs text-amber-950 flex items-start gap-2 animate-fadeIn">
-          <Lightbulb className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+        <div className="p-3 bg-amber-50 dark:bg-[#252824] border-t border-amber-200 dark:border-[#4d401a] text-xs text-amber-950 dark:text-amber-200 flex items-start gap-2 animate-fadeIn">
+          <Lightbulb className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
           <div>
             <span className="font-semibold block">Hint:</span>
             <p>{hint}</p>
@@ -238,7 +238,7 @@ export function EmbeddedSqlEditor({
 
       {/* Solution Drawer */}
       {showSolution && solutionQuery && (
-        <div className="p-3 bg-gray-50 border-t border-gray-200 text-xs text-gray-900 space-y-1.5 animate-fadeIn">
+        <div className="p-3 bg-gray-50 dark:bg-[#15202b] border-t border-gray-200 dark:border-[#283b4d] text-xs text-gray-900 dark:text-[#e2e8f0] space-y-1.5 animate-fadeIn">
           <div className="flex items-center justify-between">
             <span className="font-semibold">Reference Solution:</span>
             <button
@@ -247,15 +247,15 @@ export function EmbeddedSqlEditor({
                 setQuery(solutionQuery);
                 setShowSolution(false);
               }}
-              className="text-[#0066cc] hover:underline font-semibold text-[11px]"
+              className="text-[#0066cc] dark:text-[#38bdf8] hover:underline font-semibold text-[11px]"
             >
               Copy to Editor
             </button>
           </div>
-          <pre className="p-2 bg-[#1e293b] text-[#f8fafc] rounded font-mono text-xs overflow-x-auto">
+          <pre className="p-2 bg-[#1e293b] text-[#f8fafc] rounded font-mono text-xs overflow-x-auto border border-gray-700">
             {solutionQuery}
           </pre>
-          {explanation && <p className="text-gray-600 text-[11px]">{explanation}</p>}
+          {explanation && <p className="text-gray-600 dark:text-gray-400 text-[11px]">{explanation}</p>}
         </div>
       )}
 
@@ -265,14 +265,14 @@ export function EmbeddedSqlEditor({
           className={cn(
             'p-3 border-t text-xs flex items-start gap-2.5 animate-fadeIn',
             verification.isCorrect
-              ? 'bg-green-50 border-green-200 text-green-950'
-              : 'bg-amber-50 border-amber-200 text-amber-950'
+              ? 'bg-green-50 dark:bg-[#132e22] border-green-200 dark:border-green-800 text-green-950 dark:text-green-300'
+              : 'bg-amber-50 dark:bg-[#332612] border-amber-200 dark:border-amber-800 text-amber-950 dark:text-amber-300'
           )}
         >
           {verification.isCorrect ? (
-            <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-4 h-4 text-green-600 dark:text-green-400 shrink-0 mt-0.5" />
           ) : (
-            <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+            <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
           )}
           <div className="space-y-0.5">
             <p className="font-bold">
@@ -284,11 +284,11 @@ export function EmbeddedSqlEditor({
       )}
 
       {/* Query Output Area */}
-      <div className="p-3.5 bg-white border-t border-gray-200 space-y-1.5">
-        <div className="flex items-center justify-between text-xs text-gray-700">
+      <div className="p-3.5 bg-white dark:bg-[#15202b] border-t border-gray-200 dark:border-[#283b4d] space-y-1.5">
+        <div className="flex items-center justify-between text-xs text-gray-700 dark:text-gray-300">
           <span className="font-semibold">Output:</span>
           {queryResult && !queryResult.error && (
-            <span className="text-[11px] text-gray-500 font-mono">
+            <span className="text-[11px] text-gray-500 dark:text-gray-400 font-mono">
               {queryResult.rowCount} {queryResult.rowCount === 1 ? 'row' : 'rows'} returned (
               {queryResult.executionTimeMs} ms)
             </span>
@@ -296,32 +296,32 @@ export function EmbeddedSqlEditor({
         </div>
 
         {isRunning ? (
-          <div className="p-6 border border-gray-200 rounded-lg text-center text-xs text-gray-500 bg-gray-50">
+          <div className="p-6 border border-gray-200 dark:border-[#283b4d] rounded-lg text-center text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-[#0f172a]">
             Running query in SQLite engine...
           </div>
         ) : queryResult?.error ? (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-900 font-mono whitespace-pre-wrap">
+          <div className="p-3 bg-red-50 dark:bg-[#331a1a] border border-red-200 dark:border-red-900 rounded-lg text-xs text-red-900 dark:text-red-300 font-mono whitespace-pre-wrap">
             {queryResult.error}
           </div>
         ) : queryResult && queryResult.columns.length > 0 ? (
-          <div className="border border-gray-200 rounded-lg overflow-x-auto bg-[#f8fafc]">
+          <div className="border border-gray-200 dark:border-[#283b4d] rounded-lg overflow-x-auto bg-[#f8fafc] dark:bg-[#0f172a]">
             <table className="w-full text-left text-xs border-collapse">
-              <thead className="bg-[#f1f5f9] border-b border-gray-200">
+              <thead className="bg-[#f1f5f9] dark:bg-[#15202b] border-b border-gray-200 dark:border-[#283b4d]">
                 <tr>
                   {queryResult.columns.map((c) => (
-                    <th key={c} className="p-2 font-mono font-bold text-gray-800">
+                    <th key={c} className="p-2 font-mono font-bold text-gray-800 dark:text-white">
                       {c}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 dark:divide-[#283b4d]">
                 {queryResult.values.map((row, rIdx) => (
-                  <tr key={rIdx} className="hover:bg-[#f1f5f9]/60">
+                  <tr key={rIdx} className="hover:bg-[#f1f5f9]/60 hover:dark:bg-[#1b2a38]/60">
                     {row.map((cell, cIdx) => (
-                      <td key={cIdx} className="p-2 font-mono text-gray-800">
+                      <td key={cIdx} className="p-2 font-mono text-gray-800 dark:text-[#cbd5e1]">
                         {cell === null ? (
-                          <span className="text-gray-400 italic">NULL</span>
+                          <span className="text-gray-400 dark:text-gray-500 italic">NULL</span>
                         ) : (
                           String(cell)
                         )}
@@ -333,7 +333,7 @@ export function EmbeddedSqlEditor({
             </table>
           </div>
         ) : (
-          <div className="p-4 border border-dashed border-gray-200 rounded-lg text-center text-xs text-gray-400 bg-gray-50">
+          <div className="p-4 border border-dashed border-gray-200 dark:border-[#283b4d] rounded-lg text-center text-xs text-gray-400 bg-gray-50 dark:bg-[#0f172a]">
             Click "Run Query" to execute the SQL statement and view the output table here.
           </div>
         )}

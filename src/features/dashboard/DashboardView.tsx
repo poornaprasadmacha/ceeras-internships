@@ -290,16 +290,6 @@ export function DashboardView() {
               Our mission: <br />
               Spreading knowledge to ignite global change.
             </h1>
-
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => navigate('/learn')}
-                className="px-8 py-3 rounded-full bg-secondary hover:bg-secondary/90 text-white font-medium text-sm sm:text-base shadow-sm transition-all cursor-pointer active:scale-95 inline-flex items-center gap-2"
-              >
-                <span>Register Now</span>
-              </button>
-            </div>
           </div>
 
           {/* Right Illustration Column */}
@@ -561,247 +551,115 @@ export function DashboardView() {
                 {/* Card Action Footer */}
                 <div className="pt-4 border-t border-border flex items-center justify-between gap-2">
                   {isSQL ? (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => navigate('/practice')}
-                        className="text-xs"
-                      >
-                        <Terminal className="w-3.5 h-3.5" />
-                        <span>Sandbox</span>
-                      </Button>
-
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => navigate('/learn')}
-                        className="text-xs"
-                      >
-                        <span>{hasStartedAny ? 'Continue Course' : 'Start Course'}</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => navigate('/learn')}
+                      className="w-full text-xs"
+                    >
+                      <span>{hasStartedAny ? 'Continue Course' : 'Start Course'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
                   ) : isPython ? (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => navigate('/learn/python')}
-                        className="text-xs"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Syllabus</span>
-                      </Button>
-
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => navigate('/learn/python/hello-python-print')}
-                        className="text-xs bg-[#3776AB] hover:bg-[#2b5e89]"
-                      >
-                        <span>Start Python</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => navigate('/learn/python')}
+                      className="w-full text-xs bg-[#3776AB] hover:bg-[#2b5e89]"
+                    >
+                      <span>{hasStartedPython ? 'Continue Course' : 'Start Python'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
                   ) : isHtml ? (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => navigate('/learn/html')}
-                        className="text-xs"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Syllabus</span>
-                      </Button>
-
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => navigate('/learn/html/intro-to-html-and-tags')}
-                        className="text-xs bg-[#E44D26] hover:bg-[#c83d19] text-white"
-                      >
-                        <span>Start HTML</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => navigate('/learn/html')}
+                      className="w-full text-xs bg-[#E44D26] hover:bg-[#c83d19] text-white"
+                    >
+                      <span>{hasStartedHtml ? 'Continue Course' : 'Start HTML'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
                   ) : isCss ? (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => navigate('/learn/css')}
-                        className="text-xs"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Syllabus</span>
-                      </Button>
-
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => navigate('/learn/css/intro-to-css-syntax-and-selectors')}
-                        className="text-xs bg-[#1572B6] hover:bg-[#10568a] text-white"
-                      >
-                        <span>Start CSS</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => navigate('/learn/css')}
+                      className="w-full text-xs bg-[#1572B6] hover:bg-[#10568a] text-white"
+                    >
+                      <span>{hasStartedCss ? 'Continue Course' : 'Start CSS'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
                   ) : isJs ? (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => navigate('/learn/javascript')}
-                        className="text-xs"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Syllabus</span>
-                      </Button>
-
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => navigate('/learn/javascript/hello-javascript-and-console')}
-                        className="text-xs bg-amber-500 hover:bg-amber-600 text-black font-bold"
-                      >
-                        <span>Start JS</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => navigate('/learn/javascript')}
+                      className="w-full text-xs bg-amber-500 hover:bg-amber-600 text-black font-bold"
+                    >
+                      <span>{hasStartedJs ? 'Continue Course' : 'Start JavaScript'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
                   ) : isDs ? (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => navigate('/learn/datascience')}
-                        className="text-xs"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Syllabus</span>
-                      </Button>
-
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => navigate('/learn/datascience/intro-to-data-science-and-datasets')}
-                        className="text-xs bg-[#130754] hover:bg-[#1f0c82] text-white font-bold"
-                      >
-                        <span>Start Data Science</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => navigate('/learn/datascience')}
+                      className="w-full text-xs bg-[#130754] hover:bg-[#1f0c82] text-white font-bold"
+                    >
+                      <span>{hasStartedDs ? 'Continue Course' : 'Start Data Science'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
                   ) : isML ? (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => navigate('/learn/machinelearning')}
-                        className="text-xs"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Syllabus</span>
-                      </Button>
-
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => navigate('/learn/machinelearning/intro-to-machine-learning-paradigms')}
-                        className="text-xs bg-[#1E293B] hover:bg-[#334155] text-white font-bold"
-                      >
-                        <span>Start ML</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => navigate('/learn/machinelearning')}
+                      className="w-full text-xs bg-[#1E293B] hover:bg-[#334155] text-white font-bold"
+                    >
+                      <span>{hasStartedMl ? 'Continue Course' : 'Start Machine Learning'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
                   ) : isNumpy ? (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => navigate('/learn/numpy')}
-                        className="text-xs"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Syllabus</span>
-                      </Button>
-
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => navigate('/learn/numpy/intro-to-numpy-and-ndarrays')}
-                        className="text-xs bg-[#013243] hover:bg-[#024059] text-white font-bold"
-                      >
-                        <span>Start NumPy</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => navigate('/learn/numpy')}
+                      className="w-full text-xs bg-[#013243] hover:bg-[#024059] text-white font-bold"
+                    >
+                      <span>{hasStartedNumpy ? 'Continue Course' : 'Start NumPy'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
                   ) : isPandas ? (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => navigate('/learn/pandas')}
-                        className="text-xs"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Syllabus</span>
-                      </Button>
-
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => navigate('/learn/pandas/intro-to-pandas-series-and-dataframes')}
-                        className="text-xs bg-[#130754] hover:bg-[#1f0c82] text-white font-bold"
-                      >
-                        <span>Start Pandas</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => navigate('/learn/pandas')}
+                      className="w-full text-xs bg-[#130754] hover:bg-[#1f0c82] text-white font-bold"
+                    >
+                      <span>{hasStartedPandas ? 'Continue Course' : 'Start Pandas'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
                   ) : isGit ? (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => navigate('/learn/git')}
-                        className="text-xs"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Syllabus</span>
-                      </Button>
-
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => navigate('/learn/git/version-control-fundamentals-and-git-architecture')}
-                        className="text-xs bg-[#F05032] hover:bg-[#d44327] text-white font-bold"
-                      >
-                        <span>Start Git</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => navigate('/learn/git')}
+                      className="w-full text-xs bg-[#F05032] hover:bg-[#d44327] text-white font-bold"
+                    >
+                      <span>{hasStartedGit ? 'Continue Course' : 'Start Git'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
                   ) : isVsCode ? (
-                    <>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => navigate('/learn/vscode')}
-                        className="text-xs"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Syllabus</span>
-                      </Button>
-
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => navigate('/learn/vscode/vscode-interface-architecture-and-anatomy')}
-                        className="text-xs bg-[#007ACC] hover:bg-[#0062a3] text-white font-bold"
-                      >
-                        <span>Start VS Code</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Button>
-                    </>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => navigate('/learn/vscode')}
+                      className="w-full text-xs bg-[#007ACC] hover:bg-[#0062a3] text-white font-bold"
+                    >
+                      <span>{hasStartedVsCode ? 'Continue Course' : 'Start VS Code'}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Button>
                   ) : (
                     <div className="flex items-center justify-between w-full text-xs text-text-muted">
                       <span className="italic">In Curriculum Design</span>

@@ -70,10 +70,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       >
         {/* Brand header */}
         <div className="h-14 p-4 border-b border-border flex items-center justify-between shrink-0">
-          <NavLink to="/" onClick={onClose} className="flex items-center gap-2 group">
-            <span className="font-raleway font-extrabold text-xl tracking-widest text-[#0E5E77] group-hover:text-primary transition-colors">
-              CEERAS
-            </span>
+          <NavLink to="/" onClick={onClose} className="logo !text-2xl shrink-0" aria-label="Ceeras Home">
+            CEERAS
           </NavLink>
 
           <button

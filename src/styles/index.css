@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Aboreto&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -113,5 +114,27 @@ html[data-theme='soft-dark'] {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Ceeras Brand Logo */
+.logo {
+  font-family: 'Aboreto', sans-serif;
+  font-weight: 600;
+  font-size: 36px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1.1;
+  background: linear-gradient(45deg, #023e8a, #008080);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    font-size: 32px;
+    letter-spacing: 2px;
   }
 }

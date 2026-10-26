@@ -58,11 +58,9 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
   return (
     <header className="sticky top-0 z-40 bg-surface/95 backdrop-blur-md border-b border-border transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Brand Logo: CEERAS in bold Raleway Font matching reference design */}
-        <Link to="/" className="flex items-center gap-2 group">
-          <span className="font-raleway text-3xl sm:text-4xl font-extrabold tracking-widest text-[#0E5E77] group-hover:text-primary transition-colors">
-            CEERAS
-          </span>
+        {/* Brand Logo: CEERAS with Aboreto font & gradient */}
+        <Link to="/" className="logo shrink-0" aria-label="Ceeras Home">
+          CEERAS
         </Link>
 
         {/* Center Navigation Links (Desktop) */}

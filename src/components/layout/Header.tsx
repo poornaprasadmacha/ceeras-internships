@@ -34,10 +34,8 @@ export function Header({
           <Menu className="w-5 h-5 text-text-main" />
         </Button>
 
-        <Link to="/" className="lg:hidden flex items-center gap-2">
-          <span className="font-raleway font-extrabold text-base tracking-widest text-[#0E5E77]">
-            CEERAS
-          </span>
+        <Link to="/" className="lg:hidden logo !text-2xl shrink-0" aria-label="Ceeras Home">
+          CEERAS
         </Link>
       </div>
 

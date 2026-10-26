@@ -363,6 +363,7 @@ export function ExerciseWorkspace({
               tableName={dataset.tableName}
               availableColumns={dataset.sampleColumns}
               extraKeywords={dynamicKeywords}
+              allowedKeywords={exercise.allowedKeywords}
             />
 
             {/* CodeMirror SQL Editor */}

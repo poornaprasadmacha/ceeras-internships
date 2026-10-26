@@ -10,7 +10,7 @@ export interface SqlSyntaxBreakdownProps {
 }
 
 export function SqlSyntaxBreakdown({
-  tableName = 'CourseCatalog',
+  tableName = 'LibraryBooks',
 }: SqlSyntaxBreakdownProps) {
   const [selectedPart, setSelectedPart] = useState<'select' | 'columns' | 'from' | 'table' | 'semicolon'>('select');
 
@@ -18,49 +18,49 @@ export function SqlSyntaxBreakdown({
     select: {
       keyword: 'SELECT',
       role: 'Action Keyword',
-      color: 'bg-primary/10 text-primary border-primary/30 hover:bg-primary/20',
-      description: 'Instructs the database engine WHICH attributes or calculated columns you want to view in your output.',
+      color: 'bg-primary/10 text-primary border-primary/40 hover:bg-primary/20',
+      description: 'Instructs the database engine WHICH attributes or calculated columns to view in the result table.',
       tip: 'Conventionally written in UPPERCASE. Case-insensitive in SQL engines.',
     },
     columns: {
-      keyword: 'course_name, instructor',
-      role: 'Target Columns (Shape)',
+      keyword: 'title, category',
+      role: 'Target Columns (Projection)',
       color: 'bg-secondary/15 text-text-main border-secondary/40 hover:bg-secondary/25',
-      description: 'The comma-separated attributes to return. The order here determines the left-to-right order of the output grid.',
-      tip: 'Use an asterisk (*) as a wildcard shorthand if you want every column.',
+      description: 'The comma-separated attributes to return. You can also use an asterisk (*) to select all columns.',
+      tip: 'The order written here determines the left-to-right order in your output table.',
     },
     from: {
       keyword: 'FROM',
       role: 'Source Clause',
-      color: 'bg-primary/10 text-primary border-primary/30 hover:bg-primary/20',
-      description: 'Designates the data source or relational table where the records are physically stored.',
-      tip: 'Never place a trailing comma between the last column and the FROM keyword.',
+      color: 'bg-primary/10 text-primary border-primary/40 hover:bg-primary/20',
+      description: 'Designates the data table where the requested records are stored.',
+      tip: 'Never put a comma before the FROM keyword.',
     },
     table: {
       keyword: tableName,
       role: 'Target Table Name',
       color: 'bg-warning/15 text-text-main border-warning/40 hover:bg-warning/25',
-      description: `The exact name of the relational table inside the database schema (in this case, ${tableName}).`,
-      tip: 'Double-check spelling; a typo like extra "s" produces "no such table".',
+      description: `The exact name of the relational table in the database schema (${tableName}).`,
+      tip: 'Table names must match schema spelling accurately.',
     },
     semicolon: {
       keyword: ';',
       role: 'Statement Terminator',
       color: 'bg-subtle text-text-muted border-border hover:bg-border/60',
-      description: 'Standard ANSI/ISO SQL statement terminator. Tells the query parser the instruction is complete.',
-      tip: 'Essential in scripts containing multiple queries.',
+      description: 'Standard ANSI/ISO SQL statement terminator. Informs the engine that the instruction is complete.',
+      tip: 'Required when running scripts with multiple sequential queries.',
     },
   };
 
   const active = parts[selectedPart];
 
   return (
-    <Card className="p-4 sm:p-5 border-border shadow-subtle space-y-4">
-      <div className="flex items-center justify-between border-b border-border pb-3">
+    <Card className="p-3.5 sm:p-5 border-border shadow-subtle space-y-3.5 bg-surface">
+      <div className="flex items-center justify-between border-b border-border pb-2.5">
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-primary" />
           <h3 className="text-sm font-bold text-text-main">
-            Interactive SQL Anatomy (Tap Any Block)
+            Interactive SQL Anatomy (Tap Any Element)
           </h3>
         </div>
         <Badge variant="outline" size="sm">
@@ -68,15 +68,15 @@ export function SqlSyntaxBreakdown({
         </Badge>
       </div>
 
-      {/* Visual Block Builder */}
-      <div className="flex flex-wrap items-center gap-2 font-mono text-xs sm:text-sm p-3 bg-editor-bg rounded-lg border border-border select-none">
+      {/* Visual Block Builder with touch-friendly targets */}
+      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 font-mono text-xs sm:text-sm p-2.5 sm:p-3 bg-editor-bg rounded-lg border border-border select-none">
         <button
           type="button"
           onClick={() => setSelectedPart('select')}
           className={cn(
-            'px-2.5 py-1.5 rounded font-bold border transition-all cursor-pointer',
+            'min-h-[44px] px-3 py-2 rounded-md font-bold border transition-all cursor-pointer',
             parts.select.color,
-            selectedPart === 'select' && 'ring-2 ring-primary scale-105'
+            selectedPart === 'select' && 'ring-2 ring-primary bg-primary/20'
           )}
         >
           {parts.select.keyword}
@@ -86,9 +86,9 @@ export function SqlSyntaxBreakdown({
           type="button"
           onClick={() => setSelectedPart('columns')}
           className={cn(
-            'px-2.5 py-1.5 rounded font-medium border transition-all cursor-pointer',
+            'min-h-[44px] px-3 py-2 rounded-md font-medium border transition-all cursor-pointer',
             parts.columns.color,
-            selectedPart === 'columns' && 'ring-2 ring-secondary scale-105'
+            selectedPart === 'columns' && 'ring-2 ring-secondary bg-secondary/25'
           )}
         >
           {parts.columns.keyword}
@@ -98,9 +98,9 @@ export function SqlSyntaxBreakdown({
           type="button"
           onClick={() => setSelectedPart('from')}
           className={cn(
-            'px-2.5 py-1.5 rounded font-bold border transition-all cursor-pointer',
+            'min-h-[44px] px-3 py-2 rounded-md font-bold border transition-all cursor-pointer',
             parts.from.color,
-            selectedPart === 'from' && 'ring-2 ring-primary scale-105'
+            selectedPart === 'from' && 'ring-2 ring-primary bg-primary/20'
           )}
         >
           {parts.from.keyword}
@@ -110,9 +110,9 @@ export function SqlSyntaxBreakdown({
           type="button"
           onClick={() => setSelectedPart('table')}
           className={cn(
-            'px-2.5 py-1.5 rounded font-semibold border transition-all cursor-pointer',
+            'min-h-[44px] px-3 py-2 rounded-md font-semibold border transition-all cursor-pointer',
             parts.table.color,
-            selectedPart === 'table' && 'ring-2 ring-warning scale-105'
+            selectedPart === 'table' && 'ring-2 ring-warning bg-warning/25'
           )}
         >
           {parts.table.keyword}
@@ -122,9 +122,9 @@ export function SqlSyntaxBreakdown({
           type="button"
           onClick={() => setSelectedPart('semicolon')}
           className={cn(
-            'px-2 py-1.5 rounded font-bold border transition-all cursor-pointer',
+            'min-h-[44px] px-2.5 py-2 rounded-md font-bold border transition-all cursor-pointer',
             parts.semicolon.color,
-            selectedPart === 'semicolon' && 'ring-2 ring-primary scale-105'
+            selectedPart === 'semicolon' && 'ring-2 ring-primary bg-border'
           )}
         >
           {parts.semicolon.keyword}

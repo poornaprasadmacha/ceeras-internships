@@ -3,8 +3,7 @@ import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { getLessonBySlug, getNextLesson, getPrevLesson } from '../../data/lessons';
 import { useProgress } from '../../hooks/useProgress';
 import { ExerciseWorkspace } from './ExerciseWorkspace';
-import { TerminologyMatcher } from './TerminologyMatcher';
-import { ElementIdentifier } from './ElementIdentifier';
+import { ConceptPractice } from './ConceptPractice';
 import { InteractiveTableVisualizer } from './InteractiveTableVisualizer';
 import { SqlSyntaxBreakdown } from './SqlSyntaxBreakdown';
 import { InteractiveQuerySimulator } from './InteractiveQuerySimulator';
@@ -54,7 +53,8 @@ export function LessonView() {
   const [activeSession, setActiveSession] = useState<SessionId>('session-visuals');
   const [activeExerciseIndex, setActiveExerciseIndex] = useState(0);
   const [noteText, setNoteText] = useState('');
-  const [noteSavedFeedback, setNoteSavedFeedback] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
+  const [isNotesOpen, setIsNotesOpen] = useState(false);
 
   // References to the 4 session containers for smooth scrolling
   const visualsRef = useRef<HTMLDivElement>(null);
@@ -76,6 +76,7 @@ export function LessonView() {
       quizRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setActiveSession('session-quiz');
     } else if ((hash === '#notes' || hash === '#note') && notesRef.current) {
+      setIsNotesOpen(true);
       notesRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setActiveSession('session-notes');
     } else if ((hash === '#exercises' || hash === '#coding') && codingRef.current) {
@@ -95,6 +96,23 @@ export function LessonView() {
     }
   }, [lesson?.id, notes]);
 
+  // Auto-save note with debouncing
+  useEffect(() => {
+    if (!lesson) return;
+    const currentSaved = notes[lesson.id]?.content || '';
+    if (noteText === currentSaved) return;
+
+    setSaveStatus('saving');
+    const timer = setTimeout(async () => {
+      await saveLessonNote(lesson.id, noteText);
+      setSaveStatus('saved');
+      const resetTimer = setTimeout(() => setSaveStatus('idle'), 2000);
+      return () => clearTimeout(resetTimer);
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [noteText, lesson?.id, notes, saveLessonNote]);
+
   // Scroll to a specific session with top offset
   const scrollToSession = useCallback((sessionId: SessionId) => {
     setActiveSession(sessionId);
@@ -102,7 +120,10 @@ export function LessonView() {
     if (sessionId === 'session-visuals') targetEl = visualsRef.current;
     else if (sessionId === 'session-coding') targetEl = codingRef.current;
     else if (sessionId === 'session-quiz') targetEl = quizRef.current;
-    else if (sessionId === 'session-notes') targetEl = notesRef.current;
+    else if (sessionId === 'session-notes') {
+      setIsNotesOpen(true);
+      targetEl = notesRef.current;
+    }
 
     if (targetEl) {
       const yOffset = -70; // offset for sticky session nav bar
@@ -116,7 +137,7 @@ export function LessonView() {
       <div className="text-center py-16 space-y-4">
         <h2 className="text-xl font-bold text-text-main">Lesson Not Found</h2>
         <p className="text-sm text-text-muted">The requested lesson does not exist in the curriculum.</p>
-        <Button variant="primary" onClick={() => navigate('/learn')}>
+        <Button variant="primary" onClick={() => navigate('/learn')} className="min-h-[44px]">
           Browse All Lessons
         </Button>
       </div>
@@ -138,12 +159,6 @@ export function LessonView() {
   const solvedCountInLesson = lesson.exercises.filter((e) => exerciseAttempts[e.id]?.isSolved).length;
   const allExercisesSolved = solvedCountInLesson === lesson.exercises.length;
 
-  const handleSaveNote = async () => {
-    await saveLessonNote(lesson.id, noteText);
-    setNoteSavedFeedback(true);
-    setTimeout(() => setNoteSavedFeedback(false), 2000);
-  };
-
   const handleQuizComplete = async (
     score: number,
     total: number,
@@ -153,30 +168,31 @@ export function LessonView() {
   };
 
   return (
-    <div className="space-y-6 pb-20 max-w-5xl mx-auto px-1 sm:px-2">
-      {/* Breadcrumb & Navigation Topbar */}
+    <div className="space-y-6 pb-20 max-w-5xl mx-auto px-2 sm:px-4">
+      {/* Breadcrumb & Topbar */}
       <div className="flex items-center justify-between gap-2 text-xs text-text-muted pt-1">
         <div className="flex items-center gap-1.5 sm:gap-2 truncate">
           <Link to="/learn" className="hover:text-text-main shrink-0">
-            Curriculum
+            Lessons
           </Link>
           <span>/</span>
-          <span className="text-text-main font-medium truncate">Lesson {lesson.number}</span>
+          <span className="text-text-main font-medium truncate">
+            Lesson {lesson.number}: {lesson.title}
+          </span>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
             onClick={() => toggleBookmarkItem(lesson.id, lesson.title)}
-            className="text-xs h-8 px-2.5"
+            className={cn(
+              'text-xs gap-1.5 min-h-[38px]',
+              isBookmarked ? 'text-primary' : 'text-text-muted hover:text-text-main'
+            )}
+            title={isBookmarked ? 'Remove Bookmark' : 'Bookmark this lesson'}
           >
-            <Bookmark
-              className={cn(
-                'w-3.5 h-3.5',
-                isBookmarked ? 'fill-primary text-primary' : 'text-text-muted'
-              )}
-            />
+            <Bookmark className={cn('w-3.5 h-3.5', isBookmarked && 'fill-primary')} />
             <span className="hidden sm:inline">{isBookmarked ? 'Saved' : 'Bookmark'}</span>
           </Button>
         </div>
@@ -203,6 +219,9 @@ export function LessonView() {
         <h1 className="font-raleway text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-text-main leading-snug">
           {lesson.title}
         </h1>
+        <p className="text-xs sm:text-sm text-text-muted leading-relaxed">
+          {lesson.shortDescription}
+        </p>
       </div>
 
       {/* ========================================================= */}
@@ -215,7 +234,7 @@ export function LessonView() {
             type="button"
             onClick={() => scrollToSession('session-visuals')}
             className={cn(
-              'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 cursor-pointer',
+              'min-h-[40px] flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 cursor-pointer',
               activeSession === 'session-visuals'
                 ? 'bg-primary text-white shadow-2xs font-bold'
                 : 'text-text-muted hover:text-text-main hover:bg-subtle'
@@ -230,7 +249,7 @@ export function LessonView() {
             type="button"
             onClick={() => scrollToSession('session-coding')}
             className={cn(
-              'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 cursor-pointer',
+              'min-h-[40px] flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 cursor-pointer',
               activeSession === 'session-coding'
                 ? 'bg-primary text-white shadow-2xs font-bold'
                 : 'text-text-muted hover:text-text-main hover:bg-subtle'
@@ -257,7 +276,7 @@ export function LessonView() {
             type="button"
             onClick={() => scrollToSession('session-quiz')}
             className={cn(
-              'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 cursor-pointer',
+              'min-h-[40px] flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 cursor-pointer',
               activeSession === 'session-quiz'
                 ? 'bg-primary text-white shadow-2xs font-bold'
                 : 'text-text-muted hover:text-text-main hover:bg-subtle'
@@ -284,7 +303,7 @@ export function LessonView() {
             type="button"
             onClick={() => scrollToSession('session-notes')}
             className={cn(
-              'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 cursor-pointer',
+              'min-h-[40px] flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shrink-0 cursor-pointer',
               activeSession === 'session-notes'
                 ? 'bg-primary text-white shadow-2xs font-bold'
                 : 'text-text-muted hover:text-text-main hover:bg-subtle'
@@ -302,7 +321,7 @@ export function LessonView() {
       <section
         id="session-visuals"
         ref={visualsRef}
-        className="space-y-5 pt-2"
+        className="space-y-4 pt-2"
       >
         {/* Session Section Header */}
         <div className="flex items-center justify-between border-b border-border pb-2.5">
@@ -312,7 +331,7 @@ export function LessonView() {
             </div>
             <h2 className="text-base sm:text-lg font-bold text-text-main flex items-center gap-2">
               <Eye className="w-4 h-4 text-primary" />
-              <span>Visual Concepts & Architecture</span>
+              <span>Visual Concepts & Schema</span>
             </h2>
           </div>
           <span className="text-[11px] text-text-muted font-medium hidden sm:inline">
@@ -325,7 +344,7 @@ export function LessonView() {
           <div className="flex items-center gap-2">
             <Target className="w-4 h-4 text-primary" />
             <h3 className="text-xs sm:text-sm font-bold text-text-main">
-              What You Will Master in This Lesson:
+              What You Will Master:
             </h3>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-text-main">
@@ -361,54 +380,111 @@ export function LessonView() {
         <div className="space-y-3">
           <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
             <Zap className="w-4 h-4 text-primary" />
-            <span>Key Concept Breakdown</span>
+            <span>Lesson Concepts</span>
           </h3>
 
           <div className="grid grid-cols-1 gap-3">
-            {lesson.sections.map((section, idx) => (
-              <Card key={section.id} className="p-3.5 sm:p-5 space-y-2 bg-surface">
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" size="sm">
-                    Part {idx + 1}
-                  </Badge>
-                  <h4 className="text-xs sm:text-sm font-bold text-text-main">
-                    {section.title}
-                  </h4>
-                </div>
+            {lesson.sections.map((section, idx) => {
+              if (section.isCollapsible) {
+                return (
+                  <details
+                    key={section.id}
+                    className="group border border-border rounded-xl bg-surface overflow-hidden"
+                  >
+                    <summary className="p-3.5 sm:p-4 font-bold text-xs sm:text-sm text-text-main cursor-pointer select-none flex items-center justify-between hover:bg-subtle/50 transition-colors list-none">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline" size="sm">
+                          Optional
+                        </Badge>
+                        <span>{section.title}</span>
+                      </div>
+                      <ChevronDown className="w-4 h-4 text-text-muted transition-transform group-open:rotate-180" />
+                    </summary>
+                    <div className="px-3.5 sm:px-4 pb-4 pt-1 border-t border-border/60 text-xs sm:text-sm text-text-main/90 leading-relaxed whitespace-pre-line space-y-2">
+                      {section.collapsedSummary && (
+                        <p className="text-xs text-text-muted italic">
+                          {section.collapsedSummary}
+                        </p>
+                      )}
+                      <p>{section.content}</p>
+                    </div>
+                  </details>
+                );
+              }
 
-                <div className="text-xs sm:text-sm text-text-main/90 leading-relaxed whitespace-pre-line">
-                  {section.content}
-                </div>
-
-                {section.codeExample && (
-                  <div className="p-3 bg-editor-bg border border-border rounded-lg space-y-1 mt-2">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-text-muted block">
-                      SQL Code Example
-                    </span>
-                    <pre className="font-mono text-xs text-editor-text font-semibold whitespace-pre-wrap overflow-x-auto">
-                      {section.codeExample.sql}
-                    </pre>
-                    <p className="text-[11px] text-text-muted leading-relaxed pt-1 border-t border-border/40">
-                      {section.codeExample.explanation}
-                    </p>
+              return (
+                <Card key={section.id} className="p-3.5 sm:p-5 space-y-2 bg-surface">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" size="sm">
+                      Part {idx + 1}
+                    </Badge>
+                    <h4 className="text-xs sm:text-sm font-bold text-text-main">
+                      {section.title}
+                    </h4>
                   </div>
-                )}
-              </Card>
-            ))}
+
+                  <div className="text-xs sm:text-sm text-text-main/90 leading-relaxed whitespace-pre-line">
+                    {section.content}
+                  </div>
+
+                  {section.sampleTable && (
+                    <div className="mt-3 p-3 bg-subtle/50 border border-border rounded-lg space-y-2">
+                      <span className="text-[11px] font-semibold text-text-main block">
+                        {section.sampleTable.title}
+                      </span>
+                      <div className="overflow-x-auto border border-border rounded bg-surface">
+                        <table className="w-full text-left text-xs border-collapse">
+                          <thead className="bg-subtle border-b border-border">
+                            <tr>
+                              {section.sampleTable.columns.map((c) => (
+                                <th key={c} className="p-2 font-mono font-bold text-text-main">
+                                  {c}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-border/60">
+                            {section.sampleTable.rows.map((r, rIdx) => (
+                              <tr key={rIdx} className="hover:bg-subtle/40">
+                                {r.map((cell, cIdx) => (
+                                  <td key={cIdx} className="p-2 font-mono text-text-main/90">
+                                    {String(cell)}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+
+                  {section.codeExample && (
+                    <div className="p-3 bg-editor-bg border border-border rounded-lg space-y-1 mt-2">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-text-muted block">
+                        SQL Code Example
+                      </span>
+                      <pre className="font-mono text-xs text-editor-text font-semibold whitespace-pre-wrap overflow-x-auto">
+                        {section.codeExample.sql}
+                      </pre>
+                      <p className="text-[11px] text-text-muted leading-relaxed pt-1 border-t border-border/40">
+                        {section.codeExample.explanation}
+                      </p>
+                    </div>
+                  )}
+                </Card>
+              );
+            })}
           </div>
         </div>
 
-        {/* Interactive Check / Terminology Matching (Lesson 1) */}
-        {lesson.terminologyMatching && (
+        {/* Unified Foundational Concept Practice */}
+        {(lesson.terminologyMatching || lesson.interactiveCheck) && (
           <div className="pt-1">
-            <TerminologyMatcher items={lesson.terminologyMatching} />
-          </div>
-        )}
-
-        {/* Interactive Element Identifier (Lesson 1) */}
-        {lesson.interactiveCheck && (
-          <div className="pt-1">
-            <ElementIdentifier check={lesson.interactiveCheck} />
+            <ConceptPractice
+              terminologyItems={lesson.terminologyMatching}
+              interactiveCheck={lesson.interactiveCheck}
+            />
           </div>
         )}
 
@@ -416,17 +492,17 @@ export function LessonView() {
         <div className="p-3.5 sm:p-4 bg-primary/5 border border-primary/20 rounded-xl flex items-center justify-between gap-3">
           <div className="min-w-0">
             <span className="text-xs font-bold text-text-main block truncate">
-              Concepts Understood?
+              Concepts Clear?
             </span>
             <span className="text-[11px] text-text-muted block truncate">
-              Practice live SQL queries in the interactive editor below.
+              Execute your first live SQL query in the interactive editor below.
             </span>
           </div>
           <Button
             variant="primary"
             size="sm"
             onClick={() => scrollToSession('session-coding')}
-            className="shrink-0 text-xs gap-1.5"
+            className="shrink-0 text-xs gap-1.5 min-h-[40px]"
           >
             <span>Start Coding</span>
             <ChevronDown className="w-3.5 h-3.5" />
@@ -458,7 +534,7 @@ export function LessonView() {
           </span>
         </div>
 
-        {/* Exercise Stepper Pills (if multiple tasks) */}
+        {/* Exercise Stepper Pills */}
         {lesson.exercises.length > 1 && (
           <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 select-none">
             <span className="text-xs font-semibold text-text-muted mr-1 shrink-0">Tasks:</span>
@@ -472,7 +548,7 @@ export function LessonView() {
                   type="button"
                   onClick={() => setActiveExerciseIndex(idx)}
                   className={cn(
-                    'px-3 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 cursor-pointer flex items-center gap-1.5',
+                    'min-h-[38px] px-3.5 py-1.5 rounded-md text-xs font-medium transition-all shrink-0 cursor-pointer flex items-center gap-1.5',
                     isSelected
                       ? 'bg-primary text-white font-semibold shadow-2xs'
                       : isSolved
@@ -513,7 +589,7 @@ export function LessonView() {
             size="sm"
             disabled={activeExerciseIndex === 0}
             onClick={() => setActiveExerciseIndex((prev) => prev - 1)}
-            className="text-xs"
+            className="text-xs min-h-[40px]"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Previous Task</span>
@@ -525,7 +601,7 @@ export function LessonView() {
               variant="primary"
               size="sm"
               onClick={() => setActiveExerciseIndex((prev) => prev + 1)}
-              className="text-xs"
+              className="text-xs min-h-[40px]"
             >
               <span>Next Task</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -535,7 +611,7 @@ export function LessonView() {
               variant="primary"
               size="sm"
               onClick={() => scrollToSession('session-quiz')}
-              className="text-xs bg-primary"
+              className="text-xs bg-primary min-h-[40px]"
             >
               <span>Proceed to Knowledge Quiz</span>
               <ChevronDown className="w-3.5 h-3.5" />
@@ -568,7 +644,7 @@ export function LessonView() {
           </span>
         </div>
 
-        {/* Quiz Runner Embedded directly in single window */}
+        {/* Quiz Runner Embedded directly */}
         <QuizRunner
           key={`quiz_${lesson.id}`}
           quizId={`quiz_${lesson.id}`}
@@ -583,14 +659,14 @@ export function LessonView() {
       </section>
 
       {/* ========================================================= */}
-      {/* SESSION 4: PERSONAL NOTES & KEY TAKEAWAYS                */}
+      {/* SESSION 4: PERSONAL NOTES (COLLAPSED BY DEFAULT, AUTO-SAVE) */}
       {/* ========================================================= */}
       <section
         id="session-notes"
         ref={notesRef}
         className="space-y-4 pt-6 border-t border-border"
       >
-        {/* Section Header */}
+        {/* Section Header with Expand/Collapse toggle */}
         <div className="flex items-center justify-between border-b border-border pb-2.5">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-xs">
@@ -601,89 +677,163 @@ export function LessonView() {
               <span>Personal Notes & Cheat Sheet</span>
             </h2>
           </div>
-          {noteSavedFeedback && (
-            <Badge variant="success" size="sm">
-              Saved locally
-            </Badge>
-          )}
-        </div>
 
-        <Card className="p-4 sm:p-5 space-y-3 bg-surface">
-          <p className="text-xs text-text-muted leading-relaxed">
-            Record key query patterns, syntax nuances, or reminders for this lesson. Notes are saved
-            automatically to your local browser storage.
-          </p>
-
-          <textarea
-            value={noteText}
-            onChange={(e) => setNoteText(e.target.value)}
-            placeholder={`Jot down personal takeaways for Lesson ${lesson.number}...`}
-            className="w-full h-36 p-3 rounded-lg bg-surface border border-border text-xs sm:text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-primary/40 font-sans leading-relaxed resize-y"
-          />
-
-          <div className="flex items-center justify-between pt-1">
-            <span className="text-[11px] text-text-muted font-mono">
-              {noteText.trim().length} characters
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleSaveNote}
-              className="text-xs"
+          <div className="flex items-center gap-2">
+            {saveStatus === 'saving' && (
+              <Badge variant="outline" size="sm">
+                Saving...
+              </Badge>
+            )}
+            {saveStatus === 'saved' && (
+              <Badge variant="success" size="sm">
+                Saved locally
+              </Badge>
+            )}
+            <button
+              type="button"
+              onClick={() => setIsNotesOpen((prev) => !prev)}
+              className="text-xs font-medium text-primary hover:underline flex items-center gap-1 cursor-pointer min-h-[38px] px-2"
             >
-              <span>Save Note</span>
-            </Button>
+              <span>{isNotesOpen ? 'Collapse' : 'Expand Notes'}</span>
+              <ChevronDown
+                className={cn('w-3.5 h-3.5 transition-transform', isNotesOpen && 'rotate-180')}
+              />
+            </button>
           </div>
-        </Card>
-
-        {/* Lesson Bottom Navigation Bar */}
-        <div className="flex items-center justify-between pt-6 border-t border-border gap-3">
-          {prevLesson ? (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => navigate(`/learn/${prevLesson.slug}`)}
-              className="text-xs"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Lesson {prevLesson.number}</span>
-            </Button>
-          ) : (
-            <div />
-          )}
-
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigate('/learn')}
-            className="text-xs text-text-muted"
-          >
-            All Lessons
-          </Button>
-
-          {nextLesson ? (
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => navigate(`/learn/${nextLesson.slug}`)}
-              className="text-xs"
-            >
-              <span>Lesson {nextLesson.number}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Button>
-          ) : (
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => navigate('/quizzes')}
-              className="text-xs"
-            >
-              <span>All Quizzes</span>
-              <CheckSquare className="w-3.5 h-3.5" />
-            </Button>
-          )}
         </div>
+
+        {isNotesOpen ? (
+          <Card className="p-4 sm:p-5 space-y-3 bg-surface animate-fadeIn">
+            <p className="text-xs text-text-muted leading-relaxed">
+              Jot down personal query patterns, syntax reminders, or takeaways. Notes save
+              automatically to local storage as you type.
+            </p>
+
+            <textarea
+              value={noteText}
+              onChange={(e) => setNoteText(e.target.value)}
+              placeholder={`Jot down personal takeaways for Lesson ${lesson.number}...`}
+              className="w-full h-32 p-3 rounded-lg bg-surface border border-border text-xs sm:text-sm text-text-main focus:outline-none focus:ring-2 focus:ring-primary/40 font-sans leading-relaxed resize-y"
+            />
+
+            <div className="flex items-center justify-between pt-1 text-[11px] text-text-muted font-mono">
+              <span>{noteText.trim().length} characters</span>
+              <span>Auto-saved to IndexedDB</span>
+            </div>
+          </Card>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setIsNotesOpen(true)}
+            className="w-full p-3.5 bg-subtle/50 hover:bg-subtle border border-dashed border-border rounded-xl text-left text-xs text-text-muted transition-colors flex items-center justify-between cursor-pointer min-h-[44px]"
+          >
+            <span>
+              {noteText.trim().length > 0
+                ? `Saved Note (${noteText.trim().length} chars) - Click to view or edit`
+                : 'Click to add personal notes for this lesson (auto-saved)'}
+            </span>
+            <ChevronDown className="w-3.5 h-3.5" />
+          </button>
+        )}
       </section>
+
+      {/* ========================================================= */}
+      {/* END-OF-LESSON SUMMARY & NEXT LESSON ACTION               */}
+      {/* ========================================================= */}
+      <Card className="p-4 sm:p-5 bg-surface border-border shadow-subtle space-y-3 mt-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary block">
+              Lesson Summary
+            </span>
+            <h3 className="text-sm sm:text-base font-bold text-text-main">
+              {isLessonCompleted || (allExercisesSolved && currentQuizAttempt?.passed)
+                ? `Completed: ${lesson.title}`
+                : `Lesson Progress: ${lesson.title}`}
+            </h3>
+            <p className="text-xs text-text-muted leading-relaxed">
+              {solvedCountInLesson} of {lesson.exercises.length} coding tasks solved • Quiz:{' '}
+              {currentQuizAttempt
+                ? `${currentQuizAttempt.score}/${lesson.quiz.length} (${
+                    currentQuizAttempt.passed ? 'Passed' : 'Needs 80% to pass'
+                  })`
+                : 'Not yet taken'}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            {nextLesson ? (
+              <Button
+                variant="primary"
+                size="md"
+                onClick={() => navigate(`/learn/${nextLesson.slug}`)}
+                className="text-xs sm:text-sm font-semibold gap-2 min-h-[44px]"
+              >
+                <span>Continue to Next Lesson</span>
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                size="md"
+                onClick={() => navigate('/learn')}
+                className="text-xs sm:text-sm font-semibold gap-2 min-h-[44px]"
+              >
+                <span>Course Lessons</span>
+                <CheckSquare className="w-4 h-4" />
+              </Button>
+            )}
+          </div>
+        </div>
+      </Card>
+
+      {/* Lesson Bottom Navigation Bar */}
+      <div className="flex items-center justify-between pt-4 border-t border-border gap-3">
+        {prevLesson ? (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => navigate(`/learn/${prevLesson.slug}`)}
+            className="text-xs min-h-[44px]"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Lesson {prevLesson.number}</span>
+          </Button>
+        ) : (
+          <div />
+        )}
+
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => navigate('/learn')}
+          className="text-xs text-text-muted hover:text-text-main min-h-[44px]"
+        >
+          Course Lessons
+        </Button>
+
+        {nextLesson ? (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => navigate(`/learn/${nextLesson.slug}`)}
+            className="text-xs min-h-[44px]"
+          >
+            <span>Lesson {nextLesson.number}</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Button>
+        ) : (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => navigate('/quizzes')}
+            className="text-xs min-h-[44px]"
+          >
+            <span>All Quizzes</span>
+            <CheckSquare className="w-3.5 h-3.5" />
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

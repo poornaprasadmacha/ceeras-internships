@@ -25,6 +25,7 @@ export interface ExerciseDefinition {
   acceptedAlternativeQueries?: string[];
   allowsMutation?: boolean;
   verificationQuery?: string;
+  allowedKeywords?: string[];
 }
 
 export interface TerminologyItem {
@@ -37,6 +38,9 @@ export interface LessonSection {
   id: string;
   title: string;
   content: string; // Markdown / prose
+  isCollapsible?: boolean;
+  defaultCollapsed?: boolean;
+  collapsedSummary?: string;
   codeExample?: {
     sql: string;
     explanation: string;

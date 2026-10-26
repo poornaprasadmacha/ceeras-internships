@@ -51,32 +51,32 @@ export async function createDatabaseFromDataset(dataset: DatasetDefinition): Pro
 }
 
 /**
- * Maps raw SQLite error messages to student-friendly pedagogical guidance
+ * Maps raw SQLite error messages to student-friendly pedagogical guidance with categorization
  */
-function humanizeSqlError(rawError: string): string {
+export function humanizeSqlError(rawError: string): string {
   const lower = rawError.toLowerCase();
 
   if (lower.includes('no such table')) {
     const match = rawError.match(/no such table: (.*)/i);
     const tableName = match ? match[1] : '';
-    return `Table not found ${tableName ? `("${tableName}")` : ''}. Check the spelling and capitalization of the table in your FROM clause.`;
+    return `[Table Error] Table not found${tableName ? ` "${tableName}"` : ''}. Check the spelling and casing of the table name in your FROM clause.`;
   }
 
   if (lower.includes('no such column')) {
     const match = rawError.match(/no such column: (.*)/i);
     const colName = match ? match[1] : '';
-    return `Column not found ${colName ? `("${colName}")` : ''}. Check the spelling of your column names. If you intended a text string, enclose it in single quotes ('text').`;
+    return `[Column Error] Column not found${colName ? ` "${colName}"` : ''}. Check column spelling against the table schema. If you intended a text value, enclose it in single quotes ('text').`;
   }
 
   if (lower.includes('syntax error')) {
-    return `Syntax error: SQLite could not understand your query. Check for missing commas between columns, unmatched parentheses, or misplaced keywords.`;
+    return `[Syntax Error] SQLite could not parse your query. Common causes: missing comma between column names, missing FROM keyword, or misspelled SQL keywords.`;
   }
 
   if (lower.includes('incomplete input')) {
-    return `Incomplete query: It looks like your statement was cut short. Check that all quotes, parentheses, and clauses are closed.`;
+    return `[Incomplete Statement] The statement was cut short. Check that all quotes, parentheses, and clauses are properly closed with a semicolon.`;
   }
 
-  return rawError;
+  return `[Query Error] ${rawError}`;
 }
 
 /**

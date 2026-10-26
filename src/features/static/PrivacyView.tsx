@@ -27,7 +27,7 @@ export function PrivacyView() {
         <section className="space-y-2">
           <h2 className="text-base font-bold text-text-main">1. Information We Do Not Collect</h2>
           <p className="text-xs text-text-muted leading-relaxed">
-            QueryPath does not require user accounts, email addresses, passwords, or payment credentials. We do not load advertising networks, third-party analytics scripts, tracking cookies, or browser fingerprinting mechanisms.
+            CEERAS does not require user accounts, email addresses, passwords, or payment credentials. We do not load advertising networks, third-party analytics scripts, tracking cookies, or browser fingerprinting mechanisms.
           </p>
         </section>
 
@@ -41,7 +41,7 @@ export function PrivacyView() {
             <li>Interactive SQL exercise attempts and solutions</li>
             <li>Quiz scores and completed attempts</li>
             <li>Personal study notes and bookmarks</li>
-            <li>Selected color theme (Soft Light, Warm Paper, Soft Dark)</li>
+            <li>Selected color theme (Daylight Mode, Dark Mode)</li>
           </ul>
         </section>
 

@@ -21,7 +21,7 @@ function TitleAndMetaUpdater() {
     } else if (path === '/learn') {
       pageTitle = `Course Lessons & Curriculum — ${APP_NAME}`;
       metaDescription =
-        'Explore the QueryPath SQL curriculum. From relational database foundations to advanced query syntax.';
+        'Explore the CEERAS SQL curriculum. From relational database foundations to advanced query syntax.';
     } else if (path === '/learn/sql-basics') {
       pageTitle = `Lesson 1: Introduction to SQL and Relational Databases — ${APP_NAME}`;
       metaDescription =

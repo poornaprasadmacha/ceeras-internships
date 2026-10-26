@@ -194,7 +194,7 @@ export function ProgressView() {
       const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data, null, 2))}`;
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute('href', jsonString);
-      downloadAnchor.setAttribute('download', `querypath_progress_${new Date().toISOString().slice(0, 10)}.json`);
+      downloadAnchor.setAttribute('download', `ceeras_progress_${new Date().toISOString().slice(0, 10)}.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();

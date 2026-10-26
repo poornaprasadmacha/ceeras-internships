@@ -77,9 +77,7 @@ export function BookmarksView() {
                   <Button
                     variant="primary"
                     size="sm"
-                    onClick={() => {
-                      if (lesson) navigate(lesson.fullPath);
-                    }}
+                    onClick={() => navigate(lesson?.fullPath || '/learn')}
                   >
                     <span>Open Lesson</span>
                     <ArrowRight className="w-3.5 h-3.5" />

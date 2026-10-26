@@ -71,16 +71,14 @@ export function NotesView() {
                     <span>Delete Note</span>
                   </Button>
 
-                  {lesson && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => navigate(`${lesson.fullPath}#notes`)}
-                    >
-                      <span>Open in Lesson</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Button>
-                  )}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => navigate(lesson ? lesson.fullPath : '/learn')}
+                  >
+                    <span>Open in Lesson</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Button>
                 </div>
               </Card>
             );

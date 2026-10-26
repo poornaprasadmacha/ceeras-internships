@@ -26,7 +26,7 @@ export function SettingsView() {
           <h2 className="text-base font-bold text-text-main">Visual Reading Themes</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1 max-w-2xl">
           {THEMES.map((t) => {
             const isSelected = theme === t.id;
             return (

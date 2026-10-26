@@ -276,7 +276,7 @@ export function EmbeddedSqlEditor({
           )}
           <div className="space-y-0.5">
             <p className="font-bold">
-              {verification.isCorrect ? 'Target Matched! Query Verified.' : 'Review Suggestion'}
+              {verification.isCorrect ? 'Great work! Your query is correct.' : 'Not quite. Check the hint and try again:'}
             </p>
             <p className="text-xs">{verification.message}</p>
           </div>

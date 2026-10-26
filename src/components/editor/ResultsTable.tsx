@@ -51,7 +51,7 @@ export function ResultsTable({ result, isLoading, className }: ResultsTableProps
       >
         <AlertCircle className="w-5 h-5 text-error shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <p className="text-sm font-semibold text-error">Execution Error</p>
+          <p className="text-sm font-semibold text-error">Check Your Query</p>
           <p className="text-xs font-mono text-text-main/90 whitespace-pre-wrap leading-relaxed">
             {result.error}
           </p>
@@ -68,7 +68,7 @@ export function ResultsTable({ result, isLoading, className }: ResultsTableProps
           className
         )}
       >
-        <p className="text-sm">Query executed successfully, but returned 0 columns.</p>
+        <p className="text-sm">Query ran successfully, but returned 0 columns.</p>
         <p className="text-xs text-text-muted mt-1 font-mono">
           Duration: {result.executionTimeMs} ms
         </p>

@@ -23,7 +23,7 @@ export function AboutView() {
             <Zap className="w-5 h-5 text-primary" />
             <h2 className="text-sm font-bold text-text-main">Authentic In-Browser Execution</h2>
             <p className="text-xs text-text-muted leading-relaxed">
-              Instead of running server sandboxes or mocking responses, QueryPath executes real SQLite queries inside your browser using WebAssembly.
+              Instead of running server sandboxes or mocking responses, CEERAS executes real SQLite queries inside your browser using WebAssembly.
             </p>
           </Card>
 
@@ -55,7 +55,7 @@ export function AboutView() {
         <section className="space-y-3 pt-4">
           <h2 className="text-base font-bold text-text-main">Database Engine Disclosure</h2>
           <p className="text-xs text-text-muted leading-relaxed">
-            QueryPath teaches relational database fundamentals using an embedded SQLite engine. While standard query patterns (such as SELECT, FROM, WHERE, and JOINs) are broadly identical across database management systems, some dialect variations, mathematical operators, and internal functions differ in systems like PostgreSQL, MySQL, Microsoft SQL Server, and Oracle Database.
+            CEERAS teaches relational database fundamentals using an embedded SQLite engine. While standard query patterns (such as SELECT, FROM, WHERE, and JOINs) are broadly identical across database management systems, some dialect variations, mathematical operators, and internal functions differ in systems like PostgreSQL, MySQL, Microsoft SQL Server, and Oracle Database.
           </p>
         </section>
       </div>

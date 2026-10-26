@@ -132,6 +132,8 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
             <button
               type="button"
               onClick={() => setCoursesOpen((prev) => !prev)}
+              aria-expanded={coursesOpen}
+              aria-haspopup="true"
               className="flex items-center gap-1 transition-colors hover:text-primary cursor-pointer py-2"
             >
               <span>Courses</span>
@@ -139,8 +141,8 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
             </button>
 
             {coursesOpen && (
-              <div className="absolute top-full left-0 w-80 bg-surface border border-border rounded-xl shadow-card p-2 space-y-1 z-50">
-                <div className="px-2 py-1 text-[11px] font-bold text-text-muted uppercase tracking-wider">
+              <div className="absolute top-full left-0 w-84 max-h-[75vh] overflow-y-auto bg-surface border border-border rounded-xl shadow-card p-2 space-y-1 z-50">
+                <div className="px-2 py-1 text-[11px] font-bold text-text-muted uppercase tracking-wider sticky top-0 bg-surface/90 backdrop-blur-xs">
                   Active Courses
                 </div>
                 <Link
@@ -331,9 +333,11 @@ export function CeerasHeader({ onToggleSidebar }: { onToggleSidebar?: () => void
             <button
               type="button"
               onClick={() => setQuizzesOpen((prev) => !prev)}
+              aria-expanded={quizzesOpen}
+              aria-haspopup="true"
               className="flex items-center gap-1 transition-colors hover:text-primary cursor-pointer py-2"
             >
-              <span>Quizes</span>
+              <span>Quizzes</span>
               <ChevronDown className="w-3.5 h-3.5 opacity-70" />
             </button>
 
